@@ -1,0 +1,71 @@
+/* spin the wheel */
+body{
+	background-color: whitesmoke;
+}
+.the_wheel{
+	position: relative;
+}
+.pointer{
+	width: 0;
+	height: 0;
+	border-top: 35px solid #fff;
+	border-left: 30px solid transparent;
+	border-right: 30px solid transparent;
+	position: absolute;
+	top: 70px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.canvas{
+	position: absolute;
+	top: 40px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+.spin-btn{
+	width: 80px;
+	height: 80px;
+	border-radius: 40px;
+	border: none;
+	background-color: #fefefe;
+	font-size: 17px;
+	font-weight: bold;
+	position: absolute;
+	top: 225px;
+	left: 50%;
+	transform: translateX(-50%);
+	color: #000;
+}
+@media screen and (max-width: 500px) {
+	.pointer{
+		top: 35px;
+	}
+	.spin-btn{
+		top: 140px;
+	}
+}
+
+#modal-spin .modal-content,
+#modal-alert .modal-content{
+	margin-top: 20%;
+}
+#modal-spin .modal-body,
+#modal-alert .modal-body{
+	font-size: 16px;
+	text-align: center;
+}
+#modal-spin .close,
+#modal-alert .close{
+	position: relative;
+	top: -20px;
+	right: -15px;
+}
+
+.congratulation{
+	max-width: 500px;
+	margin-top: 50px;
+	background-color: #fff;
+	padding: 20px 20px 40px 20px;
+	font-size: 20px;
+	display: none;
+}

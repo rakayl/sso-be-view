@@ -1,0 +1,26 @@
+.button-drag {
+	margin-bottom: 10px;
+	line-height: 80%;
+}
+
+.div-drag {
+	/*margin: 10px;*/
+}
+
+.buttonOperator {
+	width: 16.6%;
+}
+
+.buttonDelete {
+	width: 16.7%;
+}
+
+@media print {
+  .noExport {
+    display: none;
+  }
+}
+
+.ytp-chrome-top-buttons {
+    display: none;
+}
