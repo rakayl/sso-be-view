@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1" name="viewport" />
-    <meta content="Technopartner Indonesia - BEHAVE Loyalty Platform" name="description" />
+    <meta content="" name="description" />
 	<title></title>
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/webview/css/spin-the-wheel.css') }}" rel="stylesheet" type="text/css" />

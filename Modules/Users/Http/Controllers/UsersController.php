@@ -232,12 +232,12 @@ class UsersController extends Controller
                 $data['celebrate'] = null;
             }
 
-            $getJob = MyHelper::get('setting/be/jobs_list');
-            if ($getJob['status'] == 'success') {
-                $data['job'] = $getJob['result'];
-            } else {
-                $data['job'] = null;
-            }
+//            $getJob = MyHelper::get('setting/be/jobs_list');
+//            if ($getJob['status'] == 'success') {
+//                $data['job'] = $getJob['result'];
+//            } else {
+//                $data['job'] = null;
+//            }
 
             return view('users::create', $data);
         }

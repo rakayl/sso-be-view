@@ -211,23 +211,6 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                                Brand
-                                <span class="required" aria-required="true"> * </span>
-                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand yang tersedia dalam outlet ini" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="col-md-4">
-                            <select class="select2 form-control" name="id_brand" required>
-                                <option></option>
-                                @foreach($brands as $brand)
-                                    <option value="{{$brand['id_brand']}}">{{$brand['name_brand']}}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
                                 Name
                                 <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama outlet" data-container="body"></i>

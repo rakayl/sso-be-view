@@ -3,7 +3,7 @@
         <title>{{env('TITLE', 'CRM System')}} | {{$title}}</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <meta content="Technopartner Indonesia - BEHAVE Loyalty Platform" name="description" />
+        <meta content="" name="description" />
         <meta content="" name="author" />
 		<!-- BEGIN PAGE FIRST SCRIPTS -->
         <script src="{{ env('STORAGE_URL_VIEW') }}{{ ('assets/global/plugins/pace/pace.min.js') }}" type="text/javascript"></script>

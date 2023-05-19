@@ -19,7 +19,7 @@
 @endsection
 
 @section('page-script')
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOHBNv3Td9_zb_7uW-AJDU6DHFYk-8e9Y&v=3.exp&signed_in=true&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{env('KEY_MAPS')}}&v=3.exp&signed_in=true&libraries=places"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
@@ -716,9 +716,6 @@
                 <li>
                     <a href="#visibility" data-toggle="tab"> Visibility Product</a>
                 </li>
-                <li>
-                    <a href="#doctors" data-toggle="tab"> Doctors</a>
-                </li>
             </ul>
         </div>
         <div class="portlet-body">
@@ -752,9 +749,6 @@
                 </div>
                 <div class="tab-pane" id="visibility">
                     @include('outlet::outlet_visibility')
-                </div>
-                <div class="tab-pane" id="doctors">
-                    @include('outlet::outlet_doctors')
                 </div>
             </div>
         </div>

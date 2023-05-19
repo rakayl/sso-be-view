@@ -44,8 +44,8 @@
 		</div>
 		<!-- END TOP NAVIGATION MENU -->
 	</div>
-	@if(config('app.env') != 'production')
+<!--	@if(config('app.env') != 'production')
 	<div style="position: fixed; top: 28px; background-color: {{config('app.env') == 'local' ? 'red' : 'gold'}}; right: -48px; width: 200px; height: 50px; transform: rotate(45deg); text-align: center; padding: 10px; color: white; font-size: 20px; font-weight: bold; opacity: .9">{{strtoupper(config('app.env'))}}</div>
-	@endif
+	@endif-->
 	<!-- END HEADER INNER -->
 </div>

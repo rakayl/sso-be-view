@@ -4,7 +4,7 @@
         <title>Behave | Print QRCode Outlet</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta content="width=device-width, initial-scale=1" name="viewport">
-        <meta content="Technopartner Indonesia - BEHAVE Loyalty Platform" name="description">
+        <meta content="" name="description">
         <meta content="" name="author">
 
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700&amp;subset=all" rel="stylesheet" type="text/css">

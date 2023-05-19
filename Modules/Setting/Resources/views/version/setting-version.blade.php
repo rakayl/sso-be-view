@@ -65,15 +65,6 @@
                     <li class="">
                         <a href="#tab_IOS" data-toggle="tab" aria-expanded="false"> IOS Setting </a>
                     </li>
-                    <li class="">
-                        <a href="#tab_Android_doctor" data-toggle="tab" aria-expanded="false"> Android Setting Doctor Apps</a>
-                    </li>
-                    <li class="">
-                        <a href="#tab_IOS_doctor" data-toggle="tab" aria-expanded="false"> IOS Setting Doctor Apps</a>
-                    </li>
-                    {{--<li class="">
-                        <a href="#tab_OutletApps" data-toggle="tab" aria-expanded="false"> Outlet Apps Setting </a>
-                    </li>--}}
                     <li class="dropdown">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"> Display Setting
                             <i class="fa fa-angle-down"></i>
@@ -82,12 +73,6 @@
                             <li>
                                 <a href="#tab_display_androidios" tabindex="-1" data-toggle="tab"> Android & IOS </a>
                             </li>
-                            <li>
-                                <a href="#tab_display_doctor_androidios" tabindex="-1" data-toggle="tab"> Doctor Android & IOS </a>
-                            </li>
-                           {{--<li>
-                                <a href="#tab_display_outletapps" tabindex="-1" data-toggle="tab"> Outlet Apps </a>
-                            </li>--}}
                         </ul>
                     </li>
                 </ul>

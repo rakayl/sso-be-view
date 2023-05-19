@@ -500,11 +500,6 @@
     });
 
 	$(".file-splash").change(function(e) {
-		var widthImg  = 1080;
-		var heightImg = 1920;
-		var widthImg2  = 540;
-		var heightImg2 = 960;
-
 		var _URL = window.URL || window.webkitURL;
 		var image, file;
 
@@ -512,7 +507,7 @@
 			image = new Image();
 
 			image.onload = function() {
-				if ((this.width == widthImg && this.height == heightImg)||(this.width == widthImg2 && this.height == heightImg2)) {
+				if ((this.width == this.height)) {
 					// image.src = _URL.createObjectURL(file);
 				}
 				else {
@@ -639,9 +634,9 @@
         <li class="active">
             <a href="#splash-screen" data-toggle="tab">Splash Screen</a>
         </li>
-		<li>
+<!--		<li>
             <a href="#doctor-splash-screen" data-toggle="tab">Doctor Splash Screen</a>
-        </li>
+        </li>-->
 		@if(MyHelper::hasAccess([144], $grantedFeature))
         <li>
             <a href="#banner" data-toggle="tab">Banner</a>
@@ -899,17 +894,17 @@
 								<div class="form-group col-md-12">
 										<label class="control-label col-md-4">Splash Screen
 											<br>
-											<span class="required" aria-required="true"> (1080*1920)/(540*960) </span>
+											<span class="required" aria-required="true"> (1:1) </span>
 										</label><br>
 										<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
-											<div class="fileinput-new thumbnail">
+											<div class="fileinput-preview fileinput-new thumbnail">
 												@if(isset($default_home['default_home_splash_screen']))
-													<img src="{{ env('STORAGE_URL_API')}}{{$default_home['default_home_splash_screen']}}?updated_at={{time()}}" alt="">
+													<img src="{{ env('STORAGE_URL_API')}}{{$default_home['default_home_splash_screen']}}?updated_at={{time()}}" style="max-width: 250px; max-height: 250px;" alt="">
 												@else
 													<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 												@endif
 											</div>
-											<div class="fileinput-preview fileinput-exists thumbnail" id="div_splash" style="max-width: 500px; max-height: 250px;"></div>
+											<div class="fileinput-preview fileinput-exists thumbnail" id="div_splash" style="max-width: 250px; max-height: 250px;"></div>
 											<div>
 												<span class="btn default btn-file">
 												<span class="fileinput-new"> Select image </span>
@@ -962,7 +957,7 @@
 										<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 											<div class="fileinput-new thumbnail">
 												@if(isset($default_home_doctor['default_home_doctor_splash_screen']))
-													<img src="{{ env('STORAGE_URL_API')}}{{$default_home['default_home_doctor_splash_screen']}}?updated_at={{time()}}" alt="">
+													<img src="{{ env('STORAGE_URL_API')}}{{$default_home['default_home_doctor_splash_screen']}}?updated_at={{time()}}" style="width: 250px; height: 250px;" alt="">
 												@else
 													<img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
 												@endif
@@ -1389,27 +1384,15 @@
 							<select class="select2 form-control" name="click_to" id="create_click_to">
 								<option value="none">None</option>
 								<option value="home">Home</option>
-								<option value="membership">Membership</option>
-								<option value="point_history">Point History</option>
 								<option value="store">Store</option>
-								<option value="consultation">Consultation</option>
-								<option value="elearning">E-learning</option>
 								<option value="product_recomendation_list">Product Recomendation List</option>
-								<option value="doctor_recommendation_list">Doctor Recomendation List</option>
 								<option value="merchant_detail">Merchant Detail</option>
 								<option value="product_detail">Product Detail</option>
 								<option value="notification_notification">Notification</option>
 								<option value="notification_promo">Notification Promo</option>
-								<option value="history_order">History Order</option>
-								<option value="history_consultation">History Consultation</option>
-								<option value="doctor_detail">Doctor Detail</option>
 								<option value="wishlist">Wishlist</option>
 								<option value="privacy_policy">Privacy Policy</option>
 								<option value="faq">FAQ</option>
-								<option value="enquires">Enquires</option>
-								<option value="featured_promo_home">Featured Promo Home</option>
-								<option value="featured_promo_merchant">Featured Promo Merchant</option>
-								<option value="promo_detail">Promo Detail</option>
 								<option value="url">URL</option>
 							</select>
                         </div>

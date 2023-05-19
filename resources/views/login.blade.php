@@ -10,7 +10,7 @@
         <meta content="{{env('TITLE', 'CRM System')}} Admin Portal" name="description" />
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-		<meta property="og:description" content="Technopartner Indonesia - BEHAVE Loyalty Platform" />
+		<meta property="og:description" content="" />
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content="{{env('TITLE', 'Behave')}}" />
 		<meta property="og:image" content="{{env('STORAGE_URL_VIEW') }}{{ ('images/logo.png')}}" />
@@ -95,13 +95,7 @@
             <!-- END LOGIN FORM -->
 
         </div>
-        <div class="copyright" style="color: #000"> Copyright © 2022 Technopartner Indonesia</div>
-        <!--[if lt IE 9]>
-<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/respond.min.js')}}"></script>
-<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/excanvas.min.js')}}"></script>
-<script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/ie8.fix.min.js')}}"></script>
-<![endif]-->
-        <!-- BEGIN CORE PLUGINS -->
+        
         <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/jquery.min.js')}}" type="text/javascript"></script>
         <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap/js/bootstrap.min.js')}}" type="text/javascript"></script>
         <!-- END CORE PLUGINS -->

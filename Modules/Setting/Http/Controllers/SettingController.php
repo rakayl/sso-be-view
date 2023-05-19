@@ -981,10 +981,7 @@ class SettingController extends Controller
         $request           = MyHelper::post('merchant/list-setting', $mp);
         $data['merchants'] = $request['result'] ?? [];
 
-        //doctor detail
-        $dcp             = ['select' => ['id_doctor', 'doctor_name']];
-        $request         = MyHelper::post('doctor', $dcp);
-        $data['doctors'] = $request['result'] ?? [];
+        
 
         $data['default_home']        = parent::getData(MyHelper::get('setting/default_home'));
         $data['default_home_doctor'] = parent::getData(MyHelper::get('setting/default_home_doctor'));
@@ -993,6 +990,7 @@ class SettingController extends Controller
         $data['app_navbar']          = parent::getData(MyHelper::get('setting/app_navbar'));
         $data['inbox_max_days']      = parent::getData(MyHelper::post('setting', ['key' => 'inbox_max_days']))['value'] ?? 30;
         // dd($data);
+//        return $data;
         return view('setting::home', $data);
     }
 

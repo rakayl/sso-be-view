@@ -56,25 +56,6 @@
                 <input type="text" class="form-control" name="outlet_license_number" value="{{ $val['outlet_license_number'] }}" required placeholder="Outlet License Number">
             </div>
         </div>
-        @if(MyHelper::hasAccess([95], $configs))
-        <div class="form-group">
-            <div class="input-icon right">
-                <label class="col-md-3 control-label">
-                Brand
-                <span class="required" aria-required="true"> * </span>
-                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan brand yang tersedia dalam outlet ini" data-container="body"></i>
-                </label>
-            </div>
-            <div class="col-md-9">
-                <select class="select2 form-control" name="outlet_brands">
-                    <option></option>
-                    @foreach($brands as $brand)
-                    <option value="{{$brand['id_brand']}}" @if(in_array($brand['id_brand'],array_column($val['brands'],'id_brand'))) selected="selected" @endif>{{$brand['name_brand']}}</option>
-                    @endforeach
-                </select>
-            </div>
-        </div>
-        @endif
         <div class="form-group">
             <label class="col-md-3 control-label">Status
                 <span class="required" aria-required="true"> * </span>
@@ -225,18 +206,6 @@
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="input-icon right">
-                <label class="col-md-3 control-label">
-                    Referral Code
-                    <span class="required" aria-required="true"> * </span>
-                    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan kode referral outlet" maxlength="15" data-container="body"></i>
-                </label>
-            </div>
-            <div class="col-md-9">
-                <input type="text" class="form-control" name="outlet_referral_code" value="{{ $val['outlet_referral_code'] }}" required placeholder="Referral Code" required>
-            </div>
-        </div>
 
         <div class="form-group">
             <label class="col-md-3 control-label">

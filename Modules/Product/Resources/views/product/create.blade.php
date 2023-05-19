@@ -575,35 +575,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label class="col-md-3 control-label">Need Recipe
-                            <i class="fa fa-question-circle tooltips" data-original-title="Setting apakah produk memerlukan resep dari dokter" data-container="body"></i>
-                        </label>
-                        <div class="input-icon right">
-                            <div class="col-md-2">
-                                <div class="md-radio-inline">
-                                    <div class="md-radio">
-                                        <input type="radio" id="radio_recipe1" name="need_recipe_status" class="md-radiobtn req-type" value="1" required>
-                                        <label for="radio_recipe1">
-                                            <span></span>
-                                            <span class="check"></span>
-                                            <span class="box"></span> Need</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="md-radio-inline">
-                                    <div class="md-radio">
-                                        <input type="radio" id="radio_recipe2" name="need_recipe_status" class="md-radiobtn req-type" value="0" required checked>
-                                        <label for="radio_recipe2">
-                                            <span></span>
-                                            <span class="check"></span>
-                                            <span class="box"></span> No Need </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    
                     <div class="form-group">
                         <label class="col-md-3 control-label">Product Visible
                             <i class="fa fa-question-circle tooltips" data-original-title="Setting apakah produk akan ditampilkan di aplikasi" data-container="body"></i>

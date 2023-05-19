@@ -183,26 +183,26 @@
 								</select>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="input-icon right">
-							    <label class="col-md-3 control-label">
-							    Celebrate
-{{--							    <span class="required" aria-required="true"> * </span>--}}
-							    <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
-							    </label>
-							</div>
-							<div class="col-md-9">
-								<select name="celebrate" class="form-control input-sm select2" placeholder="Search Celebrate" data-placeholder="Choose Users Celebrate">
-									<option value="">Select...</option>
-									@if(isset($celebrate))
-										@foreach($celebrate as $row)
-											<option value="{{$row}}" @if(old('celebrate') == $row) selected @endif>{{$row}}</option>
-										@endforeach
-									@endif
-								</select>
-							</div>
-						</div>
-						<div class="form-group">
+    <!--						<div class="form-group">
+                                                            <div class="input-icon right">
+                                                                <label class="col-md-3 control-label">
+                                                                Celebrate
+    {{--							    <span class="required" aria-required="true"> * </span>--}}
+                                                                <i class="fa fa-question-circle tooltips" data-original-title="Kota domisili user" data-container="body"></i>
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-md-9">
+                                                                    <select name="celebrate" class="form-control input-sm select2" placeholder="Search Celebrate" data-placeholder="Choose Users Celebrate">
+                                                                            <option value="">Select...</option>
+                                                                            @if(isset($celebrate))
+                                                                                    @foreach($celebrate as $row)
+                                                                                            <option value="{{$row}}" @if(old('celebrate') == $row) selected @endif>{{$row}}</option>
+                                                                                    @endforeach
+                                                                            @endif
+                                                                    </select>
+                                                            </div>
+                                                    </div>-->
+<!--						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
 							    Work
@@ -220,7 +220,7 @@
 									@endif
 								</select>
 							</div>
-						</div>
+						</div>-->
 						<div class="form-group">
 							<div class="input-icon right">
 							    <label class="col-md-3 control-label">
@@ -281,8 +281,8 @@
 							</div>
 							<div class="col-md-9">
 								<select name="level" class="form-control input-sm select2">
-									<option value="Admin" @if(old('level') == 'Admin') selected @endif>Admin</option>
-									<option value="Customer" @if(old('level') == 'Admin' || empty(old('level'))) selected @endif>Customer</option>
+									<option value="Mitra" @if(old('level') == 'Mitra') selected @endif>Mitra</option>
+									<option value="Customer" @if(old('level') == 'Customer' || empty(old('level'))) selected @endif>Customer</option>
 								</select>
 							</div>
 						</div>
