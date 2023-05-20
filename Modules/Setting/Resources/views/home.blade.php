@@ -500,6 +500,10 @@
     });
 
 	$(".file-splash").change(function(e) {
+                var widthImg  = 1080;
+		var heightImg = 1920;
+                var widthImg2  = 540;
+		var heightImg2 = 960;
 		var _URL = window.URL || window.webkitURL;
 		var image, file;
 
@@ -507,7 +511,7 @@
 			image = new Image();
 
 			image.onload = function() {
-				if ((this.width == this.height)) {
+				if ((this.width == widthImg && this.height == heightImg)&&(this.width == widthImg2 && this.height == heightImg2)) {
 					// image.src = _URL.createObjectURL(file);
 				}
 				else {
@@ -894,7 +898,7 @@
 								<div class="form-group col-md-12">
 										<label class="control-label col-md-4">Splash Screen
 											<br>
-											<span class="required" aria-required="true"> (1:1) </span>
+											<span class="required" aria-required="true"> (1080*1920)/(540*960) </span>
 										</label><br>
 										<div class="fileinput fileinput-new col-md-4" data-provides="fileinput">
 											<div class="fileinput-preview fileinput-new thumbnail">
