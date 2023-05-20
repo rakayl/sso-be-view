@@ -290,6 +290,7 @@ $configs     		= session('configs');
 								<th scope="col"> Actions </th>
 								<th scope="col"> Name </th>
 								<th scope="col"> Phone </th>
+								<th scope="col"> Level </th>
 								<th scope="col"> Device </th>
 								<th scope="col"> Email </th>
 								<th scope="col"> City </th>
@@ -338,6 +339,7 @@ $configs     		= session('configs');
 												</td>
 												<td> {!!str_replace(" ","&nbsp;", $data['name'])!!} </td>
 												<td> {{$data['phone']}} </td>
+												<td> {{$data['level']}} </td>
 												<td>
 													@if($data['android_device'] == "" && $data['ios_device'] == "") None @endif
 													@if($data['android_device'] != "" && $data['ios_device'] == "") Android @endif

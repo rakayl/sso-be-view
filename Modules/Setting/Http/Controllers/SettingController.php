@@ -1841,4 +1841,25 @@ class SettingController extends Controller
 
         return parent::redirect($result, 'Featured promo campaign has been deleted.', 'setting/home#featured_promo_campaign');
     }
+    public function settingGlobalCommissionSedotWc(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Setting Global Commission Sedot WC',
+            'menu_active'    => 'setting-global-comiisission-sedot',
+            'submenu_active'    => 'setting-global-comiisission-sedot',
+        ];
+        if($post){
+            $post['value'] = (int)str_replace(".","",$post['value']);
+            $query = MyHelper::post('setting/setting-global-commission-sedot-wc-create', $post);
+            if(($query['status']??'')=='success'){
+                return redirect('setting/setting-global-commission-sedot-wc')->with('success',['Success update data']);
+            }else{
+                return redirect('setting/setting-global-commission-sedot-wc')->withErrors([$query['message']]);
+            }
+        }else{
+            $query = MyHelper::get('setting/setting-global-commission-sedot-wc');
+            $data['result'] = $query;
+            return view('setting::setting_global_commission_sedot_wc', $data);
+        }
+    }
 }

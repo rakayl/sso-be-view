@@ -48,6 +48,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
 
     /*maintenance mode*/
     Route::any('maintenance-mode', 'SettingController@maintenanceMode');
+    /*global*/
+    Route::any('setting-global-commission-sedot-wc', 'SettingController@settingGlobalCommissionSedotWc');
 
     /*Setting Expired time OTP and Email*/
     Route::any('time-expired', 'SettingController@timeExpired');

@@ -33,6 +33,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'user', '
         Route::any('/delete/{phone}/{id_outlet}', ['middleware' => 'feature_control:4', 'uses' => 'UsersController@deleteAdminOutlet']);
     });
 
+    Route::any('/pemda/create', ['middleware' => 'feature_control:4', 'uses' => 'UsersController@createPemda']);
     Route::any('create', ['middleware' => 'feature_control:4', 'uses' => 'UsersController@create']);
     Route::any('export', ['middleware' => 'feature_control:2', 'uses' => 'UsersController@getExport']);
     Route::any('activity', ['middleware' => 'feature_control:6', 'uses' => 'UsersController@activity']);

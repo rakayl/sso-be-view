@@ -48,7 +48,7 @@
                                 function(){
                                     $.ajax({
                                         type : "POST",
-                                        url : "{{ url('merchant/candidate/delete') }}"+'/'+id,
+                                        url : "{{ url('tukang-sedot/candidate/delete') }}"+'/'+id,
                                         data : "_token="+token+"&id_merchant="+id,
                                         success : function(result) {
                                             if (result.status == "success") {
@@ -60,7 +60,7 @@
                                                     showConfirmButton: false
                                                 })
                                                 SweetAlert.init()
-                                                location.href = "{{url('merchant/candidate')}}";
+                                                location.href = "{{url('tukang-sedot/candidate')}}";
                                             }
                                             else if(result.status == "fail"){
                                                 swal("Error!", result.messages[0], "error")
@@ -163,7 +163,7 @@
                     <tr>
                         <td>
                             @if(MyHelper::hasAccess([324,326], $grantedFeature))
-                                <a class="btn btn-sm btn-info" href="{{ url('merchant/candidate/detail', $val['id_merchant']) }}"><i class="fa fa-search"></i></a>
+                                <a class="btn btn-sm btn-info" href="{{ url('tukang-sedot/candidate/detail', $val['id_merchant']) }}"><i class="fa fa-search"></i></a>
                             @endif
                             @if(MyHelper::hasAccess([327], $grantedFeature))
                                 <a class="btn btn-sm red sweetalert-delete btn-primary" data-id="{{ $val['id_merchant'] }}" data-name="{{ $val['outlet_name'] }}"><i class="fa fa-trash-o"></i></a>

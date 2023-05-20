@@ -214,22 +214,8 @@
 								<textarea type="text" name="address" placeholder="Input your address here..." class="form-control">{{old('address')}}</textarea>
 							</div>
 						</div>
-						<div class="form-group">
-							<div class="input-icon right">
-							    <label class="col-md-3 control-label">
-							    Level
-							    <span class="required" aria-required="true"> * </span>
-							    <i class="fa fa-question-circle tooltips" data-original-title="Hak akses yang diberikan ke user (admin/ customer)" data-container="body"></i>
-							    </label>
-							</div>
-							<div class="col-md-9">
-								<select name="level" class="form-control input-sm select2">
-									<option value="Tukang Sedot" @if(old('level') == 'Tukang Sedot') selected @endif>Tukang Sedot</option>
-									<option value="Kontraktor" @if(old('level') == 'Kontraktor' || empty(old('level'))) selected @endif>Kontraktor</option>
-								</select>
-							</div>
-						</div>
-					</div>
+                                            <input type="hidden" name="level" value="Admin" required>
+                                            </div>
 					<div class="form-actions" style="text-align:center;">
 						{{ csrf_field() }}
 						<button type="submit" class="btn blue" id="checkBtn">Create</button>

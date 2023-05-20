@@ -91,7 +91,10 @@ class Controller extends BaseController
                 if (isset($getConfig['status']) && $getConfig['status'] == 'success' && !empty($getConfig['result'])) {
                     $configs = $getConfig['result'];
                 }
-
+                if($userData['level'] != 'Super Admin'){
+                    session()->flush();
+                    return redirect('login')->withErrors(['You dont have access this system.']);
+                }
                 session([
                     'granted_features'  => $features,
                     'configs'           => $configs,

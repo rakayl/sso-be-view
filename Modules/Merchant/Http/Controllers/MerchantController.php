@@ -126,10 +126,10 @@ class MerchantController extends Controller
     public function create()
     {
         $data = [
-            'title'          => 'Merchant',
-            'sub_title'      => 'New Merchant',
-            'menu_active'    => 'merchant',
-            'submenu_active' => 'merchant-new'
+            'title'          => 'Tukang Sedot',
+            'sub_title'      => 'New Tukang Sedot',
+            'menu_active'    => 'Tukang Sedot',
+            'submenu_active' => 'tukang-sedot-new'
         ];
 
         $data['province'] = MyHelper::get('province/list')['result'] ?? [];
@@ -143,9 +143,9 @@ class MerchantController extends Controller
         $post = $request->all();
         $create = MyHelper::post('merchant/store', $post);
         if (isset($create['status']) && $create['status'] == "success") {
-            return redirect('merchant/candidate')->withSuccess(['Success save data']);
+            return redirect('tukang-sedot/candidate')->withSuccess(['Success save data']);
         } else {
-            return redirect('merchant/create')->withErrors($create['messages'] ?? ['Failed save data']);
+            return redirect('tukang-sedot/create')->withErrors($create['messages'] ?? ['Failed save data']);
         }
     }
 
@@ -154,10 +154,10 @@ class MerchantController extends Controller
         $post = $request->all();
 
         $data = [
-            'title'          => 'Merchant',
-            'sub_title'      => 'Merchant',
-            'menu_active'    => 'merchant',
-            'submenu_active' => 'merchant-list',
+            'title'          => 'Tukang Sedot',
+            'sub_title'      => 'Tukang Sedot List',
+            'menu_active'    => 'tukang-sedot',
+            'submenu_active' => 'tukang-sedot-list',
             'title_date_start' => 'Start',
             'title_date_end' => 'End',
             'type' => ''
@@ -218,7 +218,7 @@ class MerchantController extends Controller
             }
             return view('merchant::detail', $data);
         } else {
-            return redirect('merchant/candidate')->withErrors($save['messages'] ?? ['Failed get data']);
+            return redirect('tukang-sedot/candidate')->withErrors($save['messages'] ?? ['Failed get data']);
         }
     }
 
@@ -230,9 +230,9 @@ class MerchantController extends Controller
         $update = MyHelper::post('merchant/update', $post);
 
         if (isset($update['status']) && $update['status'] == "success") {
-            return redirect('merchant/detail/' . $id)->withSuccess(['Success save data']);
+            return redirect('tukang-sedot/detail/' . $id)->withSuccess(['Success save data']);
         } else {
-            return redirect('merchant/detail/' . $id)->withErrors($update['messages'] ?? ['Failed get data']);
+            return redirect('tukang-sedot/detail/' . $id)->withErrors($update['messages'] ?? ['Failed get data']);
         }
     }
 
@@ -241,10 +241,10 @@ class MerchantController extends Controller
         $post = $request->all();
 
         $data = [
-            'title'          => 'Merchant',
-            'sub_title'      => 'Merchant Candidate',
-            'menu_active'    => 'merchant',
-            'submenu_active' => 'merchant-candidate',
+            'title'          => 'Tukang Sedot',
+            'sub_title'      => 'Tukang Sedot Candidate',
+            'menu_active'    => 'tukang-sedot',
+            'submenu_active' => 'tukang-sedot-candidate',
             'title_date_start' => 'Start',
             'title_date_end' => 'End',
             'type' => 'candidate'
@@ -292,12 +292,12 @@ class MerchantController extends Controller
 
         if (isset($detail['status']) && $detail['status'] == "success") {
             if ($post['action_type'] == 'approve') {
-                return redirect('merchant/detail/' . $id)->withSuccess(['Success save data']);
+                return redirect('tukang-sedot/detail/' . $id)->withSuccess(['Success save data']);
             } else {
-                return redirect('merchant/candidate/detail/' . $id)->withSuccess(['Success save data']);
+                return redirect('tukang-sedot/candidate/detail/' . $id)->withSuccess(['Success save data']);
             }
         } else {
-            return redirect('merchant/candidate/detail/' . $id)->withErrors($detail['messages'] ?? ['Failed get data']);
+            return redirect('tukang-sedot/candidate/detail/' . $id)->withErrors($detail['messages'] ?? ['Failed get data']);
         }
     }
 
@@ -361,9 +361,9 @@ class MerchantController extends Controller
         $update = MyHelper::post('merchant/withdrawal/completed', $post);
 
         if (isset($update['status']) && $update['status'] == "success") {
-            return redirect('merchant/withdrawal')->withSuccess(['Success change status to completed']);
+            return redirect('tukang-sedot/withdrawal')->withSuccess(['Success change status to completed']);
         } else {
-            return redirect('merchant/withdrawal')->withErrors($update['messages'] ?? ['Failed change status']);
+            return redirect('tukang-sedot/withdrawal')->withErrors($update['messages'] ?? ['Failed change status']);
         }
     }
 
@@ -375,9 +375,9 @@ class MerchantController extends Controller
         $update = MyHelper::post('merchant/update-grading', $post);
 
         if (isset($update['status']) && $update['status'] == "success") {
-            return redirect('merchant/detail/' . $id . '#merchant_grading')->withSuccess(['Success save data']);
+            return redirect('tukang-sedot/detail/' . $id . '#merchant_grading')->withSuccess(['Success save data']);
         } else {
-            return redirect('merchant/detail/' . $id . '#merchant_grading')->withErrors($update['messages'] ?? ['Failed get data']);
+            return redirect('tukang-sedot/detail/' . $id . '#merchant_grading')->withErrors($update['messages'] ?? ['Failed get data']);
         }
     }
 }

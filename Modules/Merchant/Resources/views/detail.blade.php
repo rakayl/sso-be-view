@@ -181,9 +181,9 @@
     </div><br>
 
     @if($detail['merchant_status'] == 'Active' || $detail['merchant_status'] == 'Inactive')
-        <a href="{{url('merchant')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
+        <a href="{{url('tukang-sedot')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
     @else
-        <a href="{{url('merchant/candidate')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
+        <a href="{{url('tukang-sedot/candidate')}}" class="btn green" style="margin-bottom: 2%;"><i class="fa fa-arrow-left"></i> Back</a>
     @endif
 
     @include('layouts.notifications')
@@ -212,9 +212,9 @@
                     </div>
                     @endif
                     @if($detail['merchant_status'] == 'Active' || $detail['merchant_status'] == 'Inactive')
-                        <form class="form-horizontal" id="form_submit" role="form" action="{{url('merchant/update', $detail['id_merchant'])}}" method="post">
+                        <form class="form-horizontal" id="form_submit" role="form" action="{{url('tukang-sedot/update', $detail['id_merchant'])}}" method="post">
                     @else
-                        <form class="form-horizontal" id="form_submit" role="form" action="{{url('merchant/candidate/update', $detail['id_merchant'])}}" method="post">
+                        <form class="form-horizontal" id="form_submit" role="form" action="{{url('tukang-sedot/candidate/update', $detail['id_merchant'])}}" method="post">
                     @endif
                         <div class="form-body">
                             <div class="form-group">
@@ -388,7 +388,7 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="merchant_grading">
-                    <form class="form-horizontal" id="form_grading" role="form" action="{{url('merchant/grading', $detail['id_merchant'])}}" method="post">
+                    <form class="form-horizontal" id="form_grading" role="form" action="{{url('tukang-sedot/grading', $detail['id_merchant'])}}" method="post">
                         <div class="form-body">
                             <div class="form-group">
                                 <label for="example-search-input" class="control-label col-md-2">Reseller</label>

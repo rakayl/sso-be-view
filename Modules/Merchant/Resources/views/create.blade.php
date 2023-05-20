@@ -178,11 +178,11 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">New Merchant</span>
+                <span class="caption-subject font-blue sbold uppercase">New Tukang Sedot</span>
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal" role="form" action="{{ url('merchant/store') }}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" role="form" action="{{ url('tukang-sedot/store') }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-group">
                         <div class="input-icon right">
@@ -203,7 +203,9 @@
                             </select>
                         </div>
                     </div>
-
+                    
+                    <input type="hidden" name="outlet_type"  value="Tukang Sedot">
+                            
                     <br>
                     <h3 style="text-align: center">Data Outlet</h3>
                     <hr style="border-top: 2px dashed black;">

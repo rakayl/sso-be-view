@@ -203,7 +203,7 @@ class UsersController extends Controller
                       'submenu_active'    => 'user-new'
                     ];
 
-            $getCity = MyHelper::get('city/list');
+            $getCity = MyHelper::get('city/pemda');
 
             if ($getCity['status'] == 'success') {
                 $data['city'] = $getCity['result'];
@@ -211,38 +211,44 @@ class UsersController extends Controller
                 $data['city'] = null;
             }
 
-            $getProvince = MyHelper::get('province/list');
-            if ($getProvince['status'] == 'success') {
-                $data['province'] = $getProvince['result'];
-            } else {
-                $data['province'] = null;
-            }
-
-            $getOutlet = MyHelper::get('outlet/be/list');
-            if ($getOutlet['status'] == 'success') {
-                $data['outlets'] = $getOutlet['result'];
-            } else {
-                $data['outlets'] = null;
-            }
-
-            $getCelebrate = MyHelper::get('setting/be/celebrate_list');
-            if ($getCelebrate['status'] == 'success') {
-                $data['celebrate'] = $getCelebrate['result'];
-            } else {
-                $data['celebrate'] = null;
-            }
-
-//            $getJob = MyHelper::get('setting/be/jobs_list');
-//            if ($getJob['status'] == 'success') {
-//                $data['job'] = $getJob['result'];
-//            } else {
-//                $data['job'] = null;
-//            }
 
             return view('users::create', $data);
         }
     }
+    public function createPemda(Request $request)
+    {
+        $post = $request->except('_token');
+        if (isset($post) && !empty($post)) {
 
+            if (isset($post['id_card_image']) && !empty($post['id_card_image'])) {
+                $post['id_card_image'] = MyHelper::encodeImage($post['id_card_image']);
+            }
+
+            $query = MyHelper::post('users/create', $post);
+
+            if (isset($query['status']) && $query['status'] == 'success') {
+                return back()->withSuccess(['User Create Success']);
+            } else {
+                if (!empty($query['messages'][0])) {
+                    $query['messages'][0] = str_replace('pin', 'password', $query['messages'][0]);
+                }
+                return back()->withErrors($query['messages'])->withInput();
+            }
+        } else {
+            $data = [ 'title'             => 'New Pemda',
+                      'menu_active'       => 'pemda',
+                      'submenu_active'    => 'pemda-new'
+                    ];
+
+            $getCity = MyHelper::get('city/list/pemda');
+            if ($getCity['status'] == 'success') {
+                $data['city'] = $getCity['result'];
+            } else {
+                $data['city'] = null;
+            }
+            return view('users::create-pemda', $data);
+        }
+    }
     public function deleteAdminOutlet($phone, $id_outlet)
     {
         if (!empty($phone) && !empty($id_outlet)) {

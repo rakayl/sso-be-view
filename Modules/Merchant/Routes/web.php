@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant'], function () {
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'tukang-sedot'], function () {
     Route::get('setting/register-introduction', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterIntroduction']);
     Route::post('setting/register-introduction', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterIntroduction']);
     Route::get('setting/register-success', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterSuccess']);
@@ -21,6 +21,14 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant
     Route::get('setting/register-rejected', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterRejected']);
     Route::post('setting/register-rejected', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterRejected']);
 
+    //commission
+    Route::group(['prefix' => '/commission'], function () {
+        Route::any('/', 'CommissionController@listCommission');
+        Route::get('create', 'CommissionController@createCommission');
+        Route::post('store', 'CommissionController@storeCommission');
+        Route::get('detail/{id}', 'CommissionController@detailCommission');
+        Route::post('update/{id}', 'CommissionController@updateCommission');
+     });
     //merchant management
     Route::any('/', 'MerchantController@list');
     Route::get('create', 'MerchantController@create');
