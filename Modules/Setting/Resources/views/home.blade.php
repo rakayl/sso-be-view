@@ -625,49 +625,10 @@
 @include('layouts.notifications')
 <div class="tabbable-line">
 	<ul class="nav nav-tabs">
-	@if(MyHelper::hasAccess([30], $configs))
-		@if(MyHelper::hasAccess([31], $configs))
-        <li>
-            <a href="#greeting" data-toggle="tab">Greeting</a>
-        </li>
-		@endif
-<!--         <li>
-            <a href="#home-background" data-toggle="tab">Home Background</a>
-        </li> -->
-	@endif
         <li class="active">
             <a href="#splash-screen" data-toggle="tab">Splash Screen</a>
         </li>
-<!--		<li>
-            <a href="#doctor-splash-screen" data-toggle="tab">Doctor Splash Screen</a>
-        </li>-->
-		@if(MyHelper::hasAccess([144], $grantedFeature))
-        <li>
-            <a href="#banner" data-toggle="tab">Banner</a>
-        </li>
-		@endif
-        {{-- <li>
-            <a href="#featured_deals" data-toggle="tab">Featured Deals</a>
-        </li> --}}
-        <!-- <li>
-            <a href="#app-logo" data-toggle="tab">Application Logo</a>
-        </li> -->
-        <!-- <li>
-            <a href="#app-navigation" data-toggle="tab">App Navigation Text</a>
-        </li> -->
-        @if(MyHelper::hasAccess([241], $grantedFeature))
-        <li>
-            <a href="#featured_subscription" data-toggle="tab">Featured Subscription</a>
-        </li>
-		@endif
-		<li>
-			<a href="#featured_promo_campaign" data-toggle="tab">Featured Promo Campaign</a>
-		</li>
-        @if(MyHelper::hasAccess([246], $grantedFeature))
-        <li>
-            <a href="#user_inbox" data-toggle="tab">User Inbox</a>
-        </li>
-		@endif
+<!--	
     </ul>
 </div>
 
