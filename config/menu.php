@@ -169,7 +169,24 @@ return [
                         ],
                     ]
                 ],
-                
+                [
+                    'label' => 'Event',
+                    'icon' => 'fa fa-calendar',
+                    'type' => 'tree',
+                    'children' => [
+                        [
+                            'label' => 'New Event',
+                            'active' => '\View::shared("submenu_active") == "event-new"',
+                            'url' => 'event/create',
+                        ],
+                       
+                        [
+                            'label' => 'Event List',
+                            'active' => '\View::shared("submenu_active") == "event-list"',
+                            'url' => 'event',
+                        ],
+                    ]
+                ],
             ],
         ],
         [

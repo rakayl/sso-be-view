@@ -46,17 +46,11 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'tukang-s
     Route::post('withdrawal', 'MerchantController@withdrawalList');
     Route::post('withdrawal/completed', 'MerchantController@withdrawalCompleted');
 
-     //reseller
-     Route::group(['prefix' => '/reseller'], function () {
-            Route::group(['prefix' => 'candidate/'], function () {
-                Route::any('', 'ResellerController@candidate');
-                Route::get('detail/{id}', 'ResellerController@candidateDetail');
-                Route::post('update/{id}', 'ResellerController@candidateUpdate');
-            });
-            Route::any('', 'ResellerController@index');
-            Route::get('detail/{id}', 'ResellerController@detail');
-            Route::post('update/{id}', 'ResellerController@update');
-            Route::post('active', 'ResellerController@active');
-            Route::post('inactive', 'ResellerController@inactive');
-     });
+});
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'event'], function () {
+    Route::any('/', 'EventController@list');
+    Route::get('create', 'EventController@create');
+    Route::post('store', 'EventController@store');
+    Route::get('detail/{id}', 'EventController@detail');
+    Route::post('update/{id}', 'EventController@update');
 });
