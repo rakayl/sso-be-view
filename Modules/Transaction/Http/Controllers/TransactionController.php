@@ -1341,7 +1341,7 @@ class TransactionController extends Controller
             Session::put('filter-transaction-list', $post);
         }
 
-
+        
         return view('transaction::transactionList', $data);
     }
 
@@ -1354,10 +1354,12 @@ class TransactionController extends Controller
             'submenu_active' => 'transaction'
         ];
 
-        $check = MyHelper::post('transaction/be/detail', ['id_transaction' => $id, 'admin' => 1]);
-
+        $check = MyHelper::post('transaction/be/detail', ['id_transaction' => $id]);
+        
         if (isset($check['status']) && $check['status'] == "success") {
             $data['detail'] = $check['result'];
+            $city = $check['result']['trasaction_sedot_wc']['id_city']??null;
+            $data['outlet'] = MyHelper::post('transaction/be/outlet/sedot', ['id_city' => $city])['result']??array();
             return view('transaction::transactionDetail3', $data);
         } else {
             return redirect('transaction')->withErrors(['Failed get detail transaction']);
@@ -2172,4 +2174,26 @@ class TransactionController extends Controller
         }
     }
     /*================ End Setting Delivery ================*/
+    
+    
+    public function step1(Request $request, $id){
+        $post = $request->except('_token');
+        $post['id'] = $id;
+        $post['step_number'] = 1;
+        $update = MyHelper::post('transaction/be/update/step',$post);
+        if(isset($update['status']) && $update['status'] == 'success'){
+            return redirect()->back()->withSuccess(['Success update data to '.$post['update_type']??""]);
+        }else{
+            return redirect()->back()->withErrors($update['messages']??['Failed update data to approved']);
+        }
+    }
+    public function step(Request $request){
+        $post = $request->except('_token');
+        $update = MyHelper::post('transaction/be/update/step',$post);
+        if(isset($update['status']) && $update['status'] == 'success'){
+            return redirect()->back()->withSuccess(['Success update data']);
+        }else{
+            return redirect()->back()->withErrors($update['messages']??['Failed update data to approved']);
+        }
+    }
 }
