@@ -88,7 +88,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::get('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
     Route::post('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
     Route::get('detail/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDetail']);
-
+    Route::post('detail/step1/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@step1']);
+    Route::post('detail/step', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@step']);
+    
     Route::group(['prefix' => 'log-invalid-flag'], function () {
         Route::any('list', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@listLogInvalidFlag']);
         Route::any('detail', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@detailLogInvalidFlag']);
