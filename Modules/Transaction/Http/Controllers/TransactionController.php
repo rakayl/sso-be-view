@@ -2182,7 +2182,7 @@ class TransactionController extends Controller
         $post['step_number'] = 1;
         $update = MyHelper::post('transaction/be/update/step',$post);
         if(isset($update['status']) && $update['status'] == 'success'){
-            return redirect()->back()->withSuccess(['Success update data to '.$post['update_type']??""]);
+            return redirect()->back()->withSuccess(['Success update data']);
         }else{
             return redirect()->back()->withErrors($update['messages']??['Failed update data to approved']);
         }
