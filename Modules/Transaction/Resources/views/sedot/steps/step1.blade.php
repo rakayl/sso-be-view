@@ -1,3 +1,4 @@
+@if(isset($detail['step']['step1']))
 <div style="margin-top: -4%">
 	<form class="form-horizontal" id="form_interview" role="form" action="{{url('transaction/detail/step1/'.$detail['step']['step1']['id'])}}" method="post" enctype="multipart/form-data">
 		<div class="form-body">
@@ -36,3 +37,4 @@
 		@endif
 </form>
 </div>
+@endif

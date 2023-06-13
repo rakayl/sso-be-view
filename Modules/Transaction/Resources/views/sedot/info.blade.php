@@ -57,15 +57,15 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">Name</div>
-                                <div class="col-md-7"><b>: {{$detail['user']['name']}}</b></div>
+                                <div class="col-md-7"><b>: {{$detail['user']['name']??null}}</b></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">Email</div>
-                                <div class="col-md-7"><b>: {{$detail['user']['email']}} </b></div>
+                                <div class="col-md-7"><b>: {{$detail['user']['email']??null}} </b></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">phone</div>
-                                <div class="col-md-7"><b>: {{$detail['user']['phone']}}</b></div>
+                                <div class="col-md-7"><b>: {{$detail['user']['phone']??null}}</b></div>
                             </div>
                             <br>
                             <br>
@@ -77,11 +77,11 @@
                             </div>
                             <div class="row">
                                 <div class="col-md-4">Adress Name</div>
-                                <div class="col-md-7"><b>: {{$detail['address']['destination_name']}}</b></div>
+                                <div class="col-md-7"><b>: {{$detail['address']['destination_name']??null}}</b></div>
                             </div>
                             <div class="row">
                                 <div class="col-md-4">Address</div>
-                                <div class="col-md-7"><b>: {{$detail['address']['destination_address']}} ({{$detail['address']['destination_city']}} - {{$detail['address']['destination_province']}}</b></div>
+                                <div class="col-md-7"><b>: {{$detail['address']['destination_address']??null}} ({{$detail['address']['destination_city']??null}} - {{$detail['address']['destination_province']??null}})</b></div>
                             </div>
                         </div>
                     </div>
