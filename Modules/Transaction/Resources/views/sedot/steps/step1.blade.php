@@ -29,7 +29,7 @@
                         @endif
 			
 		</div>
-		@if($detail['transaction_status_code']==4&&$detail['step_number']==1)
+		@if($detail['transaction_status_code']==3&&$detail['step_number']==1)
 		<div class="row" style="text-align: center">
 			{{ csrf_field() }}
 			<button type='submit' class="btn blue">Submit</button>
