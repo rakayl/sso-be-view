@@ -31,6 +31,11 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
     <script>
+        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        $('.datetimepicker').datetimepicker({ 
+            format: 'dd M yyyy H:i',
+            minDate: today
+        });
         $('.onlynumber').keypress(function (e) {
             var regex = new RegExp("^[0-9]");
             var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
@@ -50,7 +55,21 @@
             e.preventDefault();
             return false;
         });
+        $(".file-splash").change(function(e) {
+                var widthImg  = 1080;
+		var heightImg = 1920;
+                var widthImg2  = 540;
+		var heightImg2 = 960;
+		var _URL = window.URL || window.webkitURL;
+		var image, file;
 
+		if ((file = this.files[0])) {
+			image = new Image();
+
+			image.src = _URL.createObjectURL(file);
+		}
+
+	});
         $('#province').change(function() {
             $('#city').empty();
             $('#city').prop('disabled', true);
@@ -227,8 +246,8 @@
                                 </label>
                             </div>
                             <div class="col-md-8">
-                                    <div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-                                            <input type="text" class="form-control date-picker" name="date" placeholder="Date Event" required>
+                                    <div class="input-group date margin-bottom-5">
+                                            <input type="text" class="form-control datetimepicker" autocomplete="off" name="date" placeholder="Date Event" required>
                                             <span class="input-group-btn">
                                                     <button class="btn btn-sm default" type="button">
                                                             <i class="fa fa-calendar"></i>
@@ -324,6 +343,33 @@
                         </div>
                         <div class="col-md-8">
                             <textarea name="address" class="form-control" placeholder="Event Address" required></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                                Image
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Foto event" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="fileinput fileinput-new col-md-8" data-provides="fileinput">
+                                <div class="fileinput-preview fileinput-new thumbnail">
+                                        @if(isset($default_home['default_home_splash_screen']))
+                                                <img src="{{ env('STORAGE_URL_API')}}{{$default_home['default_home_splash_screen']}}?updated_at={{time()}}" style="max-width: 250px; max-height: 250px;" alt="">
+                                        @else
+                                                <img src="https://www.placehold.it/200x100/EFEFEF/AAAAAA&amp;text=no+image" alt="">
+                                        @endif
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" id="div_splash" style="max-width: 250px; max-height: 250px;"></div>
+                                <div>
+                                        <span class="btn default btn-file">
+                                        <span class="fileinput-new"> Select image </span>
+                                        <span class="fileinput-exists"> Change </span>
+                                        <input type="file" class="file-splash" id="field_splash" accept="image/*" name="image_event">
+                                        </span>
+                                        <a href="javascript:;" id="removeSplash" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                </div>
                         </div>
                     </div>
                 </div>

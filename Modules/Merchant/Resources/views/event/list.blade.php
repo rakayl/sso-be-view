@@ -26,6 +26,7 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-sweetalert/sweetalert.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/form-repeater.js') }}" type="text/javascript"></script>
+
 @endsection
 
 @extends('layouts.main')
@@ -106,6 +107,7 @@
                     <tr>
                         <td>
                             <a class="btn btn-sm btn-info" href="{{ url('event/detail', $val['id_event']) }}"><i class="fa fa-search"></i></a>
+                            <a class="btn btn-sm btn-danger" href="{{ url('event/delete',$val['id_event']) }}"><i class="fa fa-trash"></i></a>
                         </td>
                         <td>{{ $val['title'] }}</td>
                         <td>{{ date('d M Y',strtotime($val['date'])) }}</td>

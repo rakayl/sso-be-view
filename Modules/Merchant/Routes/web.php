@@ -52,5 +52,6 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'event'],
     Route::get('create', 'EventController@create');
     Route::post('store', 'EventController@store');
     Route::get('detail/{id}', 'EventController@detail');
+    Route::get('delete/{id}', 'EventController@delete');
     Route::post('update/{id}', 'EventController@update');
 });

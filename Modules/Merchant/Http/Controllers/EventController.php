@@ -28,8 +28,11 @@ class EventController extends Controller
         $post = $request->except('_token');
         $idSubdis = explode("|", $post['id_subdistrict']);
         $post['id_subdistrict'] = $idSubdis[0] ?? null;
-        $post['date'] = date('Y-m-d', strtotime($post['date']));
+        $post['date'] = date('Y-m-d H:i:s', strtotime($post['date']));
         $post['created_by'] = Session::get('id_user');
+         if (isset($post['image_event'])) {
+            $post['image_event'] = MyHelper::encodeImage($post['image_event']);
+        }
         $create = MyHelper::post('event/store', $post);
         if (isset($create['status']) && $create['status'] == "success") {
             return redirect('event')->withSuccess(['Success save data']);
@@ -103,6 +106,15 @@ class EventController extends Controller
             return view('merchant::event.detail', $data);
         } else {
             return redirect('event')->withErrors($save['messages'] ?? ['Failed get data']);
+        }
+    }
+    public function delete($id)
+    {
+        $detail = MyHelper::post('event/delete', ['id_event' => $id]);
+        if (isset($update['status']) && $update['status'] == "success") {
+            return redirect('event')->withSuccess(['Success delete data']);
+        } else {
+            return redirect('event')->withErrors($update['messages'] ?? ['Failed delete data']);
         }
     }
 

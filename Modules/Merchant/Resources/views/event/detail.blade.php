@@ -203,7 +203,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="title" value="{{$result['title']??null}}" required placeholder="Title">
+                            <input type="text" disabled class="form-control" disabled name="title" value="{{$result['title']??null}}" required placeholder="Title">
                         </div>
                     </div>
                     <div class="form-group">
@@ -215,7 +215,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <textarea name="deskripsi" class="form-control" placeholder="Deskripsi event" required>{{$result['deskripsi']??null}}</textarea>
+                            <textarea name="deskripsi" disabled class="form-control" disabled placeholder="Deskripsi event" required>{{$result['deskripsi']??null}}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -228,7 +228,7 @@
                             </div>
                             <div class="col-md-8">
                                     <div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-                                            <input type="text" value="{{date('d/m/Y',strtotime($result['date']))}}" class="form-control date-picker" name="date" placeholder="Date Event" required>
+                                            <input type="text" disabled value="{{date('d/m/Y',strtotime($result['date']))}}" class="form-control date-picker" name="date" placeholder="Date Event" required>
                                             <span class="input-group-btn">
                                                     <button class="btn btn-sm default" type="button">
                                                             <i class="fa fa-calendar"></i>
@@ -246,11 +246,11 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <select id="province" name="id_province" class="form-control select2-multiple" data-placeholder="Select Province" required>
+                            <select id="province" name="id_province" disabled class="form-control select2-multiple" data-placeholder="Select Province" required>
                                 <option></option>
                                 @if (!empty($province))
                                     @foreach($province as $suw)
-                                        <option value="{{ $suw['id_province'] }}" @if($result['id_province']==$suw['id_province']) selected @endif>{{ $suw['province_name'] }}</option>
+                                        <option value="{{ $suw['id_province'] }}" disabled @if($result['id_province']==$suw['id_province']) selected @endif>{{ $suw['province_name'] }}</option>
                                     @endforeach
                                 @endif
                             </select>
@@ -266,9 +266,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <select id="city" name="id_city" class="form-control select2-multiple" data-placeholder="Select City" disabled required>
-                                <option></option>
-                            </select>
+                            <input type="text" disabled class="form-control" disabled name="title" value="{{$result['city_name']??null}}" required placeholder="Title">
                         </div>
                     </div>
 
@@ -281,9 +279,8 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <select id="district" name="id_district" class="form-control select2-multiple" data-placeholder="Select Disctrict" disabled required>
-                                <option></option>
-                            </select>
+                            <input type="text" disabled class="form-control" disabled name="title" value="{{$result['disctrict_name']??null}}" required placeholder="Title">
+                        
                         </div>
                     </div>
 
@@ -296,9 +293,8 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <select id="subdistrict" name="id_subdistrict" class="form-control select2-multiple" data-placeholder="Select Subdisctrict" disabled required>
-                                <option></option>
-                            </select>
+                            <input type="text" disabled class="form-control" disabled name="title" value="{{$result['subdisctrict_name']??null}}" required placeholder="Title">
+                        
                         </div>
                     </div>
 
@@ -310,7 +306,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="postal_code" name="postal_code" required placeholder="Postal Code" readonly>
+                            <input type="text" class="form-control" id="postal_code" name="postal_code" disabled value="{{$result['postal_code']??null}}" required placeholder="Postal Code" readonly>
                         </div>
                     </div>
 
@@ -323,17 +319,35 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <textarea name="address" class="form-control" placeholder="Event Address" required></textarea>
+                            <textarea name="address" disabled class="form-control" placeholder="Event Address" required>{{$result['address']??null}} </textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
+                                Image
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Foto event" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="fileinput fileinput-new col-md-8" data-provides="fileinput">
+                                <div class="fileinput-preview fileinput-new thumbnail">
+                                        @if(isset($result['image_event']))
+                                                <img src="{{$result['image_event']}}" style="max-width: 250px; max-height: 250px;" alt="">
+                                        @else
+                                                No Pictures
+                                        @endif
+                                </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}
-                    <div class="row">
+<!--                    <div class="row">
                         <div class="col-md-offset-3 col-md-9">
                             <button type="submit" class="btn green">Submit</button>
                         </div>
-                    </div>
+                    </div>-->
                 </div>
             </form>
         </div>
