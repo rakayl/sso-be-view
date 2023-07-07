@@ -1845,8 +1845,8 @@ class SettingController extends Controller
         $post = $request->except('_token');
         $data = [
             'title'          => 'Setting Global Commission Sedot WC',
-            'menu_active'    => 'setting-global-comiisission-sedot',
-            'submenu_active'    => 'setting-global-comiisission-sedot',
+            'menu_active'    => 'setting-global-commisission-sedot',
+            'submenu_active'    => 'setting-global-commisission-sedot',
         ];
         if($post){
             $post['value'] = (int)str_replace(".","",$post['value']);
@@ -1860,6 +1860,47 @@ class SettingController extends Controller
             $query = MyHelper::get('setting/setting-global-commission-sedot-wc');
             $data['result'] = $query;
             return view('setting::setting_global_commission_sedot_wc', $data);
+        }
+    }
+    public function settingGlobalCommissionSurvey(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Setting Global Commission Survey',
+            'menu_active'    => 'setting-global-commisission-survey',
+            'submenu_active'    => 'setting-global-commisission-survey',
+        ];
+        if($post){
+            $post['value'] = (int)str_replace(".","",$post['value']);
+            $query = MyHelper::post('setting/setting-global-commission-survey-create', $post);
+            if(($query['status']??'')=='success'){
+                return redirect('setting/setting-global-commission-survey')->with('success',['Success update data']);
+            }else{
+                return redirect('setting/setting-global-commission-survey')->withErrors([$query['message']]);
+            }
+        }else{
+            $query = MyHelper::get('setting/setting-global-commission-survey');
+            $data['result'] = $query;
+            return view('setting::setting_global_commission_survey', $data);
+        }
+    }
+    public function settingJangkaWaktu(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Setting Jangka Waktu Sedot Rutin',
+            'menu_active'    => 'setting-jangka-waktu',
+            'submenu_active'    => 'setting-jangka-waktu',
+        ];
+        if($post){
+            $query = MyHelper::post('setting/sedot-rutin-jangka-waktu-create', $post);
+            if(($query['status']??'')=='success'){
+                return redirect('setting/sedot-rutin-jangka-waktu')->with('success',['Success update data']);
+            }else{
+                return redirect('setting/sedot-rutin-jangka-waktu')->withErrors([$query['message']]);
+            }
+        }else{
+            $query = MyHelper::get('setting/sedot-rutin-jangka-waktu');
+            $data['result'] = $query;
+            return view('setting::sedot-rutin-jangka-waktu', $data);
         }
     }
 }

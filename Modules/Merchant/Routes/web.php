@@ -11,7 +11,7 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'tukang-sedot'], function () {
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'merchant'], function () {
     Route::get('setting/register-introduction', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterIntroduction']);
     Route::post('setting/register-introduction', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterIntroduction']);
     Route::get('setting/register-success', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterSuccess']);
@@ -21,6 +21,15 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'tukang-s
     Route::get('setting/register-rejected', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterRejected']);
     Route::post('setting/register-rejected', ['middleware' => 'feature_control:326', 'uses' => 'MerchantController@settingRegisterRejected']);
 
+
+    //withdrawl
+    Route::get('withdrawal', 'MerchantController@withdrawalList');
+    Route::post('withdrawal', 'MerchantController@withdrawalList');
+    Route::post('withdrawal/completed', 'MerchantController@withdrawalCompleted');
+
+});
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'tukang-sedot'], function () {
+ 
     //commission
     Route::group(['prefix' => '/commission'], function () {
         Route::any('/', 'CommissionController@listCommission');
@@ -29,7 +38,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'tukang-s
         Route::get('detail/{id}', 'CommissionController@detailCommission');
         Route::post('update/{id}', 'CommissionController@updateCommission');
      });
-    //merchant management
+      //merchant management
     Route::any('/', 'MerchantController@list');
     Route::get('create', 'MerchantController@create');
     Route::post('store', 'MerchantController@store');
@@ -41,10 +50,27 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'tukang-s
     Route::post('candidate/update/{id}', 'MerchantController@candidateUpdate');
     Route::post('candidate/delete/{id}', 'MerchantController@candidateDelete');
 
-    //withdrawl
-    Route::get('withdrawal', 'MerchantController@withdrawalList');
-    Route::post('withdrawal', 'MerchantController@withdrawalList');
-    Route::post('withdrawal/completed', 'MerchantController@withdrawalCompleted');
+});
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'kontraktor'], function () {
+    //commission
+      //merchant management
+    Route::any('/', 'KontraktorController@list');
+    Route::get('create', 'KontraktorController@create');
+    Route::post('store', 'KontraktorController@store');
+    Route::get('detail/{id}', 'KontraktorController@detail');
+    Route::post('update/{id}', 'KontraktorController@update');
+    Route::post('grading/{id}', 'KontraktorController@updateGrading');
+    Route::any('candidate', 'KontraktorController@candidate');
+    Route::get('candidate/detail/{id}', 'KontraktorController@detail');
+    Route::post('candidate/update/{id}', 'KontraktorController@candidateUpdate');
+    Route::post('candidate/delete/{id}', 'KontraktorController@candidateDelete');
+    Route::group(['prefix' => '/commission'], function () {
+        Route::any('/', 'CommissionSurveyController@listCommission');
+        Route::get('create', 'CommissionSurveyController@createCommission');
+        Route::post('store', 'CommissionSurveyController@storeCommission');
+        Route::get('detail/{id}', 'CommissionSurveyController@detailCommission');
+        Route::post('update/{id}', 'CommissionSurveyController@updateCommission');
+     });
 
 });
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'event'], function () {

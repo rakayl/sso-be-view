@@ -66,40 +66,7 @@ return [
             'type' => 'group',
             'label' => 'Browse',
             'children' => [
-                [
-                    'label' => 'Tukang Sedot',
-                    'type' => 'tree',
-                    'icon' => 'fa fa-university',
-                    'required_features' => [323,324,325,326,327,348],
-                    'children' => [
-                        [
-                            'label' => 'New Tukang Sedot',
-                            'url' => 'tukang-sedot/create',
-                            'active' => '\View::shared("submenu_active") == "tukang-sedot-new"',
-                            'required_features' => [325],
-                        ],
-                        [
-                            'label' => 'Tukang Sedot List',
-                            'url' => 'tukang-sedot',
-                            'active' => '\View::shared("submenu_active") == "tukang-sedot-list"',
-                            'required_features' => [323,324,326,327],
-                        ],
-                        [
-                            'label' => 'Candidate List',
-                            'url' => 'tukang-sedot/candidate',
-                            'required_features' => [323,324,326,327],
-                            'active' => '\View::shared("submenu_active") == "tukang-sedot-candidate"',
-                            'badge' => [
-                                'type' => 'warning',
-                                'value' => 'tukang_sedot_register_pending',
-                            ]
-                        ],
-                    ],
-                    'badge' => [
-                        'type' => 'warning',
-                        'value' => 'tukang-sedot',
-                    ]
-                ],
+                
                 [
                     'label' => 'Outlet',
                     'icon' => 'icon-pointer',
@@ -129,28 +96,133 @@ return [
                     ]
                 ],
                 [
+                    'label' => 'Tukang Sedot',
+                    'type' => 'tree',
+                    'icon' => 'fa fa-university',
+                    'required_features' => [323,324,325,326,327,348],
+                    'children' => [
+                        [
+                            'label' => 'New Tukang Sedot',
+                            'url' => 'tukang-sedot/create',
+                            'active' => '\View::shared("submenu_active") == "tukang-sedot-new"',
+                            'required_features' => [325],
+                        ],
+                        [
+                            'label' => 'Tukang Sedot List',
+                            'url' => 'tukang-sedot',
+                            'active' => '\View::shared("submenu_active") == "tukang-sedot-list"',
+                            'required_features' => [323,324,326,327],
+                        ],
+                        [
+                            'label' => 'Candidate List',
+                            'url' => 'tukang-sedot/candidate',
+                            'required_features' => [323,324,326,327],
+                            'active' => '\View::shared("submenu_active") == "tukang-sedot-candidate"',
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'tukang_sedot_register_pending',
+                            ]
+                        ],
+                        
+                    ],
+                    'badge' => [
+                        'type' => 'warning',
+                        'value' => 'tukang-sedot',
+                    ]
+                ],
+                [
+                    'label' => 'Kontraktor',
+                    'type' => 'tree',
+                    'icon' => 'fa fa-home',
+                    'required_features' => [323,324,325,326,327,348],
+                    'children' => [
+                        [
+                            'label' => 'New Kontraktor',
+                            'url' => 'kontraktor/create',
+                            'active' => '\View::shared("submenu_active") == "kontraktor-new"',
+                            'required_features' => [325],
+                        ],
+                        [
+                            'label' => 'Kontraktor List',
+                            'url' => 'kontraktor',
+                            'active' => '\View::shared("submenu_active") == "kontraktor-list"',
+                            'required_features' => [323,324,326,327],
+                        ],
+                        [
+                            'label' => 'Candidate List',
+                            'url' => 'kontraktor/candidate',
+                            'required_features' => [323,324,326,327],
+                            'active' => '\View::shared("submenu_active") == "kontraktor-candidate"',
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'kontraktor_register_pending',
+                            ]
+                        ],
+                        
+                    ],
+                    'badge' => [
+                        'type' => 'warning',
+                        'value' => 'tukang-sedot',
+                    ]
+                ],
+                [
                     'label' => 'Commission Sedot WC',
                     'icon' => 'fa fa-money',
                     'type' => 'tree',
                     'children' => [
                         [
-                            'label' => 'New Commission',
+                            'label' => 'New Sedot WC',
                             'active' => '\View::shared("submenu_active") == "commission-sedot-wc-new"',
                             'url' => 'tukang-sedot/commission/create',
                         ],
                        
                         [
-                            'label' => 'Commission List',
+                            'label' => 'Sedot WC List',
                             'active' => '\View::shared("submenu_active") == "commission-sedot-wc-list"',
                             'url' => 'tukang-sedot/commission',
+                        ],
+                         [
+                            'label' => 'New Survey Kontraktor',
+                            'active' => '\View::shared("submenu_active") == "commission-survey-new"',
+                            'url' => 'kontraktor/commission/create',
+                        ],
+                       
+                        [
+                            'label' => 'List Survey Kontraktor',
+                            'active' => '\View::shared("submenu_active") == "commission-survey-list"',
+                            'url' => 'kontraktor/commission',
                         ],
                     ]
                 ],
                 [
-                    'label' => 'Setting Global Sedot WC',
-                    'active' => '\View::shared("menu_active") == "setting-global-comiisission-sedot"',
-                    'url' => 'setting/setting-global-commission-sedot-wc',
-                    'icon' => 'fa fa-cog'
+                    'label' => 'Global Commission',
+                    'icon' => 'fa fa-cog',
+                    'type' => 'tree',
+                    'children' => [
+                        [
+                            'label' => 'Sedot Wc',
+                            'active' => '\View::shared("submenu_active") == "setting-global-commisission-sedot"',
+                            'url' => 'setting/setting-global-commission-sedot-wc',
+                        ],
+                       
+                        [
+                            'label' => 'Survey Kontraktor',
+                            'active' => '\View::shared("submenu_active") == "setting-global-commisission-survey"',
+                            'url' => 'setting/setting-global-commission-survey',
+                        ],
+                    ]
+                ],
+                [
+                    'label' => 'Sedot Rutin',
+                    'icon' => 'icon-wrench',
+                    'type' => 'tree',
+                    'children' => [
+                        [
+                            'label' => 'Setting Waktu',
+                            'active' => '\View::shared("submenu_active") == "setting-jangka-waktu"',
+                            'url' => 'setting/sedot-rutin-jangka-waktu',
+                        ],
+                    ]
                 ],
                 [
                     'label' => 'User Rating',
@@ -245,12 +317,12 @@ return [
                             'active' => '\View::shared("submenu_active") == "setting-payment-method"',
                             'url' => 'transaction/setting/available-payment'
                         ],
-                        [
-                            'label' => 'Available Delivery',
-                            'required_features' => [320],
-                            'active' => '\View::shared("submenu_active") == "delivery-setting-available"',
-                            'url' => 'transaction/setting/available-delivery'
-                        ],
+//                        [
+//                            'label' => 'Available Delivery',
+//                            'required_features' => [320],
+//                            'active' => '\View::shared("submenu_active") == "delivery-setting-available"',
+//                            'url' => 'transaction/setting/available-delivery'
+//                        ],
                         [
                             'label' => 'Setting Refund Reject Order',
                             'required_features' => [250],
@@ -281,25 +353,31 @@ return [
                     'url' => 'version',
                     'icon' => 'fa fa-info-circle'
                 ],
+                
                 [
-                    'label' => 'Custom Page',
-                    'required_features' => [],
-                    'type' => 'tree',
-                    'children' => [
-                        [
-                            'label' => 'New Custom Page',
-                            'required_features' => [150],
-                            'url' => 'custom-page/create'
-                        ],
-                        [
-                            'label' => 'Custom Page List',
-                            'required_features' => [149,151,152,153],
-                            'active' => '\View::shared("submenu_active") == "custom-page-list"',
-                            'url' => 'custom-page'
-                        ],
-                    ],
-                    'icon' => 'icon-book-open'
+                    'label' => 'Volume Harian Perorang',
+                    'url' => 'setting/volume',
+                    'icon' => 'fa fa-fill-drip'
                 ],
+//                [;
+//                    'label' => 'Custom Page',
+//                    'required_features' => [],
+//                    'type' => 'tree',
+//                    'children' => [
+//                        [
+//                            'label' => 'New Custom Page',
+//                            'required_features' => [150],
+//                            'url' => 'custom-page/create'
+//                        ],
+//                        [
+//                            'label' => 'Custom Page List',
+//                            'required_features' => [149,151,152,153],
+//                            'active' => '\View::shared("submenu_active") == "custom-page-list"',
+//                            'url' => 'custom-page'
+//                        ],
+//                    ],
+//                    'icon' => 'icon-book-open'
+//                ],
                 [
                     'label' => 'Intro Apps',
                     'required_features' => [168],
@@ -313,12 +391,12 @@ return [
                     ],
                     'icon' => 'icon-screen-tablet'
                 ],
-                [
-                    'label' => 'Confirmation Messages',
-                    'required_features' => [162,163],
-                    'url' => 'setting/confirmation-messages',
-                    'icon' => 'icon-speech'
-                ],
+//                [
+//                    'label' => 'Confirmation Messages',
+//                    'required_features' => [162,163],
+//                    'url' => 'setting/confirmation-messages',
+//                    'icon' => 'icon-speech'
+//                ],
                 [
                     'label' => 'Maintenance Mode',
                     'required_features' => [220],

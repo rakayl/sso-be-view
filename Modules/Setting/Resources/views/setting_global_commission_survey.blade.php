@@ -115,12 +115,12 @@ $configs     		= session('configs');
 				</div>
 			</div>
 			<div class="portlet-body form">
-                            <form role="form" class="form-horizontal" action="{{url('setting/setting-global-commission-sedot-wc')}}" method="POST" enctype="multipart/form-data">
+                            <form role="form" class="form-horizontal" action="{{url('setting/setting-global-commission-survey')}}" method="POST" enctype="multipart/form-data">
                                     <div class="form-body">
                                             <div class="form-group">
                                                     <div class="input-icon right">
                                                             <label class="col-md-5 control-label">
-                                                                    Global Commission Sedot WC
+                                                                    Global Commission Survey Kontraktor
                                                                     <span class="required" aria-required="true"> * </span>
                                                                     <i class="fa fa-question-circle tooltips" data-original-title="Komisi atau tarif yang dikenakan. Ketika komisi pada kota tidak di tambahkan maka menggunakan komisi ini." data-container="body"></i>
                                                             </label>

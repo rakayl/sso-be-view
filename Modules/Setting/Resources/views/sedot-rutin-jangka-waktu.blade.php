@@ -111,24 +111,24 @@ $configs     		= session('configs');
 			<div class="portlet-title">
 				<div class="caption font-blue ">
 					<i class="icon-settings font-blue "></i>
-					<span class="caption-subject bold uppercase">This menu is used to set a global commission product</span>
+					<span class="caption-subject bold uppercase">This menu is used to set a Sedot Rutin</span>
 				</div>
 			</div>
 			<div class="portlet-body form">
-                            <form role="form" class="form-horizontal" action="{{url('setting/setting-global-commission-sedot-wc')}}" method="POST" enctype="multipart/form-data">
+                            <form role="form" class="form-horizontal" action="{{url('setting/sedot-rutin-jangka-waktu')}}" method="POST" enctype="multipart/form-data">
                                     <div class="form-body">
                                             <div class="form-group">
                                                     <div class="input-icon right">
                                                             <label class="col-md-5 control-label">
-                                                                    Global Commission Sedot WC
+                                                                    Jangka Waktu
                                                                     <span class="required" aria-required="true"> * </span>
-                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Komisi atau tarif yang dikenakan. Ketika komisi pada kota tidak di tambahkan maka menggunakan komisi ini." data-container="body"></i>
+                                                                    <i class="fa fa-question-circle tooltips" data-original-title="Jangka waktu dari sedot wc. Perhitungan sesuai dengan waktu terakhir transaksi sedot atau pendaftaran baru customer + hari dari setingan ini" data-container="body"></i>
                                                             </label>
                                                     </div>
                                                     <div class="col-md-3">
                                                             <div class="input-group">
-                                                                 <span class="input-group-addon">Rp</span>
-                                                                 <input class="form-control price" type="text" name="value" value="{{$result['value']??0}}" required>
+                                                                 <input class="form-control price" type="number" min="1" name="value" value="{{$result['value']??0}}" required>
+                                                                 <span class="input-group-addon">Days</span>
                                                             </div>
                                                     </div>
                                             </div>
