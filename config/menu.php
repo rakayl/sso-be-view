@@ -213,14 +213,19 @@ return [
                     ]
                 ],
                 [
-                    'label' => 'Sedot Rutin',
+                    'label' => 'Setting',
                     'icon' => 'icon-wrench',
                     'type' => 'tree',
                     'children' => [
                         [
-                            'label' => 'Setting Waktu',
+                            'label' => 'Setting Waktu Sedot Rutin',
                             'active' => '\View::shared("submenu_active") == "setting-jangka-waktu"',
                             'url' => 'setting/sedot-rutin-jangka-waktu',
+                        ],
+                        [
+                            'label' => 'Volume Harian Perorang',
+                            'active' => '\View::shared("submenu_active") == "setting-volume"',
+                            'url' => 'setting/volume',
                         ],
                     ]
                 ],
@@ -353,31 +358,12 @@ return [
                     'url' => 'version',
                     'icon' => 'fa fa-info-circle'
                 ],
-                
                 [
-                    'label' => 'Volume Harian Perorang',
-                    'url' => 'setting/volume',
-                    'icon' => 'fa fa-fill-drip'
+                    'label' => 'URL Playsotre',
+                    'active' => '\View::shared("menu_active") == "setting-url-app-rating"',
+                    'url' => 'setting/url-app-rating',
+                    'icon' => 'fa fa-play-circle'
                 ],
-//                [;
-//                    'label' => 'Custom Page',
-//                    'required_features' => [],
-//                    'type' => 'tree',
-//                    'children' => [
-//                        [
-//                            'label' => 'New Custom Page',
-//                            'required_features' => [150],
-//                            'url' => 'custom-page/create'
-//                        ],
-//                        [
-//                            'label' => 'Custom Page List',
-//                            'required_features' => [149,151,152,153],
-//                            'active' => '\View::shared("submenu_active") == "custom-page-list"',
-//                            'url' => 'custom-page'
-//                        ],
-//                    ],
-//                    'icon' => 'icon-book-open'
-//                ],
                 [
                     'label' => 'Intro Apps',
                     'required_features' => [168],
@@ -391,12 +377,6 @@ return [
                     ],
                     'icon' => 'icon-screen-tablet'
                 ],
-//                [
-//                    'label' => 'Confirmation Messages',
-//                    'required_features' => [162,163],
-//                    'url' => 'setting/confirmation-messages',
-//                    'icon' => 'icon-speech'
-//                ],
                 [
                     'label' => 'Maintenance Mode',
                     'required_features' => [220],

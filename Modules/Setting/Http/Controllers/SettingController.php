@@ -185,6 +185,54 @@ class SettingController extends Controller
             $subTitle = 'Kebijakan Privasi Doctor Apps';
             $label    = 'Kebijakan Privasi Doctor Apps';
             $span     = '';
+        }elseif (strtolower($key) == 'bca') {
+            $sub      = 'available-payment-bca';
+            $active   = 'available-payment-bca';
+            $subTitle = 'Step Payment VA Bank BCA';
+            $label    = 'Step Payment VA Bank BCA';
+            $span     = '';
+        }elseif (strtolower($key) == 'mandiri') {
+            $sub      = 'available-payment-mandiri';
+            $active   = 'available-payment-mandiri';
+            $subTitle = 'Step Payment VA Bank Mandiri';
+            $label    = 'Step Payment VA Bank Mandiri';
+            $span     = '';
+        }elseif (strtolower($key) == 'bni') {
+            $sub      = 'available-payment-bni';
+            $active   = 'available-payment-bni';
+            $subTitle = 'Step Payment VA Bank BNI';
+            $label    = 'Step Payment VA Bank BNI';
+            $span     = '';
+        }elseif (strtolower($key) == 'bri') {
+            $sub      = 'available-payment-bri';
+            $active   = 'available-payment-bri';
+            $subTitle = 'Step Payment VA Bank BRI';
+            $label    = 'Step Payment VA Bank BRI';
+            $span     = '';
+        }elseif (strtolower($key) == 'bjb') {
+            $sub      = 'available-payment-bjb';
+            $active   = 'available-payment-bjb';
+            $subTitle = 'Step Payment VA Bank BJB';
+            $label    = 'Step Payment VA Bank BJB';
+            $span     = '';
+        }elseif (strtolower($key) == 'bsi') {
+            $sub      = 'available-payment-bsi';
+            $active   = 'available-payment-bsi';
+            $subTitle = 'Step Payment VA Bank BSI';
+            $label    = 'Step Payment VA Bank BSI';
+            $span     = '';
+        }elseif (strtolower($key) == 'permata') {
+            $sub      = 'available-payment-permata';
+            $active   = 'available-payment-permata';
+            $subTitle = 'Step Payment VA Bank Permata';
+            $label    = 'Step Payment VA Bank Permata';
+            $span     = '';
+        }elseif (strtolower($key) == 'sahabat_sampoerna') {
+            $sub      = 'available-payment-sahabat_sampoerna';
+            $active   = 'available-payment-sahabat_sampoerna';
+            $subTitle = 'Step Payment VA Bank Sahabat Sampoerna';
+            $label    = 'Step Payment VA Bank Sahabat Sampoerna';
+            $span     = '';
         }
 
         $data = [
@@ -1901,6 +1949,46 @@ class SettingController extends Controller
             $query = MyHelper::get('setting/sedot-rutin-jangka-waktu');
             $data['result'] = $query;
             return view('setting::sedot-rutin-jangka-waktu', $data);
+        }
+    }
+    public function volume(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Volume',
+            'menu_active'    => 'setting-volume',
+            'submenu_active'    => 'setting-volume',
+        ];
+        if($post){
+            $query = MyHelper::post('setting/volume-create', $post);
+            if(($query['status']??'')=='success'){
+                return redirect('setting/volume')->with('success',['Success update data']);
+            }else{
+                return redirect('setting/volume')->withErrors([$query['message']]);
+            }
+        }else{
+            $query = MyHelper::get('setting/volume');
+            $data['result'] = $query;
+            return view('setting::volume', $data);
+        }
+    }
+    public function appRating(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Url App Rating',
+            'menu_active'    => 'setting-url-app-rating',
+            'submenu_active'    => 'setting-url-app-rating',
+        ];
+        if($post){
+            $query = MyHelper::post('setting/app-rating-create', $post);
+            if(($query['status']??'')=='success'){
+                return redirect('setting/url-app-rating')->with('success',['Success update data']);
+            }else{
+                return redirect('setting/url-app-rating')->withErrors([$query['message']]);
+            }
+        }else{
+            $query = MyHelper::get('setting/app-rating');
+            $data['result'] = $query;
+            return view('setting::url_app_rating', $data);
         }
     }
 }

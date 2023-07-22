@@ -88,6 +88,7 @@
                         <th>Payment Gateway</th>
                         <th>Payment Method</th>
                         <th>Status</th>
+                        <th>Step Payment</th>
                     </tr>
                 </thead>
                 <tbody class="sortable">
@@ -98,6 +99,9 @@
                         <td>{{$payment['payment_method']}}</td>
                         <td>
                             <input type="checkbox" name="payments[{{$payment['code']}}][status]" class="make-switch brand_visibility" data-size="small" data-on-color="info" data-on-text="Enable" data-off-color="default" data-off-text="Disable" value="1" {{$payment['status']?'checked':''}}>
+                        </td>
+                        <td>
+                                <a href="{{url('setting/'.$payment['payment_method'])}}" class="btn btn-sm btn-warning"><i class="fa fa-money"></i></a>
                         </td>
                         <input type="hidden" name="payments[{{$payment['code']}}][dummy]">
                     </tr>

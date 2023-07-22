@@ -52,6 +52,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::any('setting-global-commission-sedot-wc', 'SettingController@settingGlobalCommissionSedotWc');
     Route::any('setting-global-commission-survey', 'SettingController@settingGlobalCommissionSurvey');
     Route::any('sedot-rutin-jangka-waktu', 'SettingController@settingJangkaWaktu');
+    
+    Route::any('volume', 'SettingController@volume');
+    
+    Route::any('url-app-rating', 'SettingController@appRating');
 
     /*Setting Expired time OTP and Email*/
     Route::any('time-expired', 'SettingController@timeExpired');
