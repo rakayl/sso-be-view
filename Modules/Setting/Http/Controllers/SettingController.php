@@ -1986,7 +1986,7 @@ class SettingController extends Controller
                 return redirect('setting/url-app-rating')->withErrors([$query['message']]);
             }
         }else{
-            $query = MyHelper::get('setting/app-rating');
+            $query = MyHelper::get('setting/app-rating')['result'];
             $data['result'] = $query;
             return view('setting::url_app_rating', $data);
         }
