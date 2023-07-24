@@ -1320,7 +1320,7 @@ class TransactionController extends Controller
         } else {
             Session::forget('filter-transaction-list');
         }
-
+        $post['filter_status_code'] = [3];
         $list = MyHelper::post('transaction/list-all', $post);
 
         if (isset($list['result']['data']) && !empty($list['result']['data'])) {
@@ -2196,4 +2196,11 @@ class TransactionController extends Controller
             return redirect()->back()->withErrors($update['messages']??['Failed update data to approved']);
         }
     }
+    
+    
+    
+    
+    
+    
+    
 }

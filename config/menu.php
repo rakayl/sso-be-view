@@ -272,23 +272,96 @@ return [
             'children' => [
                 [
                     'type' => 'tree',
-                    'label' => 'Transaction',
+                    'label' => 'Transaction Sedot WC',
                     'icon' => 'fa fa-shopping-cart',
                     'children' => [
                         [
-                            'label' => 'Transaction List',
+                            'label' => 'Pending',
                             'required_features' => [69],
-                            'active' => '\View::shared("submenu_active") == "transaction"',
-                            'url' => 'transaction',
+                            'active' => '\View::shared("submenu_active") == "transaction-sedot-wc-pending"',
+                            'url' => 'transaction/sedot/pending',
                             'badge' => [
                                 'type' => 'warning',
                                 'value' => 'transaction_pending',
                             ]
                         ],
+                        [
+                            'label' => 'Proses',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "transaction-sedot-wc-proses"',
+                            'url' => 'transaction/sedot/proses',
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'transaction_proses',
+                            ]
+                        ],
+                        [
+                            'label' => 'Selesai',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "transaction-sedot-wc-selesai"',
+                            'url' => 'transaction/sedot/selesai',
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'transaction_selesai',
+                            ]
+                        ],
+                        [
+                            'label' => 'Completed',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "transaction-sedot-wc-complete"',
+                            'url' => 'transaction/sedot/completed',
+                        ],
                     ],
                     'badge' => [
                         'type' => 'warning',
-                        'value' => 'transaction_pending',
+                        'value' => 'transaction_sedot-wc',
+                    ]
+                ],
+                [
+                    'type' => 'tree',
+                    'label' => 'Transaction Kontraktor',
+                    'icon' => 'icon-wrench',
+                    'children' => [
+                        [
+                            'label' => 'Pending',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "transaction-kontraktor-pending"',
+                            'url' => 'transaction/kontraktor/pending',
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'transaction_pending',
+                            ]
+                        ],
+                        [
+                            'label' => 'Proses',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "transaction-kontraktor-proses"',
+                            'url' => 'transaction/kontraktor/proses',
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'transaction_proses',
+                            ]
+                        ],
+                        [
+                            'label' => 'Selesai',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "transaction-kontraktor-selesai"',
+                            'url' => 'transaction/kontraktor/selesai',
+                            'badge' => [
+                                'type' => 'warning',
+                                'value' => 'transaction_selesai',
+                            ]
+                        ],
+                        [
+                            'label' => 'Completed',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "transaction-kontraktor-complete"',
+                            'url' => 'transaction/kontraktor/completed',
+                        ],
+                    ],
+                    'badge' => [
+                        'type' => 'warning',
+                        'value' => 'transaction_kontraktor',
                     ]
                 ],
                 [

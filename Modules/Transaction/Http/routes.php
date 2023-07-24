@@ -85,8 +85,13 @@ Route::group(['prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Htt
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transaction', 'namespace' => 'Modules\Transaction\Http\Controllers'], function () {
-    Route::get('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
-    Route::post('/', ['middleware' => 'feature_control:69', 'uses' => 'TransactionController@transactionList']);
+   
+    Route::group(['prefix' => 'sedot'], function () {
+        Route::any('pending', ['middleware' => 'feature_control:69', 'uses' => 'TransactionSedotController@pending']);
+        Route::any('proses', ['middleware' => 'feature_control:69', 'uses' => 'TransactionSedotController@proses']);
+        Route::any('selesai', ['middleware' => 'feature_control:69', 'uses' => 'TransactionSedotController@selesai']);
+        Route::any('completed', ['middleware' => 'feature_control:69', 'uses' => 'TransactionSedotController@complete']);
+    });
     Route::get('detail/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDetail']);
     Route::post('detail/step1/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@step1']);
     Route::post('detail/step', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@step']);
