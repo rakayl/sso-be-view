@@ -39,7 +39,7 @@
                         <div class="tab-pane @if($detail['transaction_status_code']==3||$detail['step_number']==5) active @endif" id="step1">
                                 @include('transaction::kontraktor.steps.step1')
                         </div>
-                        <div class="tab-pane @if(@if($detail['transaction_status_code']!=3&&$detail['step_number']==1) active @endif" id="step2">
+                        <div class="tab-pane @if($detail['transaction_status_code']!=3&&$detail['step_number']==1) active @endif" id="step2">
                                @include('transaction::kontraktor.steps.step2')
                         </div>
                         <div class="tab-pane @if($detail['step_number']==2) active @endif" id="step3">
