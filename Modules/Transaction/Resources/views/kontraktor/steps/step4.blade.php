@@ -1,15 +1,15 @@
 <br>
 <div style="margin-top: -4%">
-	<form class="form-horizontal" id="form_interview" role="form" action="{{url('transaction/detail/step')}}" method="post" enctype="multipart/form-data">
+	<form class="form-horizontal" id="form_interview" role="form" action="{{url('transaction/detail/kontraktor/step')}}" method="post" enctype="multipart/form-data">
 		<div class="form-body">
-			<div style="text-align: center"><h3>Penyelesaian Pekerjaan</h3></div>
+			<div style="text-align: center"><h3>Vendor Survey</h3></div>
                         <br>
                         
 			<div class="form-group">
 				<label class="col-md-2 control-label">
 				</label>
 				<div class="col-md-10">
-					Mitra telah menyelesaikan pekerjaan
+					Mitra melakukan survey lokasi
 				</div>
 			</div>
 			<div class="form-group">
