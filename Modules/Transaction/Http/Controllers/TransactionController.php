@@ -2216,7 +2216,7 @@ class TransactionController extends Controller
     }
     public function kontraktorStep(Request $request){
         $post = $request->except('_token');
-        return $update = MyHelper::post('transaction/be/update/kontraktor/step',$post);
+        $update = MyHelper::post('transaction/be/update/kontraktor/step',$post);
         if(isset($update['status']) && $update['status'] == 'success'){
             return redirect()->back()->withSuccess(['Success update data']);
         }else{
