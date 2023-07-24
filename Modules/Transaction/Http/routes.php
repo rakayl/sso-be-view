@@ -92,9 +92,18 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
         Route::any('selesai', ['middleware' => 'feature_control:69', 'uses' => 'TransactionSedotController@selesai']);
         Route::any('completed', ['middleware' => 'feature_control:69', 'uses' => 'TransactionSedotController@complete']);
     });
+    Route::group(['prefix' => 'kontraktor'], function () {
+        Route::any('pending', ['middleware' => 'feature_control:69', 'uses' => 'TransactionKontraktorController@pending']);
+        Route::any('proses', ['middleware' => 'feature_control:69', 'uses' => 'TransactionKontraktorController@proses']);
+        Route::any('selesai', ['middleware' => 'feature_control:69', 'uses' => 'TransactionKontraktorController@selesai']);
+        Route::any('completed', ['middleware' => 'feature_control:69', 'uses' => 'TransactionKontraktorController@complete']);
+    });
     Route::get('detail/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@transactionDetail']);
     Route::post('detail/step1/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@step1']);
     Route::post('detail/step', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@step']);
+    
+    Route::post('detail/kontraktor/step1/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@kontraktorStep1']);
+    Route::post('detail/kontraktor/step', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@kontraktorStep']);
     
     Route::group(['prefix' => 'log-invalid-flag'], function () {
         Route::any('list', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@listLogInvalidFlag']);

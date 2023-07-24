@@ -1360,6 +1360,11 @@ class TransactionController extends Controller
             $data['detail'] = $check['result'];
             $city = $check['result']['trasaction_sedot_wc']['id_city']??null;
             $data['outlet'] = MyHelper::post('transaction/be/outlet/sedot', ['id_city' => $city])['result']??array();
+            if($data['detail']['type'] == "renovasi"){
+                $city = $check['result']['transaction_renovasi']['id_city']??null;
+                $data['outlet'] = MyHelper::post('transaction/be/outlet/renov', ['id_city' => $city])['result']??array();
+                return view('transaction::transactionDetail4', $data);
+            }
             return view('transaction::transactionDetail3', $data);
         } else {
             return redirect('transaction')->withErrors(['Failed get detail transaction']);
@@ -2197,8 +2202,27 @@ class TransactionController extends Controller
         }
     }
     
-    
-    
+//    kontraktor
+     public function kontraktorStep1(Request $request, $id){
+        $post = $request->except('_token');
+        $post['id'] = $id;
+        $post['step_number'] = 1;
+        $update = MyHelper::post('transaction/be/update/kontraktor/step',$post);
+        if(isset($update['status']) && $update['status'] == 'success'){
+            return redirect()->back()->withSuccess(['Success update data']);
+        }else{
+            return redirect()->back()->withErrors($update['messages']??['Failed update data to approved']);
+        }
+    }
+    public function kontraktorStep(Request $request){
+        $post = $request->except('_token');
+        $update = MyHelper::post('transaction/be/update/kontraktor/step',$post);
+        if(isset($update['status']) && $update['status'] == 'success'){
+            return redirect()->back()->withSuccess(['Success update data']);
+        }else{
+            return redirect()->back()->withErrors($update['messages']??['Failed update data to approved']);
+        }
+    }
     
     
     
