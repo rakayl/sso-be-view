@@ -124,10 +124,6 @@ return [
                             ]
                         ],
                         
-                    ],
-                    'badge' => [
-                        'type' => 'warning',
-                        'value' => 'tukang-sedot',
                     ]
                 ],
                 [
@@ -280,10 +276,7 @@ return [
                             'required_features' => [69],
                             'active' => '\View::shared("submenu_active") == "transaction-sedot-wc-pending"',
                             'url' => 'transaction/sedot/pending',
-                            'badge' => [
-                                'type' => 'warning',
-                                'value' => 'transaction_pending',
-                            ]
+                            
                         ],
                         [
                             'label' => 'Proses',
@@ -311,10 +304,6 @@ return [
                             'active' => '\View::shared("submenu_active") == "transaction-sedot-wc-complete"',
                             'url' => 'transaction/sedot/completed',
                         ],
-                    ],
-                    'badge' => [
-                        'type' => 'warning',
-                        'value' => 'transaction_sedot-wc',
                     ]
                 ],
                 [
@@ -326,31 +315,21 @@ return [
                             'label' => 'Pending',
                             'required_features' => [69],
                             'active' => '\View::shared("submenu_active") == "transaction-kontraktor-pending"',
-                            'url' => 'transaction/kontraktor/pending',
-                            'badge' => [
-                                'type' => 'warning',
-                                'value' => 'transaction_pending',
-                            ]
+                            'url' => 'transaction/kontraktor/pending'
                         ],
                         [
                             'label' => 'Proses',
                             'required_features' => [69],
                             'active' => '\View::shared("submenu_active") == "transaction-kontraktor-proses"',
                             'url' => 'transaction/kontraktor/proses',
-                            'badge' => [
-                                'type' => 'warning',
-                                'value' => 'transaction_proses',
-                            ]
+                            
                         ],
                         [
                             'label' => 'Selesai',
                             'required_features' => [69],
                             'active' => '\View::shared("submenu_active") == "transaction-kontraktor-selesai"',
                             'url' => 'transaction/kontraktor/selesai',
-                            'badge' => [
-                                'type' => 'warning',
-                                'value' => 'transaction_selesai',
-                            ]
+                            
                         ],
                         [
                             'label' => 'Completed',
@@ -359,10 +338,7 @@ return [
                             'url' => 'transaction/kontraktor/completed',
                         ],
                     ],
-                    'badge' => [
-                        'type' => 'warning',
-                        'value' => 'transaction_kontraktor',
-                    ]
+                    
                 ],
                 [
                     'label' => 'Failed Void Payment',
