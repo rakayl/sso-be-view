@@ -105,6 +105,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'transact
     Route::post('detail/kontraktor/step1/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@kontraktorStep1']);
     Route::post('detail/kontraktor/step', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@kontraktorStep']);
     
+    
+    Route::post('detail/kontraktor/rab/create', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@createRAB']);
+    Route::get('detail/kontraktor/rab/delete/{id}', ['middleware' => 'feature_control:70', 'uses' => 'TransactionController@deleteRAB']);
+    
     Route::group(['prefix' => 'log-invalid-flag'], function () {
         Route::any('list', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@listLogInvalidFlag']);
         Route::any('detail', ['middleware' => 'feature_control:276', 'uses' => 'InvalidFlagController@detailLogInvalidFlag']);
