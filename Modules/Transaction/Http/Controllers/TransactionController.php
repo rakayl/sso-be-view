@@ -2226,7 +2226,7 @@ class TransactionController extends Controller
     
     public function createRAB(){
         $post = $request->except('_token');
-        return $update = MyHelper::post('transaction/be/update/kontraktor/rab/create',$post);
+        $update = MyHelper::post('transaction/be/update/kontraktor/rab/create',$post);
         if(isset($update['status']) && $update['status'] == 'success'){
             return redirect()->back()->withSuccess(['Success update data']);
         }else{
