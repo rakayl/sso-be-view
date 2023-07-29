@@ -1,49 +1,39 @@
-<br>
 <div style="margin-top: -4%">
-	<form class="form-horizontal" id="form_interview" role="form" action="{{url('transaction/detail/step')}}" method="post" enctype="multipart/form-data">
+	<form class="form-horizontal" id="form_interview" role="form" action="{{url('transaction/detail/kontraktor/step')}}" method="post" enctype="multipart/form-data">
 		<div class="form-body">
-			<div style="text-align: center"><h3>Konfirmasi Customer</h3></div>
+			<div style="text-align: center"><h3>Konfirmasi RAB Customer</h3></div>
                         <br>
-                        
-			<div class="form-group">
+                        <div class="form-group">
 				<label class="col-md-2 control-label">
 				</label>
 				<div class="col-md-10">
-					Proses Konfirmasi dilakukan oleh Customer untuk menyelesai transaksi
+					Pembayaran RAB Customer
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-2 control-label">
 				</label>
 				<div class="col-md-10">
-					{{$detail['step']['step5']['name']??null}}
+					{{$detail['step']['step6']['name']??null}}
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-2 control-label">
 				</label>
 				<div class="col-md-10">
-					{{$detail['step']['step5']['description']??null}}
+					{{$detail['step']['step6']['description']??null}}
 				</div>
 			</div>
-                        @if(isset($detail['step']['step5']['procesed_by']))
+                        @if(isset($detail['step']['step6']['procesed_by']))
 			<div class="form-group">
 				<label class="col-md-2 control-label"> 
 				</label>
 				<div class="col-md-10">
-					Processed By : {{$detail['step']['step5']['procesed_by']??null}}
+					Processed By : {{$detail['step']['step6']['procesed_by']??null}}
 				</div>
 			</div>
                         @endif
 			
 		</div>
-		@if($detail['transaction_status_code']==5&&$detail['step_number']==4)
-		<div class="row" style="text-align: center">
-                    <input type="hidden" name="step_number" value="5">
-            <input type="hidden" name="id_transaction" value="{{$detail['id_transaction']}}">
-			{{ csrf_field() }}
-			<button type='submit' class="btn blue">Submit</button>
-		</div>
-		@endif
 </form>
 </div>

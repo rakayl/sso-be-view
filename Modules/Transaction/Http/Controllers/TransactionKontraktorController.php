@@ -191,4 +191,15 @@ class TransactionKontraktorController extends Controller
         }
         return view('transaction::transactionList', $data);
     }
+    public function createRAB(Request $request){
+        $post = $request->except('_token');
+        $post['product_price'] = (int)str_replace(".","",$post['product_price']);
+        $post['qty'] = (int)str_replace(".","",$post['qty']);
+        $update = MyHelper::post('transaction/be/update/kontraktor/rab/create',$post);
+        if(isset($update['status']) && $update['status'] == 'success'){
+            return redirect()->back()->withSuccess(['Success update data']);
+        }else{
+            return redirect()->back()->withErrors($update['messages']??['Failed update data to approved']);
+        }
+    }
 }

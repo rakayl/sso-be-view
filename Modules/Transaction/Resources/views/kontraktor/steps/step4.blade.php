@@ -37,7 +37,7 @@
                         @endif
 			
 		</div>
-		@if($detail['transaction_status_code']==5&&$detail['step_number']==3)
+		@if($detail['transaction_status_code']==4&&$detail['step_number']==3)
 		<div class="row" style="text-align: center">
                     <input type="hidden" name="step_number" value="4">
             <input type="hidden" name="id_transaction" value="{{$detail['id_transaction']}}">
