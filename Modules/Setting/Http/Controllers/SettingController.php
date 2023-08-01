@@ -233,6 +233,18 @@ class SettingController extends Controller
             $subTitle = 'Step Payment VA Bank Sahabat Sampoerna';
             $label    = 'Step Payment VA Bank Sahabat Sampoerna';
             $span     = '';
+        }elseif (strtolower($key) == 'panduan-mitra-sedot') {
+            $sub      = 'panduan-mitra-sedot';
+            $active   = 'panduan-mitra-sedot';
+            $subTitle = 'Panduang Mitra Sedot';
+            $label    = 'Panduang Mitra Sedot';
+            $span     = '';
+        }elseif (strtolower($key) == 'panduan-mitra-kontraktor') {
+            $sub      = 'panduan-mitra-kontraktor';
+            $active   = 'panduan-mitra-kontraktor';
+            $subTitle = 'Panduang Mitra Kontraktor';
+            $label    = 'Panduang Mitra Kontraktor';
+            $span     = '';
         }
 
         $data = [
@@ -1990,5 +2002,286 @@ class SettingController extends Controller
             $data['result'] = $query;
             return view('setting::url_app_rating', $data);
         }
+    }
+    
+    
+    public function faqSedotList()
+    {
+        $data = [];
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-list-sedot',
+        ];
+
+        $faqList = MyHelper::get('setting/be/faq/sedot');
+
+        if (isset($faqList['status']) && $faqList['status'] == 'success') {
+            $data['result'] = array_map(function ($var) {
+                $var['id_faq_sedot'] = MyHelper::createSlug($var['id_faq_sedot'], $var['created_at']);
+                return $var;
+            }, $faqList['result']);
+        } else {
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
+                $data['result'] = [];
+            } else {
+                $e = ['e' => 'Something went wrong. Please try again.'];
+                return view('setting::faqList', $data)->withErrors($e);
+            }
+        }
+
+        return view('setting::sedot.faqList', $data);
+    }
+
+    public function faqSedotCreate()
+    {
+        $data = [];
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-sedot-new',
+        ];
+
+        return view('setting::sedot.faqCreate', $data);
+    }
+
+    public function faqSedotStore(Request $request)
+    {
+        $data = $request->except('_token');
+
+        $insert = MyHelper::post('setting/faq/sedot/create', $data);
+
+        return parent::redirect($insert, 'FAQ has been created.');
+    }
+
+    /*======== This function is used to display the FAQ list that will be sorted ========*/
+    public function faqSedotSort()
+    {
+        $data = [];
+        $data = [
+            'title'          => 'Sorting FAQ List',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-sort-sedot',
+        ];
+
+        $faqList = MyHelper::get('setting/be/faq/sedot');
+
+        if (isset($faqList['status']) && $faqList['status'] == 'success') {
+            $data['result'] = $faqList['result'];
+        } else {
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
+                $data['result'] = [];
+            } else {
+                $e = ['e' => 'Something went wrong. Please try again.'];
+                return view('setting::sedot.faqList', $data)->withErrors($e);
+            }
+        }
+        return view('setting::sedot.faqSort', $data);
+    }
+
+    public function faqSedotSortUpdate(Request $request)
+    {
+        $post   = $request->except('_token');
+        $status = 0;
+        $update = MyHelper::post('setting/faq/sedot/sort/update', $post);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            $status = 1;
+        }
+
+        return response()->json(['status' => $status]);
+    }
+
+    public function faqSedotEdit($slug)
+    {
+        $exploded   = MyHelper::explodeSlug($slug);
+        $id         = $exploded[0];
+        $created_at = $exploded[1];
+        $data       = [];
+        $data       = [
+            'title'          => 'Setting',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-list-sedot',
+        ];
+
+        $edit = MyHelper::post('setting/faq/sedot/edit', ['id_faq_sedot' => $id, 'created_at' => $created_at]);
+
+        if (isset($edit['status']) && $edit['status'] == 'success') {
+            $data['faq'] = $edit['result'];
+            if (isset($data['faq']['id_faq_sedot'])) {
+                $data['faq']['id_faq_sedot'] = $slug;
+            }
+            return view('setting::sedot.faqEdit', $data);
+        } else {
+            $e = ['e' => 'Something went wrong. Please try again.'];
+
+            return back()->witherrors($e);
+        }
+    }
+
+    public function faqSedotUpdate(Request $request, $slug)
+    {
+        $exploded   = MyHelper::explodeSlug($slug);
+        $id         = $exploded[0];
+        $created_at = $exploded[1];
+        $post       = [
+            'id_faq_sedot'     => $id,
+            'question'   => $request['question'],
+            'answer'     => $request['answer'],
+            'created_at' => $created_at,
+        ];
+
+        $update = MyHelper::post('setting/faq/sedot/update', $post);
+
+        return parent::redirect($update, 'FAQ has been updated.');
+    }
+
+    public function faqSedotDelete($slug)
+    {
+        $exploded   = MyHelper::explodeSlug($slug);
+        $id         = $exploded[0];
+        $created_at = $exploded[1];
+        $delete     = MyHelper::post('setting/faq/sedot/delete', ['id_faq_sedot' => $id, 'created_at', $created_at]);
+
+        return parent::redirect($delete, 'FAQ has been deleted.');
+    }
+    
+     public function faqKontraktorList()
+    {
+        $data = [];
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-list-kontraktor',
+        ];
+
+        $faqList = MyHelper::get('setting/be/faq/kontraktor');
+
+        if (isset($faqList['status']) && $faqList['status'] == 'success') {
+            $data['result'] = array_map(function ($var) {
+                $var['id_faq_kontraktor'] = MyHelper::createSlug($var['id_faq_kontraktor'], $var['created_at']);
+                return $var;
+            }, $faqList['result']);
+        } else {
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
+                $data['result'] = [];
+            } else {
+                $e = ['e' => 'Something went wrong. Please try again.'];
+                return view('setting::faqList', $data)->withErrors($e);
+            }
+        }
+
+        return view('setting::kontraktor.faqList', $data);
+    }
+
+    public function faqKontraktorCreate()
+    {
+        $data = [];
+        $data = [
+            'title'          => 'Setting',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-kontraktor-new',
+        ];
+
+        return view('setting::kontraktor.faqCreate', $data);
+    }
+
+    public function faqKontraktorStore(Request $request)
+    {
+        $data = $request->except('_token');
+
+        $insert = MyHelper::post('setting/faq/kontraktor/create', $data);
+
+        return parent::redirect($insert, 'FAQ has been created.');
+    }
+
+    /*======== This function is used to display the FAQ list that will be sorted ========*/
+    public function faqKontraktorSort()
+    {
+        $data = [];
+        $data = [
+            'title'          => 'Sorting FAQ List',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-sort-kontraktor',
+        ];
+
+        $faqList = MyHelper::get('setting/be/faq/kontraktor');
+
+        if (isset($faqList['status']) && $faqList['status'] == 'success') {
+            $data['result'] = $faqList['result'];
+        } else {
+            if (isset($faqList['status']) && $faqList['status'] == 'fail') {
+                $data['result'] = [];
+            } else {
+                $e = ['e' => 'Something went wrong. Please try again.'];
+                return view('setting::faqList', $data)->withErrors($e);
+            }
+        }
+        return view('setting::kontraktor.faqSort', $data);
+    }
+
+    public function faqKontraktorSortUpdate(Request $request)
+    {
+        $post   = $request->except('_token');
+        $status = 0;
+        $update = MyHelper::post('setting/faq/kontraktor/sort/update', $post);
+        if (isset($update['status']) && $update['status'] == 'success') {
+            $status = 1;
+        }
+
+        return response()->json(['status' => $status]);
+    }
+
+    public function faqKontraktorEdit($slug)
+    {
+        $exploded   = MyHelper::explodeSlug($slug);
+        $id         = $exploded[0];
+        $created_at = $exploded[1];
+        $data       = [];
+        $data       = [
+            'title'          => 'Setting',
+            'menu_active'    => 'faq',
+            'submenu_active' => 'faq-list-kontraktor',
+        ];
+
+        $edit = MyHelper::post('setting/faq/kontraktor/edit', ['id_faq_kontraktor' => $id, 'created_at' => $created_at]);
+
+        if (isset($edit['status']) && $edit['status'] == 'success') {
+            $data['faq'] = $edit['result'];
+            if (isset($data['faq']['id_faq_kontraktor'])) {
+                $data['faq']['id_faq_kontraktor'] = $slug;
+            }
+            return view('setting::kontraktor.faqEdit', $data);
+        } else {
+            $e = ['e' => 'Something went wrong. Please try again.'];
+
+            return back()->witherrors($e);
+        }
+    }
+
+    public function faqkontraktorUpdate(Request $request, $slug)
+    {
+        $exploded   = MyHelper::explodeSlug($slug);
+        $id         = $exploded[0];
+        $created_at = $exploded[1];
+        $post       = [
+            'id_faq_kontraktor'     => $id,
+            'question'   => $request['question'],
+            'answer'     => $request['answer'],
+            'created_at' => $created_at,
+        ];
+
+        $update = MyHelper::post('setting/faq/kontraktor/update', $post);
+
+        return parent::redirect($update, 'FAQ has been updated.');
+    }
+
+    public function faqkontraktorDelete($slug)
+    {
+        $exploded   = MyHelper::explodeSlug($slug);
+        $id         = $exploded[0];
+        $created_at = $exploded[1];
+        $delete     = MyHelper::post('setting/faq/kontraktor/delete', ['id_faq_kontraktor' => $id, 'created_at', $created_at]);
+
+        return parent::redirect($delete, 'FAQ has been deleted.');
     }
 }

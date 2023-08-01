@@ -485,7 +485,19 @@ return [
             'label' => 'About',
             'children' => [
                 [
-                    'label' => 'FAQ',
+                    'label' => 'Panduan Mitra Sedot',
+                    'active' => '\View::shared("submenu_active") == "panduan-mitra-sedot"',
+                    'url' => 'setting/panduan-mitra-sedot',
+                    'icon' => 'fa fa-university',
+                ],
+                [
+                    'label' => 'Panduan Mitra Kontraktor',
+                    'active' => '\View::shared("submenu_active") == "panduan-mitra-kontraktor"',
+                    'url' => 'setting/panduan-mitra-kontraktor',
+                    'icon' => 'fa fa-home',
+                ],
+                [
+                    'label' => 'FAQ Customer',
                     'required_features' => [],
                     'type' => 'tree',
                     'children' => [
@@ -505,6 +517,56 @@ return [
                             'required_features' => [88],
                             'active' => '\View::shared("submenu_active") == "faq-sort"',
                             'url' => 'setting/faq/sort'
+                        ],
+                    ],
+                    'icon' => 'icon-question'
+                ],
+                [
+                    'label' => 'FAQ Mitra Sedot',
+                    'required_features' => [],
+                    'type' => 'tree',
+                    'children' => [
+                        [
+                            'label' => 'New FAQ',
+                            'required_features' => [89],
+                            'url' => 'setting/faq/sedot/create'
+                        ],
+                        [
+                            'label' => 'List FAQ',
+                            'required_features' => [88],
+                            'active' => '\View::shared("submenu_active") == "faq-list-sedot"',
+                            'url' => 'setting/faq/sedot'
+                        ],
+                        [
+                            'label' => 'Sorting FAQ List',
+                            'required_features' => [88],
+                            'active' => '\View::shared("submenu_active") == "faq-sort-sedot"',
+                            'url' => 'setting/faq/sedot/sort'
+                        ],
+                    ],
+                    'icon' => 'icon-question'
+                ],
+                [
+                    'label' => 'FAQ Mitra Kontraktor',
+                    'required_features' => [],
+                    'type' => 'tree',
+                    'children' => [
+                        [
+                            'label' => 'New FAQ',
+                            'required_features' => [89],
+                            'url' => 'setting/faq/kontraktor/create'
+                        ],
+                        [
+                            'label' => 'List FAQ',
+                            'required_features' => [88],
+                            'active' => '\View::shared("submenu_active") == "faq-list-kontraktor"',
+                            'url' => 'setting/faq/kontraktor'
+                        ],
+                        [
+                            'label' => 'Sorting FAQ List',
+                            'required_features' => [88],
+                            'active' => '\View::shared("submenu_active") == "faq-sort-kontraktor"',
+                            'url' => 'setting/faq/kontraktor/sort'
                         ],
                     ],
                     'icon' => 'icon-question'

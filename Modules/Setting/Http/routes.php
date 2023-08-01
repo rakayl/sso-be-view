@@ -111,6 +111,29 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     // point reset
     Route::post('reset/{type}/update', 'SettingController@updatePointReset');
     Route::post('consultation/{type}/update', 'SettingController@updateConsultationSetting');
+    
+    
+    //faq sedot 
+    
+    Route::get('faq/sedot', 'SettingController@faqSedotList');
+    Route::get('faq/sedot/create', 'SettingController@faqSedotCreate');
+    Route::post('faq/sedot/save', 'SettingController@faqSedotStore');
+    Route::get('faq/sedot/edit/{slug}', 'SettingController@faqSedotEdit');
+    Route::post('faq/sedot/update/{slug}', 'SettingController@faqSedotUpdate');
+    Route::any('faq/sedot/delete/{slug}', 'SettingController@faqSedotDelete');
+    Route::get('faq/sedot/sort', 'SettingController@faqSedotSort');
+    Route::post('faq/sedot/sort/update', 'SettingController@faqSedotSortUpdate');
+    
+    //faq kontraktor
+    Route::get('faq/kontraktor', 'SettingController@faqKontraktorList');
+    Route::get('faq/kontraktor/create', 'SettingController@faqKontraktorCreate');
+    Route::post('faq/kontraktor/save', 'SettingController@faqKontraktorStore');
+    Route::get('faq/kontraktor/edit/{slug}', 'SettingController@faqKontraktorEdit');
+    Route::post('faq/kontraktor/update/{slug}', 'SettingController@faqKontraktorUpdate');
+    Route::any('faq/kontraktor/delete/{slug}', 'SettingController@faqKontraktorDelete');
+    Route::get('faq/kontraktor/sort', 'SettingController@faqKontraktorSort');
+    Route::post('faq/kontraktor/sort/update', 'SettingController@faqKontraktorSortUpdate');
+    
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function () {
