@@ -57,7 +57,21 @@ return [
                             'url' => 'user/activity',
                             'required_features' => [7],
                         ],
-                        
+                        [
+                            'type' => 'group',
+                            'required_configs' => [40],
+                            'required_features' => [92],
+                            'children' => [
+                                [
+                                    'label' => '[Response] Pin Changed Forgot Password',
+                                    'url' => 'user/autoresponse/pin-changed-forgot-password',
+                                ],
+                                [
+                                    'label' => '[Response] Pin Forgot',
+                                    'url' => 'user/autoresponse/pin-forgot',
+                                ],
+                            ],
+                        ],
                     ],
                 ],
             ],
