@@ -201,10 +201,10 @@ class MerchantController extends Controller
     public function detail($id)
     {
         $data = [
-            'title'          => 'Merchant',
-            'sub_title'      => 'Merchant Detail',
-            'menu_active'    => 'merchant',
-            'submenu_active' => 'merchant-list'
+            'title'          => 'Tukang Sedot',
+            'sub_title'      => 'Tukang Sedot Detail',
+            'menu_active'    => 'tukang-sedot',
+            'submenu_active' => 'tukang-sedot-list',
         ];
 
         $data['outlets'] = MyHelper::get('outlet/be/list/simple')['result'] ?? [];

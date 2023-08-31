@@ -107,7 +107,7 @@
                     <tr>
                         <td>
                             @if(MyHelper::hasAccess([324,326], $grantedFeature))
-                                <a class="btn btn-sm btn-info" href="{{ url('merchant/detail', $val['id_merchant']) }}"><i class="fa fa-search"></i></a>
+                                <a class="btn btn-sm btn-info" href="{{ url('kontraktor/detail', $val['id_merchant']) }}"><i class="fa fa-search"></i></a>
                             @endif
                         </td>
                         <td>

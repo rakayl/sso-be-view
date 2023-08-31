@@ -89,10 +89,10 @@ class KontraktorController extends Controller
     public function detail($id)
     {
         $data = [
-            'title'          => 'Merchant',
-            'sub_title'      => 'Merchant Detail',
-            'menu_active'    => 'merchant',
-            'submenu_active' => 'merchant-list'
+            'title'          => 'Kontraktor',
+            'sub_title'      => 'Kontraktor Detail',
+            'menu_active'    => 'kontraktor',
+            'submenu_active' => 'kontraktor-list',
         ];
 
         $data['outlets'] = MyHelper::get('outlet/be/list/simple')['result'] ?? [];
