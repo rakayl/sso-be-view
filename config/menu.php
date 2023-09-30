@@ -131,11 +131,7 @@ return [
                             'label' => 'Candidate List',
                             'url' => 'tukang-sedot/candidate',
                             'required_features' => [323,324,326,327],
-                            'active' => '\View::shared("submenu_active") == "tukang-sedot-candidate"',
-                            'badge' => [
-                                'type' => 'warning',
-                                'value' => 'tukang_sedot_register_pending',
-                            ]
+                            'active' => '\View::shared("submenu_active") == "tukang-sedot-candidate"'
                         ],
                         
                     ]
@@ -162,17 +158,9 @@ return [
                             'label' => 'Candidate List',
                             'url' => 'kontraktor/candidate',
                             'required_features' => [323,324,326,327],
-                            'active' => '\View::shared("submenu_active") == "kontraktor-candidate"',
-                            'badge' => [
-                                'type' => 'warning',
-                                'value' => 'kontraktor_register_pending',
-                            ]
+                            'active' => '\View::shared("submenu_active") == "kontraktor-candidate"'
                         ],
                         
-                    ],
-                    'badge' => [
-                        'type' => 'warning',
-                        'value' => 'tukang-sedot',
                     ]
                 ],
                 [
@@ -296,21 +284,13 @@ return [
                             'label' => 'Proses',
                             'required_features' => [69],
                             'active' => '\View::shared("submenu_active") == "transaction-sedot-wc-proses"',
-                            'url' => 'transaction/sedot/proses',
-                            'badge' => [
-                                'type' => 'warning',
-                                'value' => 'transaction_proses',
-                            ]
+                            'url' => 'transaction/sedot/proses'
                         ],
                         [
                             'label' => 'Selesai',
                             'required_features' => [69],
                             'active' => '\View::shared("submenu_active") == "transaction-sedot-wc-selesai"',
-                            'url' => 'transaction/sedot/selesai',
-                            'badge' => [
-                                'type' => 'warning',
-                                'value' => 'transaction_selesai',
-                            ]
+                            'url' => 'transaction/sedot/selesai'
                         ],
                         [
                             'label' => 'Completed',
