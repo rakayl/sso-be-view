@@ -761,6 +761,7 @@ class UsersController extends Controller
         $data['jobs'] = MyHelper::get('setting/be/jobs_list')['result'] ?? [];
         if (isset($getUser['result'])) {
             $data['profile'] = $getUser['result'];
+			$levels = $getUser['result']['level'];
 //          $data['trx'] = $getUser['trx'];
 //          $data['voucher'] = $getUser['voucher'];
         }
@@ -783,8 +784,12 @@ class UsersController extends Controller
             $data['voucher'] = $getVoucher['result'];
         }
         $data['inboxes'] = $getInbox['result'] ?? [];
-
-        $getCity = MyHelper::get('city/list?log_save=0');
+		if($levels == "Tukang Sedot"||$levels == "Kontraktor"){
+			
+			$getCity = MyHelper::get('city/pemda');
+		}else{
+			$getCity = MyHelper::get('city/list?log_save=0');
+		}
         if ($getCity['status'] == 'success') {
             $data['city'] = $getCity['result'];
         } else {
