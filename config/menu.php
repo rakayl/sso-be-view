@@ -211,6 +211,11 @@ return [
                     ]
                 ],
                 [
+                    'label' => 'Withdrawal',
+                    'icon' => 'fa fa-money',
+                    'url' => 'merchant/withdrawal'
+                ],
+                [
                     'label' => 'Setting',
                     'icon' => 'icon-wrench',
                     'type' => 'tree',
