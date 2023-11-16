@@ -81,3 +81,11 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'event'],
     Route::get('delete/{id}', 'EventController@delete');
     Route::post('update/{id}', 'EventController@update');
 });
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'accommodation'], function () {
+    Route::any('/', 'AccommodationController@list');
+    Route::get('create', 'AccommodationController@create');
+    Route::post('store', 'AccommodationController@store');
+    Route::get('detail/{id}', 'AccommodationController@detail');
+    Route::get('delete/{id}', 'AccommodationController@delete');
+    Route::post('update/{id}', 'AccommodationController@update');
+});

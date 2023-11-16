@@ -164,6 +164,24 @@ return [
                     ]
                 ],
                 [
+                    'label' => 'Accommodation',
+                    'icon' => 'fa fa-car',
+                    'type' => 'tree',
+                    'children' => [
+                        [
+                            'label' => 'New Acommodation',
+                            'active' => '\View::shared("submenu_active") == "accommodation-new"',
+                            'url' => 'accommodation/create',
+                        ],
+                       
+                        [
+                            'label' => 'Acommodation List',
+                            'active' => '\View::shared("submenu_active") == "accommodation-list"',
+                            'url' => 'accommodation',
+                        ],
+                    ]
+                ],
+                [
                     'label' => 'Commission Sedot WC',
                     'icon' => 'fa fa-money',
                     'type' => 'tree',
