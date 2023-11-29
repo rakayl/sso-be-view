@@ -131,8 +131,12 @@ class MerchantController extends Controller
             'menu_active'    => 'Tukang Sedot',
             'submenu_active' => 'tukang-sedot-new'
         ];
-
-        $data['province'] = MyHelper::get('province/list')['result'] ?? [];
+        $getCity = MyHelper::get('city/pemda');
+        if ($getCity['status'] == 'success') {
+            $data['city'] = $getCity['result'];
+        } else {
+            $data['city'] = null;
+        }
         $data['users'] = MyHelper::get('merchant/user/list-not-register')['result'] ?? [];
         $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
         return view('merchant::create', $data);
@@ -141,6 +145,35 @@ class MerchantController extends Controller
     public function store(Request $request)
     {
         $post = $request->all();
+        if (!empty($post['outlet_latitude']) && (strpos($post['outlet_latitude'], ',') !== false || $post['outlet_latitude'] == 'NaN')) {
+            return back()->withErrors(['Please input invalid latitude'])->withInput();
+        }
+
+        if (!empty($post['outlet_longitude']) && (strpos($post['outlet_longitude'], ',') !== false || $post['outlet_longitude'] == 'NaN')) {
+            return back()->withErrors(['Please input invalid longitude'])->withInput();
+        }
+        if (!empty($post['outlet_image_logo_portrait'])) {
+            $post['outlet_image_logo_portrait'] = MyHelper::encodeImage($post['outlet_image_logo_portrait']);
+        }
+
+        if (!empty($post['outlet_image_logo_landscape'])) {
+            $post['outlet_image_logo_landscape'] = MyHelper::encodeImage($post['outlet_image_logo_landscape']);
+        }
+
+        if (!empty($post['outlet_image_cover'])) {
+            $post['outlet_image_cover'] = MyHelper::encodeImage($post['outlet_image_cover']);
+        }
+        if (!empty($post['merchant_pic_attachment'])) {
+                $post['merchant_pic_attachment_ext'] = pathinfo($post['merchant_pic_attachment']->getClientOriginalName(), PATHINFO_EXTENSION);
+                $post['merchant_pic_attachment'] = MyHelper::encodeImage($post['merchant_pic_attachment']);
+        }
+        if (!empty($post['phone'])) {
+                $post['merchant_phone'] = $post['phone'];
+        }
+        if (!empty($post['email'])) {
+                $post['merchant_email'] = $post['email'];
+        }
+        
         $create = MyHelper::post('merchant/store', $post);
         if (isset($create['status']) && $create['status'] == "success") {
             return redirect('tukang-sedot/candidate')->withSuccess(['Success save data']);
