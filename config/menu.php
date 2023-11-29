@@ -34,12 +34,6 @@ return [
                     'icon' => 'icon-home',
                     'children' => [
                         [
-                            'label' => 'New User',
-                            'active' => '\View::shared("submenu_active") == "user-new"',
-                            'url' => 'user/create',
-                            'required_features' => [4],
-                        ],
-                        [
                             'label' => 'New Pemda',
                             'active' => '\View::shared("submenu_active") == "pemda-new"',
                             'url' => 'user/pemda/create',
