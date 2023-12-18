@@ -2,14 +2,14 @@
 <div style="margin-top: -4%">
 	<form class="form-horizontal" id="form_interview" role="form" action="{{url('transaction/detail/step')}}" method="post" enctype="multipart/form-data">
 		<div class="form-body">
-			<div style="text-align: center"><h3>Konfirmasi Vendor</h3></div>
+			<div style="text-align: center"><h3>Survey Lokasi</h3></div>
                         <br>
                         
 			<div class="form-group">
 				<label class="col-md-2 control-label">
 				</label>
 				<div class="col-md-10">
-					Proses Konfirmasi dilakukan oleh Mitra, Superadmin maupun Pemda yang terkait dengan transaksi ini
+					Proses survey lokasi dilakukan oleh Mitra, Superadmin maupun Pemda yang terkait dengan transaksi ini
 				</div>
 			</div>
 			<div class="form-group">
