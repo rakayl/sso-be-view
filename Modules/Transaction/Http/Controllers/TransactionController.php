@@ -1363,11 +1363,12 @@ class TransactionController extends Controller
             if($data['detail']['type'] == "renovasi"){
                 $city = $check['result']['transaction_renovasi']['id_city']??null;
                 $data['outlet'] = MyHelper::post('transaction/be/outlet/renov', ['id_city' => $city])['result']??array();
-                return view('transaction::transactionDetail4', $data);
+              return view('transaction::transactionDetail4', $data);
             }
+            $data['armada'] = MyHelper::get('transaction/be/armada/'.$id)['result']??[];
             return view('transaction::transactionDetail3', $data);
         } else {
-            return redirect('transaction')->withErrors(['Failed get detail transaction']);
+            return back()->withErrors(['Failed get detail transaction']);
         }
     }
 
