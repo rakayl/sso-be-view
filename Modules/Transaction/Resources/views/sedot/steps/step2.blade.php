@@ -13,7 +13,7 @@
                                             <option value="">Select...</option>
                                             @if(isset($armada))
                                                     @foreach($armada as $row)
-                                                            <option value="{{$row['id_accommodation']}}" @if($detail['trasaction_sedot_wc']['id_accommodation']) selected @endif >{{$row['name']}}-{{$row['number_accommodation']}}-{{$row['merk']}} {{$row['type']}}</option>
+                                                            <option value="{{$row['id_accommodation']}}" @if($detail['trasaction_sedot_wc']['id_accommodation']==$row['id_accommodation']) selected @endif >{{$row['name']}}-{{$row['number_accommodation']}}-{{$row['merk']}} {{$row['type']}}</option>
                                                     @endforeach
                                             @endif
                                     </select>
