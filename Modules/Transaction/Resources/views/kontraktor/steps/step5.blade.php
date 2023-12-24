@@ -5,6 +5,17 @@
                         <br>
                         
 			<form class="form-horizontal" id="form_interview" role="form" action="{{url('transaction/kontraktor/rab/create')}}" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+				<label class="col-md-4 control-label">Vendor <span class="required" aria-required="true"> * </span>
+				</label>
+				<div class="col-md-6">
+                                    <select @if($detail['transaction_status_code']==4&&$detail['step_number']==4) disabled @endif name="id_outlet" class="form-control input-sm select2" placeholder="Search vendor" data-placeholder="Choose Vendor" required>
+                                            <option @if($detail['transaction_renovasi']['standard_septic_tank']??null == "Leher Angsa") selected @endif  value="Leher Angsa">Leher Angsa</option>
+                                            <option @if($detail['transaction_renovasi']['standard_septic_tank']??null == "Standard") selected @endif value="Standard">Standard</option>
+                                           
+                                    </select>
+                                </div>
+			</div>    
                         <div><h3>Material</h3></div>
                         @if(isset($detail['transaction_renovasi_renovasi']['material']))
                         <table class="table table-striped table-bordered table-hover" id="kt_datatable">
