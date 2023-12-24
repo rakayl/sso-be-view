@@ -9,7 +9,7 @@
 				<label class="col-md-4 control-label">Vendor <span class="required" aria-required="true"> * </span>
 				</label>
 				<div class="col-md-6">
-                                    <select @if($detail['transaction_status_code']==4&&$detail['step_number']!=4) disabled @endif name="id_outlet" class="form-control input-sm select2" placeholder="Search vendor" data-placeholder="Choose Vendor" required>
+                                    <select @if($detail['transaction_status_code']==4&&$detail['step_number']!=4) disabled @endif name="standard_septic_tank" class="form-control input-sm select2" placeholder="Search vendor" data-placeholder="Choose Vendor" required>
                                             <option @if($detail['transaction_renovasi']['standard_septic_tank']??null == "Leher Angsa") selected @endif  value="Leher Angsa">Leher Angsa</option>
                                             <option @if($detail['transaction_renovasi']['standard_septic_tank']??null == "Standard") selected @endif value="Standard">Standard</option>
                                            
