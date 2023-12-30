@@ -43,7 +43,49 @@ class OutletController extends Controller
 
         return view('outlet::list', $data);
     }
+    public function tukangSedot(Request $request)
+    {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Outlet List',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'tukang-sedot-list',
+        ];
 
+        // outlet
+        $post['level'] = "Tukang Sedot";
+        $post['all_outlet'] = 1;
+       $outlet = MyHelper::post('outlet/be/list', $post);
+
+        if (isset($outlet['status']) && $outlet['status'] == "success") {
+            $data['outlet'] = $outlet['result'];
+        } else {
+            $data['outlet'] = [];
+        }
+
+        return view('outlet::list', $data);
+    }
+    public function kontraktor(Request $request)
+    {
+        $data = [
+            'title'          => 'Outlet',
+            'sub_title'      => 'Outlet List',
+            'menu_active'    => 'outlet',
+            'submenu_active' => 'kontraktor-list',
+        ];
+
+         $post['level'] = "Kontraktor";
+        $post['all_outlet'] = 1;
+        $outlet = MyHelper::post('outlet/be/list', $post);
+
+        if (isset($outlet['status']) && $outlet['status'] == "success") {
+            $data['outlet'] = $outlet['result'];
+        } else {
+            $data['outlet'] = [];
+        }
+
+        return view('outlet::list', $data);
+    }
     public function indexAjax(Request $request)
     {
         $post = $request->except('_token');
@@ -168,32 +210,30 @@ class OutletController extends Controller
     {
 
         $post = $request->except('_token');
-
-        if (empty($post['outlet_name'])) {
-            $data = [
+        $data = [
                 'title'          => 'Outlet',
                 'sub_title'      => 'Detail Outlet',
-                'menu_active'    => 'outlet',
-                'submenu_active' => 'outlet-list',
+                'menu_active'    => 'outlet'
             ];
+        if (empty($post['outlet_name'])) {
+            
 
             $outlet = MyHelper::post('outlet/be/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
-            $data['brands'] = MyHelper::get('brand/be/list')['result'] ?? [];
-            $data['delivery'] = [];
-            // return $outlet;
-
+            
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet']    = $outlet['result'];
             } else {
                 $e = ['e' => 'Data outlet not found'];
                 return back()->witherrors($e);
             }
-
-
-            // province
+            
+            if($data['outlet'][0]['outlet_type']??null == "Tukang Sedot"){
+                $data['submenu_active'] = 'tukang-sedot-list';
+            }else{
+                $data['submenu_active'] = 'kontraktor-list';
+            }
+           $data['merchant'] = MyHelper::post('merchant/detail', ['id_merchant' => $data['outlet'][0]['merchant']['id_merchant']])['result'] ?? [];
             $data['province'] = $this->getPropinsi();
-            // return $data;
-            // print_r($data); exit();
             $pageBalance = 1;
             if ($type == 'log-balance') {
                 $pageBalance = $post['page'] ?? 1;
@@ -259,11 +299,10 @@ class OutletController extends Controller
                 "filter" => "1",
                 "admin_list" => 1
             ];
-
-            $data['products'] = MyHelper::post('product/be/list', $conditions)['result'] ?? [];
-            $data['doctors'] = MyHelper::post('doctor/list/outlet', ['id_outlet' => $data['outlet'][0]['id_outlet']])['result'] ?? [];
             $data['id_outlet'] = $data['outlet'][0]['id_outlet'];
             $data['outlet_code'] = $code;
+            $data['provinces'] = MyHelper::get('province/list')['result'] ?? [];
+            $data['cities'] = MyHelper::get('city/list')['result'] ?? [];
             return view('outlet::detail', $data);
         } else {
             if (!empty($post['outlet_latitude']) && (strpos($post['outlet_latitude'], ',') !== false || $post['outlet_latitude'] == 'NaN')) {

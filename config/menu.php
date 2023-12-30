@@ -117,7 +117,7 @@ return [
                         ],
                         [
                             'label' => 'Tukang Sedot List',
-                            'url' => 'tukang-sedot',
+                            'url' => 'outlet/tukang-sedot',
                             'active' => '\View::shared("submenu_active") == "tukang-sedot-list"',
                             'required_features' => [323,324,326,327],
                         ],
@@ -144,7 +144,7 @@ return [
                         ],
                         [
                             'label' => 'Kontraktor List',
-                            'url' => 'kontraktor',
+                            'url' => 'outlet/kontraktor',
                             'active' => '\View::shared("submenu_active") == "kontraktor-list"',
                             'required_features' => [323,324,326,327],
                         ],

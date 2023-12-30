@@ -225,9 +225,6 @@
                     <tr>
                         <th> Code </th>
                         <th> Name </th>
-                        @if(MyHelper::hasAccess([95], $configs))
-                        <th> Brand </th>
-                        @endif
                         <th> City </th>
                         <th> Status </th>
                         @if(MyHelper::hasAccess([25,27,28], $grantedFeature))
@@ -241,13 +238,6 @@
                             <tr>
                                 <td>{{ $value['outlet_code'] }}</td>
                                 <td>{{ $value['outlet_name'] }}</td>
-                                @if(MyHelper::hasAccess([95], $configs))
-                                <td>
-                                    @foreach ($value['brands'] as $item)
-                                        {{$item['name_brand']}}
-                                    @endforeach
-                                </td>
-                                @endif
                                 @if (empty($value['city']))
                                     <td> - </td>
                                 @else

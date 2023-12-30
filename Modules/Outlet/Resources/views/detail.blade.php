@@ -344,14 +344,6 @@
                 $('#outlet_postal_code').val(isi[1]);
             });
 
-            @foreach($products as $key => $pro)
-                var option =  '<option class="option-visibility" data-id={{$pro["id_product"]}}>{{$pro["product_code"]}} - {{$pro["product_name"]}}</option>'
-                @if(!empty($pro['product_detail'][0]['product_detail_visibility']) && $pro['product_detail'][0]['product_detail_visibility'] == 'Visible')
-                    $('#visibleglobal-{{lcfirst('Visible')}}').append(option)
-                @else
-                $('#visibleglobal-{{lcfirst('Hidden')}}').append(option)
-                @endif
-            @endforeach
 
             $('#move-hiden').click(function() {
                 if($('#visibleglobal-visible').val() == null){
@@ -677,45 +669,16 @@
                 <li @if(!isset($tipe)) class="active" @endif id="infoOutlet">
                     <a href="#info" data-toggle="tab" > Info </a>
                 </li>
-                <li id="listProduct">
-                    <a href="#list_product" data-toggle="tab" > List Product </a>
+                <li id="logBalanceOutlet" >
+                    <a href="#merchant" data-toggle="tab" > Merchant </a>
                 </li>
-                <li id="listPayment" @if(isset($tipe) && $tipe=='list_payment') class="active" @endif>
+                <li id="listProduct">
+                    <a href="#log_balance" data-toggle="tab" > List Balance </a>
+                </li>
+                <li id="listPayment">
                     <a href="#list_payment" data-toggle="tab" > List Payment </a>
                 </li>
-                <li id="logBalanceOutlet" @if(isset($tipe) && $tipe=='log_balance') class="active" @endif>
-                    <a href="#log_balance" data-toggle="tab" > Log Balance </a>
-                </li>
-                @if(MyHelper::hasAccess([5], $configs))
-                <li id="pinOutlet">
-                    <a href="#pin" data-toggle="tab" > Update Pin </a>
-                </li>
-                @endif
-                @if(MyHelper::hasAccess([29], $grantedFeature))
-                    <li>
-                        <a href="#photo" data-toggle="tab"> Photo </a>
-                    </li>
-                @endif
-                @if(MyHelper::hasAccess([4], $configs))
-                    @if(MyHelper::hasAccess([34], $grantedFeature))
-                        <li>
-                            <a href="#holiday" data-toggle="tab"> Holiday </a>
-                        </li>
-                    @endif
-                @endif
-                @if(MyHelper::hasAccess([5], $configs))
-                    @if(MyHelper::hasAccess([39,40,41], $grantedFeature))
-                        <li>
-                            <a href="#admin" data-toggle="tab"> Admin Outlet </a>
-                        </li>
-                    @endif
-                    <li>
-                        <a href="#schedule" data-toggle="tab"> Schedule </a>
-                    </li>
-                @endif
-                <li>
-                    <a href="#visibility" data-toggle="tab"> Visibility Product</a>
-                </li>
+              
             </ul>
         </div>
         <div class="portlet-body">
@@ -723,33 +686,17 @@
                 <div class="tab-pane @if(!isset($tipe)) active @endif" id="info">
                     @include('outlet::info')
                 </div>
-                <div class="tab-pane @if(isset($tipe) && $tipe=='log_balance') active @endif" id="log_balance">
+
+                <div class="tab-pane" id="merchant">
+                    @include('outlet::merchant')
+                </div>
+                <div class="tab-pane" id="log_balance">
                     @include('outlet::log_balance')
                 </div>
-                <div class="tab-pane @if(isset($tipe) && $tipe=='list_payment') active @endif" id="list_payment">
+                <div class="tab-pane" id="list_payment">
                     @include('outlet::list_payment')
                 </div>
-                <div class="tab-pane" id="list_product">
-                    @include('outlet::list_product')
-                </div>
-                <div class="tab-pane" id="pin">
-                    @include('outlet::pin')
-                </div>
-                <div class="tab-pane" id="photo">
-                    @include('outlet::photo')
-                </div>
-                <div class="tab-pane" id="holiday">
-                    @include('outlet::holiday')
-                </div>
-                <div class="tab-pane" id="admin">
-                    @include('outlet::admin')
-                </div>
-                <div class="tab-pane" id="schedule">
-                    @include('outlet::schedule_open')
-                </div>
-                <div class="tab-pane" id="visibility">
-                    @include('outlet::outlet_visibility')
-                </div>
+               
             </div>
         </div>
     </div>

@@ -196,11 +196,6 @@
                 <li class="active">
                     <a href="#merchant_info" data-toggle="tab"> Info </a>
                 </li>
-                @if(MyHelper::hasAccess([141], $configs))
-                <li>
-                    <a href="#merchant_grading" data-toggle="tab"> Grading </a>
-                </li>
-                @endif
             </ul>
         </div>
         <div class="portlet-body form form-horizontal">
