@@ -13,14 +13,7 @@ return [
                     'icon' => 'icon-home',
                     'url' => 'home',
                     'active' => '\View::shared("menu_active") == "home"',
-                ],
-                [
-                    'type' => 'single',
-                    'label' => 'Home Setting',
-                    'icon' => 'fa fa-cog',
-                    'url' => 'setting/home/user',
-                    'active' => '\View::shared("menu_active") == "setting-home-user"',
-                ],
+                ]
             ]
         ],
 
@@ -74,35 +67,6 @@ return [
             'type' => 'group',
             'label' => 'Browse',
             'children' => [
-                
-                [
-                    'label' => 'Outlet',
-                    'icon' => 'icon-pointer',
-                    'type' => 'tree',
-                    'children' => [
-                        [
-                            'label' => 'New Outlet',
-                            'url' => 'outlet/create',
-                            'required_features' => [26],
-                            'required_configs' => [82],
-                        ],
-                       
-                        [
-                            'label' => 'Outlet List',
-                            'active' => '\View::shared("submenu_active") == "outlet-list"',
-                            'url' => 'outlet/list',
-                            'required_features' => [24],
-                        ],
-                       
-                        [
-                            'label' => 'Manage Location',
-                            'active' => '\View::shared("submenu_active") == "manage-location"',
-                            'url' => 'outlet/manage-location',
-                            'required_configs' => [2,3],
-                            'required_features' => [27],
-                        ],
-                    ]
-                ],
                 [
                     'label' => 'Tukang Sedot',
                     'type' => 'tree',

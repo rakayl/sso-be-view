@@ -409,4 +409,15 @@ class Controller extends BaseController
         }
         return abort(404);
     }
+     public function setRange(Request $request){
+        $data=$request->all();
+        Session::put('dari',$data['dari']);
+        Session::put('sampai',$data['sampai']);
+        return response()->json($data);
+    }
+    public function setfilter(Request $request){
+        $data=$request->all();
+        Session::put('setfilter',$data['filter']);
+        return response()->json($data);
+    }
 }

@@ -30,6 +30,9 @@ Route::group(['middleware' => 'web'], function () {
     });
     Route::post('login', 'Controller@login');
     Route::group(['middleware' => 'validate_session'], function () {
+        Route::get('setrange', 'Controller@setrange')->name('setrange');
+        Route::post('setfilter', 'Controller@setfilter')->name('setfilter');
+        
         Route::get('home', 'Controller@getHome');
         Route::any('debugger', 'Controller@debugger');
         Route::any('fire/{path}', 'Controller@proxyAPI')->where(['path' => ".*"]);
