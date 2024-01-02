@@ -142,55 +142,14 @@ class Controller extends BaseController
             session()->flush();
             return redirect('login')->withErrors(['You dont have access this system.']);
         } else {
-            if ($year == 'alltime') {
-                $data['date_start']   = date('Y-m-d', strtotime("- 20 years"));
-                $data['date_end']     = date('Y-m-d');
-            } else {
-                if ($year == null && $month == null) {
-                    // $data['date_start']   = date("Y-m-1");
-                    // $data['date_end']     = date("Y-m-t");
-                }
+           
 
-                if ($year != null && $month != null) {
-                    $timestamp    = strtotime("" . $month . " " . $year . "");
-                    $last         = date('t', $timestamp);
-                    $data['date_start'] = date("" . $year . "-" . $month . "-01");
-                    $data['date_end'] = date("" . $year . "-" . $month . "-" . $last);
-                }
-
-                if ($year == 'last7days') {
-                    $data['date_end'] = date("Y-m-d");
-                    $data['date_start'] = date('Y-m-d', strtotime('-7 days', strtotime($data['date_end'])));
-                }
-                if ($year == 'last30days') {
-                    $data['date_end'] = date("Y-m-d");
-                    $data['date_start'] = date('Y-m-d', strtotime('-30 days', strtotime($data['date_end'])));
-                }
-                if ($year == 'last3months') {
-                    $data['date_end'] = date("Y-m-d");
-                    $data['date_start'] = date('Y-m-d', strtotime('-3 months', strtotime($data['date_end'])));
-                }
-            }
-            $data['month'] = $month;
-            $data['year'] = $year;
-
-            if ($month == null) {
-                $data['month'] = date('m');
-            }
-
-            $dashboard = MyHelper::post('setting/dashboard', $data);
+            $dashboard = MyHelper::post('report/dashboard/recent', $data);
             // dd($data);
             if (isset($dashboard['status']) && $dashboard['status'] == 'success') {
                 $data['dashboard'] = $dashboard['result'];
-                if ($year == null && (strpos($dashboard['result']['daterange'], 'days') !== false || strpos($dashboard['result']['daterange'], 'months') !== false)) {
-                    $data['year'] = 'last' . str_replace(' ', '', $dashboard['result']['daterange']);
-                } else {
-                    if ($year == null) {
-                        $data['year'] = date('Y');
-                    }
-                }
             } else {
-                $data['dashboard'] = "";
+                $data['dashboard'] = [];
             }
 
             return view('home', $data);

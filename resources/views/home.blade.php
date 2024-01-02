@@ -1,3 +1,15 @@
+@php
+    use App\Lib\MyHelper;
+    $grantedFeature     = session('granted_features');
+    $codeColor = [
+            1 => 'badge-danger',
+            2 => 'badge-warning',
+            3 => 'badge-secondary',
+            4 => 'badge-warning',
+            5 => 'badge-warning',
+            6 => 'badge-success',
+        ];
+@endphp
 @extends('layouts.main')
 
 @section('page-style')
@@ -251,7 +263,6 @@
                 success: function(data) {
                     var html = [];
                     $.each(data, function(i, f) {
-                       
                          html +='<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">\n\
                                     <div class="dashboard-stat dashboard-stat-v2 '+f.color+'">\n\
                                         <div class="visual"><i class="'+f.icon+'"></i></div>\n\
@@ -281,75 +292,11 @@
         });
         $.ajax({
             type: "get",
-            url: "{{ url('dashboard/omset') }}",
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                omsetCategory(data)
-            },
-            error: function(data) {
-                console.log('gagal')
-            }
-        });
-        $.ajax({
-            type: "get",
             url: "{{ url('dashboard/categori') }}",
             dataType: 'json',
             cache: false,
             success: function(data) {
                 vendorCategory(data)
-            },
-            error: function(data) {
-                console.log('gagal')
-            }
-        });
-        $.ajax({
-            type: "get",
-            url: "{{ url('dashboard/depart/tertinggi') }}",
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                departPemesananNominal(data)
-                departPemesananQty(data)
-            },
-            error: function(data) {
-                console.log('gagal')
-            }
-        });
-        $.ajax({
-            type: "get",
-            url: "{{ url('dashboard/depart/piutang') }}",
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                departPiutangNominal(data)
-                departPiutangQty(data)
-            },
-            error: function(data) {
-                console.log('gagal')
-            }
-        });
-        $.ajax({
-            type: "get",
-            url: "{{ url('dashboard/omset/outlet') }}",
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                vendorOmsetNominal(data)
-                vendorOmsetQty(data)
-            },
-            error: function(data) {
-                console.log('gagal')
-            }
-        });
-        $.ajax({
-            type: "get",
-            url: "{{ url('dashboard/vendor') }}",
-            dataType: 'json',
-            cache: false,
-            success: function(data) {
-                vendorHutangNominal(data)
-                vendorHutangQty(data)
             },
             error: function(data) {
                 console.log('gagal')
@@ -437,7 +384,7 @@ function makeSeries(name, fieldName) {
   }));
 
   series.columns.template.setAll({
-    tooltipText: "{name}, {categoryX}:{valueY}",
+    tooltipText: "{name},pada minggu ke-{categoryX}:total {valueY}",
     width: am5.percent(90),
     tooltipY: 0,
     strokeOpacity: 0
@@ -465,8 +412,8 @@ function makeSeries(name, fieldName) {
   legend.data.push(series);
 }
 
-makeSeries("Harga Jual", "subtotal");
-makeSeries("COGS", "cogs");
+makeSeries("Sedot WC", "sedot");
+makeSeries("Bangun & Renovasi", "renov");
 
 // Make stuff animate on load
 // https://www.amcharts.com/docs/v5/concepts/animations/
@@ -474,119 +421,6 @@ chart.appear(1000, 100);
 
 };
 
-function omsetCategory(data) {
-
-
-
-// Create root element
-// https://www.amcharts.com/docs/v5/getting-started/#Root_element
-var root = am5.Root.new("chartdiv_vendor_category");
-
-
-// Set themes
-// https://www.amcharts.com/docs/v5/concepts/themes/
-root.setThemes([
-  am5themes_Animated.new(root)
-]);
-
-
-// Create chart
-// https://www.amcharts.com/docs/v5/charts/xy-chart/
-var chart = root.container.children.push(am5xy.XYChart.new(root, {
-  panX: false,
-  panY: false,
-  paddingLeft: 0,
-  wheelX: "panX",
-  wheelY: "zoomX",
-  layout: root.verticalLayout
-}));
-
-
-// Add legend
-// https://www.amcharts.com/docs/v5/charts/xy-chart/legend-xy-series/
-var legend = chart.children.push(
-  am5.Legend.new(root, {
-    centerX: am5.p50,
-    x: am5.p50
-  })
-);
-
-
-// Create axes
-// https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
-var xRenderer = am5xy.AxisRendererX.new(root, {
-  cellStartLocation: 0.1,
-  cellEndLocation: 0.9,
-  minorGridEnabled: true
-})
-
-var xAxis = chart.xAxes.push(am5xy.CategoryAxis.new(root, {
-  categoryField: "date",
-  renderer: xRenderer,
-  tooltip: am5.Tooltip.new(root, {})
-}));
-
-xRenderer.grid.template.setAll({
-  location: 1
-})
-
-xAxis.data.setAll(data);
-
-var yAxis = chart.yAxes.push(am5xy.ValueAxis.new(root, {
-  renderer: am5xy.AxisRendererY.new(root, {
-    strokeOpacity: 0.1
-  })
-}));
-
-
-// Add series
-// https://www.amcharts.com/docs/v5/charts/xy-chart/series/
-function makeSeries(name, fieldName) {
-  var series = chart.series.push(am5xy.ColumnSeries.new(root, {
-    name: name,
-    xAxis: xAxis,
-    yAxis: yAxis,
-    valueYField: fieldName,
-    categoryXField: "date"
-  }));
-
-  series.columns.template.setAll({
-    tooltipText: "{name}, {categoryX}:{valueY}",
-    width: am5.percent(90),
-    tooltipY: 0,
-    strokeOpacity: 0
-  });
-
-  series.data.setAll(data);
-
-  // Make stuff animate on load
-  // https://www.amcharts.com/docs/v5/concepts/animations/
-  series.appear();
-
-  series.bullets.push(function () {
-    return am5.Bullet.new(root, {
-      locationY: 0,
-      sprite: am5.Label.new(root, {
-        text: "{valueY}",
-        fill: root.interfaceColors.get("alternativeText"),
-        centerY: 0,
-        centerX: am5.p50,
-        populateText: true
-      })
-    });
-  });
-
-  legend.data.push(series);
-}
-
-makeSeries("Pre Order", "pre_order");
-makeSeries("Cepat Saji", "cepat_saji");
-
-// Make stuff animate on load
-// https://www.amcharts.com/docs/v5/concepts/animations/
-chart.appear(1000, 100);
-
-};
 function vendorCategory(data) {
 
 // https://www.amcharts.com/docs/v5/getting-started/#Root_element
@@ -625,457 +459,6 @@ series.states.create("hidden", {
 series.data.setAll(data);
 
 series.appear(1000, 100);
-};
-
-function departPemesananNominal(data){
-
-            // Themes begin
-            am4core.useTheme(am4themes_animated);
-            // Themes end
-
-            // Create chart instance
-            var chart = am4core.create("departPemesananNominal", am4charts.XYChart3D);
-
-            // Add data
-            chart.data = data;
-
-            // Create axes
-            let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "name";
-            categoryAxis.renderer.labels.template.rotation = 0;
-            categoryAxis.renderer.labels.template.hideOversized = false;
-            categoryAxis.renderer.minGridDistance = 20;
-            categoryAxis.renderer.labels.template.horizontalCenter = "right";
-            categoryAxis.renderer.labels.template.verticalCenter = "middle";
-            categoryAxis.tooltip.label.rotation = 270;
-            categoryAxis.tooltip.label.horizontalCenter = "right";
-            categoryAxis.tooltip.label.verticalCenter = "middle";
-
-            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Nominal";
-            valueAxis.title.fontWeight = "bold";
-
-            // Create series
-            var series = chart.series.push(new am4charts.ColumnSeries3D());
-            series.dataFields.valueY = "total";
-            series.dataFields.categoryX = "name";
-            series.name = "Visits";
-            series.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-            series.columns.template.fillOpacity = .8;
-
-            var columnTemplate = series.columns.template;
-            columnTemplate.strokeWidth = 2;
-            columnTemplate.strokeOpacity = 1;
-            columnTemplate.stroke = am4core.color("#FFFFFF");
-
-            columnTemplate.adapter.add("fill", function(fill, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            columnTemplate.adapter.add("stroke", function(stroke, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            chart.cursor = new am4charts.XYCursor();
-            chart.cursor.lineX.strokeOpacity = 0;
-            chart.cursor.lineY.strokeOpacity = 0;
-
-
-};
-
-function departPemesananQty(data){
-
-    // Themes begin
-            am4core.useTheme(am4themes_animated);
-            // Themes end
-
-            // Create chart instance
-            var chart = am4core.create("departPemesananQty", am4charts.XYChart3D);
-
-            // Add data
-            chart.data = data;
-
-            // Create axes
-            let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "name";
-            categoryAxis.renderer.labels.template.rotation = 0;
-            categoryAxis.renderer.labels.template.hideOversized = false;
-            categoryAxis.renderer.minGridDistance = 20;
-            categoryAxis.renderer.labels.template.horizontalCenter = "right";
-            categoryAxis.renderer.labels.template.verticalCenter = "middle";
-            categoryAxis.tooltip.label.rotation = 270;
-            categoryAxis.tooltip.label.horizontalCenter = "right";
-            categoryAxis.tooltip.label.verticalCenter = "middle";
-
-            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Quantity";
-            valueAxis.title.fontWeight = "bold";
-
-            // Create series
-            var series = chart.series.push(new am4charts.ColumnSeries3D());
-            series.dataFields.valueY = "qty";
-            series.dataFields.categoryX = "name";
-            series.name = "Visits";
-            series.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-            series.columns.template.fillOpacity = .8;
-
-            var columnTemplate = series.columns.template;
-            columnTemplate.strokeWidth = 2;
-            columnTemplate.strokeOpacity = 1;
-            columnTemplate.stroke = am4core.color("#FFFFFF");
-
-            columnTemplate.adapter.add("fill", function(fill, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            columnTemplate.adapter.add("stroke", function(stroke, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            chart.cursor = new am4charts.XYCursor();
-            chart.cursor.lineX.strokeOpacity = 0;
-            chart.cursor.lineY.strokeOpacity = 0;
-          
-
-};
-
-
-function departPiutangNominal(data){
-
-            // Themes begin
-            am4core.useTheme(am4themes_animated);
-            // Themes end
-
-            // Create chart instance
-            var chart = am4core.create("departPiutangNominal", am4charts.XYChart3D);
-
-            // Add data
-            chart.data = data;
-
-            // Create axes
-            let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "name";
-            categoryAxis.renderer.labels.template.rotation = 0;
-            categoryAxis.renderer.labels.template.hideOversized = false;
-            categoryAxis.renderer.minGridDistance = 20;
-            categoryAxis.renderer.labels.template.horizontalCenter = "right";
-            categoryAxis.renderer.labels.template.verticalCenter = "middle";
-            categoryAxis.tooltip.label.rotation = 270;
-            categoryAxis.tooltip.label.horizontalCenter = "right";
-            categoryAxis.tooltip.label.verticalCenter = "middle";
-
-            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Nominal";
-            valueAxis.title.fontWeight = "bold";
-
-            // Create series
-            var series = chart.series.push(new am4charts.ColumnSeries3D());
-            series.dataFields.valueY = "total";
-            series.dataFields.categoryX = "name";
-            series.name = "Visits";
-            series.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-            series.columns.template.fillOpacity = .8;
-
-            var columnTemplate = series.columns.template;
-            columnTemplate.strokeWidth = 2;
-            columnTemplate.strokeOpacity = 1;
-            columnTemplate.stroke = am4core.color("#FFFFFF");
-
-            columnTemplate.adapter.add("fill", function(fill, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            columnTemplate.adapter.add("stroke", function(stroke, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            chart.cursor = new am4charts.XYCursor();
-            chart.cursor.lineX.strokeOpacity = 0;
-            chart.cursor.lineY.strokeOpacity = 0;
-
-
-};
-
-function departPiutangQty(data){
-
-    // Themes begin
-            am4core.useTheme(am4themes_animated);
-            // Themes end
-
-            // Create chart instance
-            var chart = am4core.create("departPiutangQty", am4charts.XYChart3D);
-
-            // Add data
-            chart.data = data;
-
-            // Create axes
-            let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "name";
-            categoryAxis.renderer.labels.template.rotation = 0;
-            categoryAxis.renderer.labels.template.hideOversized = false;
-            categoryAxis.renderer.minGridDistance = 20;
-            categoryAxis.renderer.labels.template.horizontalCenter = "right";
-            categoryAxis.renderer.labels.template.verticalCenter = "middle";
-            categoryAxis.tooltip.label.rotation = 270;
-            categoryAxis.tooltip.label.horizontalCenter = "right";
-            categoryAxis.tooltip.label.verticalCenter = "middle";
-
-            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Quantity";
-            valueAxis.title.fontWeight = "bold";
-
-            // Create series
-            var series = chart.series.push(new am4charts.ColumnSeries3D());
-            series.dataFields.valueY = "qty";
-            series.dataFields.categoryX = "name";
-            series.name = "Visits";
-            series.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-            series.columns.template.fillOpacity = .8;
-
-            var columnTemplate = series.columns.template;
-            columnTemplate.strokeWidth = 2;
-            columnTemplate.strokeOpacity = 1;
-            columnTemplate.stroke = am4core.color("#FFFFFF");
-
-            columnTemplate.adapter.add("fill", function(fill, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            columnTemplate.adapter.add("stroke", function(stroke, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            chart.cursor = new am4charts.XYCursor();
-            chart.cursor.lineX.strokeOpacity = 0;
-            chart.cursor.lineY.strokeOpacity = 0;
-          
-
-};
-
-//vendor
-function vendorOmsetNominal(data){
-
-            // Themes begin
-            am4core.useTheme(am4themes_animated);
-            // Themes end
-
-            // Create chart instance
-            var chart = am4core.create("vendorOmsetNominal", am4charts.XYChart3D);
-
-            // Add data
-            chart.data = data;
-
-            // Create axes
-            let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "name";
-            categoryAxis.renderer.labels.template.rotation = 0;
-            categoryAxis.renderer.labels.template.hideOversized = false;
-            categoryAxis.renderer.minGridDistance = 20;
-            categoryAxis.renderer.labels.template.horizontalCenter = "right";
-            categoryAxis.renderer.labels.template.verticalCenter = "middle";
-            categoryAxis.tooltip.label.rotation = 270;
-            categoryAxis.tooltip.label.horizontalCenter = "right";
-            categoryAxis.tooltip.label.verticalCenter = "middle";
-
-            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Nominal";
-            valueAxis.title.fontWeight = "bold";
-
-            // Create series
-            var series = chart.series.push(new am4charts.ColumnSeries3D());
-            series.dataFields.valueY = "nominal";
-            series.dataFields.categoryX = "name";
-            series.name = "Visits";
-            series.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-            series.columns.template.fillOpacity = .8;
-
-            var columnTemplate = series.columns.template;
-            columnTemplate.strokeWidth = 2;
-            columnTemplate.strokeOpacity = 1;
-            columnTemplate.stroke = am4core.color("#FFFFFF");
-
-            columnTemplate.adapter.add("fill", function(fill, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            columnTemplate.adapter.add("stroke", function(stroke, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            chart.cursor = new am4charts.XYCursor();
-            chart.cursor.lineX.strokeOpacity = 0;
-            chart.cursor.lineY.strokeOpacity = 0;
-
-
-};
-
-function vendorOmsetQty(data){
-
-    // Themes begin
-            am4core.useTheme(am4themes_animated);
-            // Themes end
-
-            // Create chart instance
-            var chart = am4core.create("vendorOmsetQty", am4charts.XYChart3D);
-
-            // Add data
-            chart.data = data;
-
-            // Create axes
-            let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "name";
-            categoryAxis.renderer.labels.template.rotation = 0;
-            categoryAxis.renderer.labels.template.hideOversized = false;
-            categoryAxis.renderer.minGridDistance = 20;
-            categoryAxis.renderer.labels.template.horizontalCenter = "right";
-            categoryAxis.renderer.labels.template.verticalCenter = "middle";
-            categoryAxis.tooltip.label.rotation = 270;
-            categoryAxis.tooltip.label.horizontalCenter = "right";
-            categoryAxis.tooltip.label.verticalCenter = "middle";
-
-            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Quantity";
-            valueAxis.title.fontWeight = "bold";
-
-            // Create series
-            var series = chart.series.push(new am4charts.ColumnSeries3D());
-            series.dataFields.valueY = "qty";
-            series.dataFields.categoryX = "name";
-            series.name = "Visits";
-            series.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-            series.columns.template.fillOpacity = .8;
-
-            var columnTemplate = series.columns.template;
-            columnTemplate.strokeWidth = 2;
-            columnTemplate.strokeOpacity = 1;
-            columnTemplate.stroke = am4core.color("#FFFFFF");
-
-            columnTemplate.adapter.add("fill", function(fill, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            columnTemplate.adapter.add("stroke", function(stroke, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            chart.cursor = new am4charts.XYCursor();
-            chart.cursor.lineX.strokeOpacity = 0;
-            chart.cursor.lineY.strokeOpacity = 0;
-          
-
-};
-
-
-function vendorHutangNominal(data){
-
-            // Themes begin
-            am4core.useTheme(am4themes_animated);
-            // Themes end
-
-            // Create chart instance
-            var chart = am4core.create("vendorHutangNominal", am4charts.XYChart3D);
-
-            // Add data
-            chart.data = data;
-
-            // Create axes
-            let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "name";
-            categoryAxis.renderer.labels.template.rotation = 0;
-            categoryAxis.renderer.labels.template.hideOversized = false;
-            categoryAxis.renderer.minGridDistance = 20;
-            categoryAxis.renderer.labels.template.horizontalCenter = "right";
-            categoryAxis.renderer.labels.template.verticalCenter = "middle";
-            categoryAxis.tooltip.label.rotation = 270;
-            categoryAxis.tooltip.label.horizontalCenter = "right";
-            categoryAxis.tooltip.label.verticalCenter = "middle";
-
-            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Nominal";
-            valueAxis.title.fontWeight = "bold";
-
-            // Create series
-            var series = chart.series.push(new am4charts.ColumnSeries3D());
-            series.dataFields.valueY = "total_hutang";
-            series.dataFields.categoryX = "name";
-            series.name = "Visits";
-            series.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-            series.columns.template.fillOpacity = .8;
-
-            var columnTemplate = series.columns.template;
-            columnTemplate.strokeWidth = 2;
-            columnTemplate.strokeOpacity = 1;
-            columnTemplate.stroke = am4core.color("#FFFFFF");
-
-            columnTemplate.adapter.add("fill", function(fill, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            columnTemplate.adapter.add("stroke", function(stroke, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            chart.cursor = new am4charts.XYCursor();
-            chart.cursor.lineX.strokeOpacity = 0;
-            chart.cursor.lineY.strokeOpacity = 0;
-
-
-};
-
-function vendorHutangQty(data){
-
-    // Themes begin
-            am4core.useTheme(am4themes_animated);
-            // Themes end
-
-            // Create chart instance
-            var chart = am4core.create("vendorHutangQty", am4charts.XYChart3D);
-
-            // Add data
-            chart.data = data;
-
-            // Create axes
-            let categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
-            categoryAxis.dataFields.category = "name";
-            categoryAxis.renderer.labels.template.rotation = 0;
-            categoryAxis.renderer.labels.template.hideOversized = false;
-            categoryAxis.renderer.minGridDistance = 20;
-            categoryAxis.renderer.labels.template.horizontalCenter = "right";
-            categoryAxis.renderer.labels.template.verticalCenter = "middle";
-            categoryAxis.tooltip.label.rotation = 270;
-            categoryAxis.tooltip.label.horizontalCenter = "right";
-            categoryAxis.tooltip.label.verticalCenter = "middle";
-
-            let valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
-            valueAxis.title.text = "Quantity";
-            valueAxis.title.fontWeight = "bold";
-
-            // Create series
-            var series = chart.series.push(new am4charts.ColumnSeries3D());
-            series.dataFields.valueY = "qty";
-            series.dataFields.categoryX = "name";
-            series.name = "Visits";
-            series.tooltipText = "{categoryX}: [bold]{valueY}[/]";
-            series.columns.template.fillOpacity = .8;
-
-            var columnTemplate = series.columns.template;
-            columnTemplate.strokeWidth = 2;
-            columnTemplate.strokeOpacity = 1;
-            columnTemplate.stroke = am4core.color("#FFFFFF");
-
-            columnTemplate.adapter.add("fill", function(fill, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            columnTemplate.adapter.add("stroke", function(stroke, target) {
-              return chart.colors.getIndex(target.dataItem.index);
-            })
-
-            chart.cursor = new am4charts.XYCursor();
-            chart.cursor.lineX.strokeOpacity = 0;
-            chart.cursor.lineY.strokeOpacity = 0;
-          
-
 };
 
 
@@ -1132,23 +515,51 @@ function vendorHutangQty(data){
     </div>
     <div class="portlet light bordered">
             <div class="row" style=" margin-top: 25px;margin-bottom: 25px;">
-             <div class="col-md-8">
+             <div class="col-md-12">
                     <div class="card card-custom">
                         <div class="card-header border-0 pt-5">
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label font-weight-bolder text-primary">Omset Vendor Category</span>
+                                <span class="card-label font-weight-bolder text-primary">Recent Transaction</span>
                             </h3>
                         </div>
                         <div class="card-body pt-0">
-                            <div id="chartdiv_vendor_category"></div>
+                            <table class="table table-striped table-bordered table-hover" id="sample_1">
+                                <thead>
+                                <tr>
+                                    <th>ID Transaksi</th>
+                                    <th>Nama Pelanggan</th>
+                                    <th>Jenis Layanan</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                @if(!empty($dashboard))
+                                    @foreach($dashboard as $res)
+                                        <tr>
+                                            <td>{{ $res['transaction_receipt_number'] }}</td>
+                                            <td>{{ $res['name'] }}</td>
+                                            <td>{{ $res['layanan'] }}</td>
+                                           
+                                            <td><span class="badge badge-sm {{$codeColor[$res['status']]??'badge-default'}}" @if($res['status'] == 6) style="background-color: #28a745;" @endif>{{ $res['status_text'] }}</span></td>
+                                            <td>
+                                               <a class="btn btn-block yellow btn-xs" href="{{ url('transaction/detail', $res['id_transaction']) }}"><i class="icon-pencil"></i> Detail </a>
+                                               
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                                </tbody>
+
+                            </table>
                         </div>
                     </div>
                 </div>
-             <div class="col-md-4">
+             <div class="col-md-12">
                     <div class="card card-custom">
                         <div class="card-header border-0 pt-5">
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label font-weight-bolder text-primary">Presentasi Categori</span>
+                                <span class="card-label font-weight-bolder text-primary">Presentase Transaction</span>
                             </h3>
                         </div>
                         <div class="card-body pt-0">
@@ -1156,94 +567,6 @@ function vendorHutangQty(data){
                         </div>
                     </div>
                 </div>
-            </div>
-    </div>
-    <div class="portlet light bordered">
-        <div class="caption">
-            <h2>Department Pemesanan Tertinggi</h2>
-            </div>
-            <div class="row" style=" margin-top: 25px;margin-bottom: 25px;">
-                <div class="col-md-6">
-                       <div class="card card-custom">
-                           <div class="card-body pt-0">
-                               <div id="departPemesananNominal"></div>
-                           </div>
-                       </div>
-                   </div>
-                <div class="col-md-6">
-                       <div class="card card-custom">
-                           <div class="card-body pt-0">
-                               <div id="departPemesananQty"></div>
-                           </div>
-                       </div>
-                   </div>
-               
-            </div>
-    </div>
-    <div class="portlet light bordered">
-        <div class="caption">
-            <h2>Department Hutang Tertinggi</h2>
-            </div>
-            <div class="row" style=" margin-top: 25px;margin-bottom: 25px;">
-                <div class="col-md-6">
-                       <div class="card card-custom">
-                           <div class="card-body pt-0">
-                               <div id="departPiutangNominal"></div>
-                           </div>
-                       </div>
-                   </div>
-                <div class="col-md-6">
-                       <div class="card card-custom">
-                           <div class="card-body pt-0">
-                               <div id="departPiutangQty"></div>
-                           </div>
-                       </div>
-                   </div>
-               
-            </div>
-    </div>
-    <div class="portlet light bordered">
-        <div class="caption">
-            <h2>Omset Vendor Tertinggi</h2>
-            </div>
-            <div class="row" style=" margin-top: 25px;margin-bottom: 25px;">
-                <div class="col-md-6">
-                       <div class="card card-custom">
-                           <div class="card-body pt-0">
-                               <div id="vendorOmsetNominal"></div>
-                           </div>
-                       </div>
-                   </div>
-                <div class="col-md-6">
-                       <div class="card card-custom">
-                           <div class="card-body pt-0">
-                               <div id="vendorOmsetQty"></div>
-                           </div>
-                       </div>
-                   </div>
-               
-            </div>
-    </div>
-    <div class="portlet light bordered">
-        <div class="caption">
-            <h2>Hutang Vendor Tertinggi</h2>
-            </div>
-            <div class="row" style=" margin-top: 25px;margin-bottom: 25px;">
-                <div class="col-md-6">
-                       <div class="card card-custom">
-                           <div class="card-body pt-0">
-                               <div id="vendorHutangNominal"></div>
-                           </div>
-                       </div>
-                   </div>
-                <div class="col-md-6">
-                       <div class="card card-custom">
-                           <div class="card-body pt-0">
-                               <div id="vendorHutangQty"></div>
-                           </div>
-                       </div>
-                   </div>
-               
             </div>
     </div>
      
