@@ -73,6 +73,14 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'kontrakt
      });
 
 });
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'artikel'], function () {
+    Route::any('/', 'ArtikelController@list');
+    Route::get('create', 'ArtikelController@create');
+    Route::post('store', 'ArtikelController@store');
+    Route::get('detail/{id}', 'ArtikelController@detail');
+    Route::get('delete/{id}', 'ArtikelController@delete');
+    Route::post('update/{id}', 'ArtikelController@update');
+});
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'event'], function () {
     Route::any('/', 'EventController@list');
     Route::get('create', 'EventController@create');
@@ -82,6 +90,19 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'event'],
     Route::post('update/{id}', 'EventController@update');
 });
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'accommodation'], function () {
+    Route::any('/', 'AccommodationController@list');
+    Route::get('create', 'AccommodationController@create');
+    Route::post('store', 'AccommodationController@store');
+    Route::get('detail/{id}', 'AccommodationController@detail');
+    Route::get('delete/{id}', 'AccommodationController@delete');
+    Route::post('update/{id}', 'AccommodationController@update');
+});
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'iplt'], function () {
+    Route::any('/', 'IpltController@list');
+    Route::any('/pending', 'IpltController@pending');
+    Route::get('detail/{id}', 'AccommodationController@detail');
+});
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'non-iplt'], function () {
     Route::any('/', 'AccommodationController@list');
     Route::get('create', 'AccommodationController@create');
     Route::post('store', 'AccommodationController@store');

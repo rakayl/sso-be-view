@@ -243,6 +243,24 @@ return [
                         ],
                     ]
                 ],
+                [
+                    'label' => 'Artikel',
+                    'icon' => 'fa fa-calendar',
+                    'type' => 'tree',
+                    'children' => [
+                        [
+                            'label' => 'New Artikel',
+                            'active' => '\View::shared("submenu_active") == "artikel-new"',
+                            'url' => 'artikel/create',
+                        ],
+                       
+                        [
+                            'label' => 'Artikel List',
+                            'active' => '\View::shared("submenu_active") == "artikel-list"',
+                            'url' => 'artikel',
+                        ],
+                    ]
+                ],
             ],
         ],
         [
