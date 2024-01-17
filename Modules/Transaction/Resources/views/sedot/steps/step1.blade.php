@@ -22,7 +22,7 @@
 				<label class="col-md-4 control-label">Date <span class="required" aria-required="true"> * </span>
 				</label>
 				<div class="col-md-6">
-                                    <input  @if($detail['transaction_status_code']==4&&$detail['step_number']!=1) disabled @endif type="datetime-local" class="form-control form-filter input-sm datetimepicker" name="time_confirm" placeholder="From" @if($detail['step_number']==1) value="{{date('Y-m-d H:i',strtotime($detail['trasaction_sedot_wc']['time']??date('Y-m-d H:i')))}}" @else value="{{date('Y-m-d H:i',strtotime($detail['trasaction_sedot_wc']['time_confirm']??date('Y-m-d H:i')))}}" @endif  min="{{date('Y-m-d H:i')}}" data-date-format="yyyy-mm-dd hh:ii">
+                                    <input  @if($detail['transaction_status_code']==4&&$detail['step_number']!=1) disabled @endif type="datetime-local" class="form-control form-filter input-sm datetimepicker" name="time_confirm" placeholder="From" @if($detail['step_number']==0) value="{{date('Y-m-d H:i',strtotime($detail['trasaction_sedot_wc']['time']??date('Y-m-d H:i')))}}" @else value="{{date('Y-m-d H:i',strtotime($detail['trasaction_sedot_wc']['time_confirm']??date('Y-m-d H:i')))}}" @endif  min="{{date('Y-m-d H:i')}}" data-date-format="yyyy-mm-dd hh:ii">
                                 </div>
 			</div>
                         @if(isset($detail['step']['step1']['procesed_by']))
