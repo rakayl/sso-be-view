@@ -187,7 +187,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">New Event</span>
+                <span class="caption-subject font-blue sbold uppercase">New Kegiatan</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -221,14 +221,14 @@
                     <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
-                                Date Event
+                                Date Kegiatan
                                 <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir dilaksanakan event" data-container="body"></i>
                                 </label>
                             </div>
                             <div class="col-md-8">
                                     <div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-                                            <input type="text" disabled value="{{date('d/m/Y',strtotime($result['date']))}}" class="form-control date-picker" name="date" placeholder="Date Event" required>
+                                            <input type="text" disabled value="{{date('d/m/Y',strtotime($result['date']))}}" class="form-control date-picker" name="date" placeholder="Date Kegiatan" required>
                                             <span class="input-group-btn">
                                                     <button class="btn btn-sm default" type="button">
                                                             <i class="fa fa-calendar"></i>
@@ -319,7 +319,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <textarea name="address" disabled class="form-control" placeholder="Event Address" required>{{$result['address']??null}} </textarea>
+                            <textarea name="address" disabled class="form-control" placeholder="Kegiatan Address" required>{{$result['address']??null}} </textarea>
                         </div>
                     </div>
                     <div class="form-group">

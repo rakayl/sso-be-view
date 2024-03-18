@@ -14,8 +14,8 @@ class EventController extends Controller
     public function create()
     {
         $data = [
-            'title'          => 'Event',
-            'sub_title'      => 'New Event',
+            'title'          => 'Kegiatan',
+            'sub_title'      => 'New Kegiatan',
             'menu_active'    => 'event',
             'submenu_active' => 'event-new'
         ];
@@ -46,8 +46,8 @@ class EventController extends Controller
         $post = $request->all();
 
         $data = [
-            'title'          => 'Event',
-            'sub_title'      => 'Event List',
+            'title'          => 'Kegiatan',
+            'sub_title'      => 'Kegiatan List',
             'menu_active'    => 'event',
             'submenu_active' => 'event-list',
             'title_date_start' => 'Start',
@@ -93,8 +93,8 @@ class EventController extends Controller
     public function detail($id)
     {
         $data = [
-            'title'          => 'Event',
-            'sub_title'      => 'Event Detail',
+            'title'          => 'Kegiatan',
+            'sub_title'      => 'Kegiatan Detail',
             'menu_active'    => 'event',
             'submenu_active' => 'event-list',
         ];

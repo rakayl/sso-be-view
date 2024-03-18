@@ -443,7 +443,7 @@
     <div class="portlet card_ light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">New Kontraktor</span>
+                <span class="caption-subject font-blue sbold uppercase">New Vendor Pembangunan</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -578,7 +578,7 @@
                         </div>
 
                     <br>
-                    <h3 style="text-align: center">Data Outlet</h3>
+                    <h3 style="text-align: center">Data Vendor</h3>
                     <hr style="border-top: 2px dashed black;">
                     <br>
                     <div class="form-group">

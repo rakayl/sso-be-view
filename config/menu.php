@@ -68,19 +68,19 @@ return [
             'label' => 'Browse',
             'children' => [
                 [
-                    'label' => 'Tukang Sedot',
+                    'label' => 'Vendor Penyedotan',
                     'type' => 'tree',
                     'icon' => 'fa fa-university',
                     'required_features' => [323,324,325,326,327,348],
                     'children' => [
                         [
-                            'label' => 'New Tukang Sedot',
+                            'label' => 'New Vendor Penyedotan',
                             'url' => 'tukang-sedot/create',
                             'active' => '\View::shared("submenu_active") == "tukang-sedot-new"',
                             'required_features' => [325],
                         ],
                         [
-                            'label' => 'Tukang Sedot List',
+                            'label' => 'Vendor Penyedotan List',
                             'url' => 'outlet/tukang-sedot',
                             'active' => '\View::shared("submenu_active") == "tukang-sedot-list"',
                             'required_features' => [323,324,326,327],
@@ -95,19 +95,19 @@ return [
                     ]
                 ],
                 [
-                    'label' => 'Kontraktor',
+                    'label' => 'Vendor Pembangunan',
                     'type' => 'tree',
                     'icon' => 'fa fa-home',
                     'required_features' => [323,324,325,326,327,348],
                     'children' => [
                         [
-                            'label' => 'New Kontraktor',
+                            'label' => 'New Vendor Pembangunan',
                             'url' => 'kontraktor/create',
                             'active' => '\View::shared("submenu_active") == "kontraktor-new"',
                             'required_features' => [325],
                         ],
                         [
-                            'label' => 'Kontraktor List',
+                            'label' => 'Vendor Pembangunan List',
                             'url' => 'outlet/kontraktor',
                             'active' => '\View::shared("submenu_active") == "kontraktor-list"',
                             'required_features' => [323,324,326,327],
@@ -140,54 +140,54 @@ return [
                     ]
                 ],
                 [
-                    'label' => 'Commission Sedot WC',
+                    'label' => 'Pendapatan Vendor',
                     'icon' => 'fa fa-money',
                     'type' => 'tree',
                     'children' => [
                         [
-                            'label' => 'New Sedot WC',
+                            'label' => 'New Pengosongan Tangki',
                             'active' => '\View::shared("submenu_active") == "commission-sedot-wc-new"',
                             'url' => 'tukang-sedot/commission/create',
                         ],
                        
                         [
-                            'label' => 'Sedot WC List',
+                            'label' => 'Pengosongan Tangki List',
                             'active' => '\View::shared("submenu_active") == "commission-sedot-wc-list"',
                             'url' => 'tukang-sedot/commission',
                         ],
                          [
-                            'label' => 'New Survey Kontraktor',
+                            'label' => 'New Survey Vendor Pembangunan',
                             'active' => '\View::shared("submenu_active") == "commission-survey-new"',
                             'url' => 'kontraktor/commission/create',
                         ],
                        
                         [
-                            'label' => 'List Survey Kontraktor',
+                            'label' => 'List Survey Vendor Pembangunan',
                             'active' => '\View::shared("submenu_active") == "commission-survey-list"',
                             'url' => 'kontraktor/commission',
                         ],
                     ]
                 ],
                 [
-                    'label' => 'Global Commission',
+                    'label' => 'Global Pendapatan Vendor',
                     'icon' => 'fa fa-cog',
                     'type' => 'tree',
                     'children' => [
                         [
-                            'label' => 'Sedot Wc',
+                            'label' => 'Pengosongan Tangki',
                             'active' => '\View::shared("submenu_active") == "setting-global-commisission-sedot"',
                             'url' => 'setting/setting-global-commission-sedot-wc',
                         ],
                        
                         [
-                            'label' => 'Survey Kontraktor',
+                            'label' => 'Survey Vendor Pembangunan',
                             'active' => '\View::shared("submenu_active") == "setting-global-commisission-survey"',
                             'url' => 'setting/setting-global-commission-survey',
                         ],
                     ]
                 ],
                 [
-                    'label' => 'Withdrawal',
+                    'label' => 'Penarikan Vendor',
                     'icon' => 'fa fa-money',
                     'url' => 'merchant/withdrawal'
                 ],
@@ -226,18 +226,18 @@ return [
                     ]
                 ],
                 [
-                    'label' => 'Event',
+                    'label' => 'Kegiatan',
                     'icon' => 'fa fa-calendar',
                     'type' => 'tree',
                     'children' => [
                         [
-                            'label' => 'New Event',
+                            'label' => 'New Kegiatan',
                             'active' => '\View::shared("submenu_active") == "event-new"',
                             'url' => 'event/create',
                         ],
                        
                         [
-                            'label' => 'Event List',
+                            'label' => 'Kegiatan List',
                             'active' => '\View::shared("submenu_active") == "event-list"',
                             'url' => 'event',
                         ],
@@ -269,7 +269,7 @@ return [
             'children' => [
                 [
                     'type' => 'tree',
-                    'label' => 'Transaction Sedot WC',
+                    'label' => 'Transaction Pengosongan Tangki',
                     'icon' => 'fa fa-shopping-cart',
                     'children' => [
                         [
@@ -301,7 +301,7 @@ return [
                 ],
                 [
                     'type' => 'tree',
-                    'label' => 'Transaction Kontraktor',
+                    'label' => 'Transaction Vendor Pembangunan',
                     'icon' => 'icon-wrench',
                     'children' => [
                         [
@@ -484,7 +484,7 @@ return [
                     'icon' => 'fa fa-university',
                 ],
                 [
-                    'label' => 'Panduan Mitra Kontraktor',
+                    'label' => 'Panduan Mitra Vendor Pembangunan',
                     'active' => '\View::shared("submenu_active") == "panduan-mitra-kontraktor"',
                     'url' => 'setting/panduan-mitra-kontraktor',
                     'icon' => 'fa fa-home',
@@ -515,7 +515,7 @@ return [
                     'icon' => 'icon-question'
                 ],
                 [
-                    'label' => 'FAQ Mitra Sedot',
+                    'label' => 'FAQ Vendor Penyedotan',
                     'required_features' => [],
                     'type' => 'tree',
                     'children' => [
@@ -540,7 +540,7 @@ return [
                     'icon' => 'icon-question'
                 ],
                 [
-                    'label' => 'FAQ Mitra Kontraktor',
+                    'label' => 'FAQ Vendor Pembangunan',
                     'required_features' => [],
                     'type' => 'tree',
                     'children' => [

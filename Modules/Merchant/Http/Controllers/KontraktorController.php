@@ -15,9 +15,9 @@ class KontraktorController extends Controller
     public function create()
     {
         $data = [
-            'title'          => 'Kontraktor',
-            'sub_title'      => 'New Kontraktor',
-            'menu_active'    => 'Kontraktor',
+            'title'          => 'Vendor Pembangunan',
+            'sub_title'      => 'New Vendor Pembangunan',
+            'menu_active'    => 'Vendor Pembangunan',
             'submenu_active' => 'kontraktor-new'
         ];
 
@@ -75,8 +75,8 @@ class KontraktorController extends Controller
         $post = $request->all();
 
         $data = [
-            'title'          => 'Kontraktor',
-            'sub_title'      => 'Kontraktor List',
+            'title'          => 'Vendor Pembangunan',
+            'sub_title'      => 'Vendor Pembangunan List',
             'menu_active'    => 'kontraktor',
             'submenu_active' => 'kontraktor-list',
             'title_date_start' => 'Start',
@@ -121,8 +121,8 @@ class KontraktorController extends Controller
     public function detail($id)
     {
         $data = [
-            'title'          => 'Kontraktor',
-            'sub_title'      => 'Kontraktor Detail',
+            'title'          => 'Vendor Pembangunan',
+            'sub_title'      => 'Vendor Pembangunan Detail',
             'menu_active'    => 'kontraktor',
             'submenu_active' => 'kontraktor-list',
         ];
@@ -162,8 +162,8 @@ class KontraktorController extends Controller
         $post = $request->all();
 
         $data = [
-            'title'          => 'Kontraktor',
-            'sub_title'      => 'Kontraktor Candidate',
+            'title'          => 'Vendor Pembangunan',
+            'sub_title'      => 'Vendor Pembangunan Candidate',
             'menu_active'    => 'kontraktor',
             'submenu_active' => 'kontraktor-candidate',
             'title_date_start' => 'Start',

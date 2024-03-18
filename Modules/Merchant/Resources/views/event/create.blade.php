@@ -206,7 +206,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">New Event</span>
+                <span class="caption-subject font-blue sbold uppercase">New Kegiatan</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -240,14 +240,14 @@
                     <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
-                                Date Event
+                                Date Kegiatan
                                 <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir dilaksanakan event" data-container="body"></i>
                                 </label>
                             </div>
                             <div class="col-md-8">
                                     <div class="input-group date margin-bottom-5">
-                                            <input type="text" class="form-control datetimepicker" autocomplete="off" name="date" placeholder="Date Event" required>
+                                            <input type="text" class="form-control datetimepicker" autocomplete="off" name="date" placeholder="Date Kegiatan" required>
                                             <span class="input-group-btn">
                                                     <button class="btn btn-sm default" type="button">
                                                             <i class="fa fa-calendar"></i>
@@ -342,7 +342,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <textarea name="address" class="form-control" placeholder="Event Address" required></textarea>
+                            <textarea name="address" class="form-control" placeholder="Kegiatan Address" required></textarea>
                         </div>
                     </div>
                     <div class="form-group">
