@@ -109,7 +109,7 @@ class HomeController extends BaseController
         $post['date_end'] = $post['sampai'];
         $data = MyHelper::post('report/dashboard/leher-angsa', $post)['result']??0;
         $array[] = array(
-            "title"=> "Jumlah Pembangunan Leher Angsa",
+            "title"=> "Pembangunan Toilet Leher Angsa",
             "amount"=> $data,
             "tooltip"=> "Bangunan yang telah menggunakan Leher Angsa pada WC",
             "show"=> 1,
@@ -118,7 +118,7 @@ class HomeController extends BaseController
         ); 
         $data = MyHelper::post('report/dashboard/leher-angsa', $post)['result']??0;
         $array[] = array(
-           "title"=> "Jumlah Pembangunan Tangki Septic Standar",
+           "title"=> "Pembangunan Tangki Septic Standar",
             "amount"=> $data,
             "tooltip"=> "Bangunan yang telah menggunakan Tangki Septic Standar",
             "show"=> 1,
@@ -127,7 +127,7 @@ class HomeController extends BaseController
         ); 
         $data = MyHelper::post('report/dashboard/sedotWc', $post)['result']??0;
         $array[] = array(
-            "title"=> "Jumlah Sedot WC",
+            "title"=> "Jumlah Lumpur Tinja",
             "amount"=> $data,
             "tooltip"=> "Jumlah Rumah Tangga yang di sedot",
             "show"=> 1,
@@ -137,7 +137,7 @@ class HomeController extends BaseController
         
         $data = MyHelper::post('report/dashboard/sedotWcIplt', $post)['result']??0;
         $array[] = array(
-            "title"=> "Jumlah Sedot WC IPLT",
+            "title"=> "Volume Lumpur Tinja yang diolah di IPLT",
             "amount"=> $data,
             "tooltip"=> "Jumlah lumpur tinja yang ditransport ke IPLT",
             "show"=> 1,
@@ -146,7 +146,7 @@ class HomeController extends BaseController
         ); 
         $data = MyHelper::post('report/dashboard/sedotWcNonIplt', $post)['result']??0;
         $array[] = array(
-            "title"=> "Jumlah Sedot WC Non IPLT",
+            "title"=> "Volume Lumpur Tinja yang tidak diolah di IPLT",
             "amount"=> $data,
             "tooltip"=> "Jumlah lumpur tinja yang ditransport ke Non IPLT",
             "show"=> 1,
@@ -173,7 +173,7 @@ class HomeController extends BaseController
         ); 
         $data = MyHelper::post('report/dashboard/event', $post)['result']??0;
         $array[] = array(
-            "title"=> "Event Dibuat",
+            "title"=> "Kegiatan Dibuat",
             "amount"=> $data,
             "tooltip"=> "Jumlah lumpur tinja yang ditransport ke Non IPLT",
             "show"=> 1,

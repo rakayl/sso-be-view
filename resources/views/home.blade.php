@@ -263,7 +263,7 @@
                 success: function(data) {
                     var html = [];
                     $.each(data, function(i, f) {
-                         html +='<div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">\n\
+                         html +='<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">\n\
                                     <div class="dashboard-stat dashboard-stat-v2 '+f.color+'">\n\
                                         <div class="visual"><i class="'+f.icon+'"></i></div>\n\
                                     <div class="details">\n\
@@ -412,7 +412,7 @@ function makeSeries(name, fieldName) {
   legend.data.push(series);
 }
 
-makeSeries("Sedot WC", "sedot");
+makeSeries("Pengosongan Tangki", "sedot");
 makeSeries("Bangun & Renovasi", "renov");
 
 // Make stuff animate on load

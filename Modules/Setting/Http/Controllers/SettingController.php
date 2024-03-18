@@ -1904,7 +1904,7 @@ class SettingController extends Controller
     public function settingGlobalCommissionSedotWc(Request $request){
         $post = $request->except('_token');
         $data = [
-            'title'          => 'Setting Global Commission Sedot WC',
+            'title'          => 'Setting Global Pendapatan Vendor Penyedotan',
             'menu_active'    => 'setting-global-commisission-sedot',
             'submenu_active'    => 'setting-global-commisission-sedot',
         ];
@@ -1925,7 +1925,7 @@ class SettingController extends Controller
     public function settingGlobalCommissionSurvey(Request $request){
         $post = $request->except('_token');
         $data = [
-            'title'          => 'Setting Global Commission Survey',
+            'title'          => 'Setting Global Pendapatan Survey Vendor Pembangunan',
             'menu_active'    => 'setting-global-commisission-survey',
             'submenu_active'    => 'setting-global-commisission-survey',
         ];

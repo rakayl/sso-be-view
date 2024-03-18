@@ -111,7 +111,7 @@ $configs     		= session('configs');
 			<div class="portlet-title">
 				<div class="caption font-blue ">
 					<i class="icon-settings font-blue "></i>
-					<span class="caption-subject bold uppercase">This menu is used to set a global commission product</span>
+					<span class="caption-subject bold uppercase">This menu is used to set a Global Pendapatan Survey Vendor Pembangunan</span>
 				</div>
 			</div>
 			<div class="portlet-body form">
@@ -120,7 +120,7 @@ $configs     		= session('configs');
                                             <div class="form-group">
                                                     <div class="input-icon right">
                                                             <label class="col-md-5 control-label">
-                                                                    Global Commission Survey Kontraktor
+                                                                    Global Pendapatan Survey Vendor Pembangunan
                                                                     <span class="required" aria-required="true"> * </span>
                                                                     <i class="fa fa-question-circle tooltips" data-original-title="Komisi atau tarif yang dikenakan. Ketika komisi pada kota tidak di tambahkan maka menggunakan komisi ini." data-container="body"></i>
                                                             </label>

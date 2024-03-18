@@ -68,8 +68,8 @@ class OutletController extends Controller
     public function kontraktor(Request $request)
     {
         $data = [
-            'title'          => 'Outlet',
-            'sub_title'      => 'Outlet List',
+            'title'          => 'Vendor Pembangunan',
+            'sub_title'      => 'Vendor Pembangunan List',
             'menu_active'    => 'outlet',
             'submenu_active' => 'kontraktor-list',
         ];
@@ -211,8 +211,8 @@ class OutletController extends Controller
 
         $post = $request->except('_token');
         $data = [
-                'title'          => 'Outlet',
-                'sub_title'      => 'Detail Outlet',
+                'title'          => 'Vendor',
+                'sub_title'      => 'Detail Vendor',
                 'menu_active'    => 'outlet'
             ];
         if (empty($post['outlet_name'])) {
