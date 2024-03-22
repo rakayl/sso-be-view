@@ -113,7 +113,7 @@
                         <td>{{ $val['count_sedot']}}</td>
                         <td>{{ $val['status']}}</td>
                         <td>
-                            <a class="btn btn-sm btn-info" href="{{ url('iplt/detail', $val['id_accommodation']) }}"><i class="fa fa-search"></i></a>
+                            <a class="btn btn-sm btn-info" href="{{ url('iplt/detail', $val['id_iplt']) }}"><i class="fa fa-search"></i></a>
                         </td>
                     </tr>
                 @endforeach
