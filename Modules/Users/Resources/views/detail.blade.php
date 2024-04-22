@@ -678,7 +678,7 @@
 
 									</div>
 
-									<div class="col-md-12" style="margin-top:30px">
+<!--									<div class="col-md-12" style="margin-top:30px">
 										<h4 class="font-blue sbold uppercase">HISTORY</h4>
 											<div class="tabbable-line tabbable-full-width">
 												<ul class="nav nav-tabs">
@@ -703,7 +703,7 @@
 											</div>
 											<div class="tab-content" style="margin-top:20px">
 												<div class="tab-pane active" id="history_ongoing">
-													<!-- BEGIN: Comments -->
+													 BEGIN: Comments 
 													<div class="mt-comments">
 														@if(!empty($profile['on_going']))
 															<table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
@@ -722,7 +722,7 @@
 																	@foreach($profile['on_going'] as $res)
 																		<tr>
 																			<td>{{ date('d F Y H:i', strtotime($res['transaction_date'])) }}</td>
-																			<td>{{ $res['outlet_name']['outlet_name'] }}</td>
+																			<td>{{ $res['outlet_name']['outlet_name']??null }}</td>
 																			<td><span class="badge bg-{{$res['pickup_by'] == 'Customer' ? 'green-jungle':'blue'}}">{{$res['pickup_by'] == 'Customer' ? 'Pickup Order':'Delivery'}}</span></td>
 																			<td>{{ $res['transaction_receipt_number'] }}</td>
 																			<td>Rp {{ number_format($res['transaction_grandtotal']) }}</td>
@@ -754,10 +754,10 @@
 															Transaction is empty
 														@endif
 													</div>
-													<!-- END: Comments -->
+													 END: Comments 
 												</div>
 												<div class="tab-pane" id="history_trx">
-													<!-- BEGIN: Comments -->
+													 BEGIN: Comments 
 													<div class="mt-comments">
 														@if(!empty($profile['history_transactions']))
 															<table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_1">
@@ -836,31 +836,31 @@
 															Transaction is empty
 														@endif
 													</div>
-													<!-- END: Comments -->
+													 END: Comments 
 												</div>
 												@if(MyHelper::hasAccess([19], $configs))
 													<div class="tab-pane" id="history_balance">
 														<div class="row">
 															<div class="col-lg-12 col-xs-12 col-sm-12">
 																	<div class="mt-comments">
-																		<!--<div class="row number-stats margin-bottom-30">-->
-																		<!--	<div class="col-md-6 col-sm-6 col-xs-6">-->
-																		<!--		<div class="stat-left">-->
-																		<!--			<div class="stat-number">-->
-																		<!--				<div class="title" style="color: red"> Voucher </div>-->
-																		<!--				<div class="number"> Voucher </div>-->
-																		<!--			</div>-->
-																		<!--		</div>-->
-																		<!--	</div>-->
-																		<!--	<div class="col-md-6 col-sm-6 col-xs-6">-->
-																		<!--		<div class="stat-right">-->
-																		<!--			<div class="stat-number">-->
-																		<!--				<div class="title" style="color: blue"> Transaction </div>-->
-																		<!--				<div class="number"> Trx </div>-->
-																		<!--			</div>-->
-																		<!--		</div>-->
-																		<!--	</div>-->
-																		<!--</div>-->
+																		<div class="row number-stats margin-bottom-30">
+																			<div class="col-md-6 col-sm-6 col-xs-6">
+																				<div class="stat-left">
+																					<div class="stat-number">
+																						<div class="title" style="color: red"> Voucher </div>
+																						<div class="number"> Voucher </div>
+																					</div>
+																				</div>
+																			</div>
+																			<div class="col-md-6 col-sm-6 col-xs-6">
+																				<div class="stat-right">
+																					<div class="stat-number">
+																						<div class="title" style="color: blue"> Transaction </div>
+																						<div class="number"> Trx </div>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
 																		<table class="table table-striped table-bordered table-hover dt-responsive" width="100%" id="sample_4">
 																			<thead>
 																				<tr class="uppercase">
@@ -946,7 +946,7 @@
 											</div>
 											<div class="tab-content" style="margin-top:20px">
 												<div class="tab-pane active" id="vouche_not_invalidate">
-													<!-- BEGIN: Comments -->
+													 BEGIN: Comments 
 													<div class="mt-comments">
 														@if(!empty($voucher))
 															<table class="table table-striped table-bordered table-hover dt-responsive sample_1" width="100%">
@@ -984,11 +984,11 @@
 															Voucher is empty
 														@endif
 													</div>
-													<!-- END: Comments -->
+													 END: Comments 
 												</div>
 
 												<div class="tab-pane" id="voucher_invalidate">
-													<!-- BEGIN: Comments -->
+													 BEGIN: Comments 
 													<div class="mt-comments">
 														@if(!empty($voucher))
 															<table class="table table-striped table-bordered table-hover dt-responsive sample_1" width="100%">
@@ -1030,11 +1030,11 @@
 															Voucher is empty
 														@endif
 													</div>
-													<!-- END: Comments -->
+													 END: Comments 
 												</div>
 
 												<div class="tab-pane" id="voucher_used">
-													<!-- BEGIN: Comments -->
+													 BEGIN: Comments 
 													<div class="mt-comments">
 														@if(!empty($voucher))
 															<table class="table table-striped table-bordered table-hover dt-responsive sample_1" width="100%">
@@ -1078,11 +1078,11 @@
 															Voucher is empty
 														@endif
 													</div>
-													<!-- END: Comments -->
+													 END: Comments 
 												</div>
 
 												<div class="tab-pane" id="voucher_expired">
-													<!-- BEGIN: Comments -->
+													 BEGIN: Comments 
 													<div class="mt-comments">
 														@if(!empty($voucher))
 															<table class="table table-striped table-bordered table-hover dt-responsive sample_1" width="100%">
@@ -1124,12 +1124,12 @@
 															Voucher is empty
 														@endif
 													</div>
-													<!-- END: Comments -->
+													 END: Comments 
 												</div>
 
 											</div>
 										</div>
-                                    <div class="col-md-12" style="margin-top:30px">
+                                                                        <div class="col-md-12" style="margin-top:30px">
                                         <h4 class="font-blue sbold uppercase">Address</h4>
                                             <div class="tabbable-line tabbable-full-width" style="position:absolute">
                                                 <ul class="nav nav-tabs">
@@ -1218,7 +1218,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
 								</div>
 							</div>
 						</div>
@@ -1456,16 +1456,6 @@
 							</div>
 							@endif
 
-							@if($profile['level'] != 'Admin')
-							<div class="col-md-4">
-								<form action="{{url('user/detail')}}/{{$profile['phone']}}" role="form" enctype="multipart/form-data" method="POST" style="text-align:center;">
-								{{ csrf_field() }}
-									<input type="password" class="form-control" width="30%" name="password_level" placeholder="Enter Your current password" required>
-									<input type="hidden" class="form-control" name="level" value="Admin">
-									<button class="btn btn-lg yellow btn-block"> Yes! Be an Admin <i class="fa fa-user-plus "></i> </button>
-								</form>
-							</div>
-							@endif
 
 							@if($profile['level'] != 'Super Admin' && Session::get('level') == 'Super Admin')
 							<div class="col-md-4">
