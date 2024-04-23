@@ -440,13 +440,16 @@
 						<a href="#overview" data-toggle="tab"> Account Overview </a>
 					</li>
 					<li>
+						<a href="#bangunan" data-toggle="tab"> Data Bangunan</a>
+					</li>
+                                        <li>
 						<a href="#profileupdate" data-toggle="tab"> Account Update </a>
 					</li>
-                    @if(MyHelper::hasAccess([6], $grantedFeature))
+                                @if(MyHelper::hasAccess([6], $grantedFeature))
 					<li>
 						<a href="#permission" data-toggle="tab"> Access Permission </a>
 					</li>
-                    @endif
+                                @endif
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="overview">
@@ -680,6 +683,148 @@
 
 								</div>
 							</div>
+						</div>
+					</div>
+                                        
+					<div class="tab-pane" id="bangunan">
+						<div class="row profile-account">
+							<div class="col-md-3">
+								<ul class="ver-inline-menu tabbable margin-bottom-10">
+									<li class="active">
+										<a data-toggle="tab" href="#tabs_1-1">
+											<i class="fa fa-cog"></i> Personal info </a>
+										<span class="after"> </span>
+									</li>
+								</ul>
+							</div>
+							<div class="col-md-9">
+								<div class="tab-content">
+									<div id="tabs_1-1" class="tab-pane active">
+										<form role="form" action="{{url('user/detail')}}/{{$profile['phone']}}" method="POST" enctype="multipart/form-data">
+										{{ csrf_field() }}
+											<div class="form-group">
+												<label class="control-label">Name</label>
+												<input type="text" name="name" placeholder="User Name (Required)" class="form-control" value="{{$profile['name']}}" />
+											</div>
+											<div class="form-group">
+												<label class="control-label">Phone</label>
+												<input type="text" name="phone" placeholder="Phone Number(Required & Unique)" maxlength="20" class="form-control onlynumber" value="{{$profile['phone']}}" />
+											</div>
+											<div class="form-group">
+												<label class="control-label">Email</label>
+												<input type="text" name="email" placeholder="Email (Required & Unique)" class="form-control" value="{{$profile['email']}}" />
+											</div>
+											<div class="form-group">
+												<label class="control-label">City</label>
+												<select name="id_city" class="form-control input-sm select2" placeholder="Search City">
+													<option value="">Select...</option>
+													@if(isset($city))
+														@foreach($city as $row)
+															<option value="{{$row['id_city']}}" @if(isset($profile['id_city'])) @if($row['id_city'] == $profile['id_city']) selected @endif @endif>{{$row['city_name']}}</option>
+														@endforeach
+													@endif
+												</select>
+											</div>
+                                            <div class="form-group">
+                                                <label class="control-label">Address</label>
+                                                <input type="text" name="address" placeholder="User Address" class="form-control" value="{{$profile['address']}}" />
+                                            </div>
+											<div class="form-group">
+												<label class="control-label">Celebrate</label>
+												<select name="celebrate" class="form-control input-sm select2" data-placeholder="Select Users Celebrate">
+													<option value=""></option>
+                                                    @php $was=false; @endphp
+                                                    @foreach($celebrates??[] as $celebrate)
+                                                    <option value="{{$celebrate}}" @if($celebrate==$profile['celebrate']) @php $was=true; @endphp selected @endif>{{$celebrate}}</option>
+                                                    @endforeach
+                                                    @if(!$was)
+                                                    <option value="{{$profile['celebrate']}}" selected>{{$profile['celebrate']}}</option>
+                                                    @endif
+												</select>
+											</div>
+                                            <div class="form-group">
+                                                <label class="control-label">Job</label>
+                                                <select name="job" class="form-control input-sm select2" data-placeholder="Select User's Job">
+                                                    <option value=""></option>
+                                                    @php $was=false; @endphp
+                                                    @foreach($jobs??[] as $job)
+                                                    <option value="{{$job}}" @if($job==$profile['job']) @php $was=true; @endphp selected @endif>{{$job}}</option>
+                                                    @endforeach
+                                                    @if(!$was)
+                                                    <option value="{{$profile['job']}}" selected>{{$profile['job']}}</option>
+                                                    @endif
+                                                </select>
+                                            </div>
+											<!-- <div class="form-group">
+												<label class="control-label">Relationship</label>
+												<select name="relationship" class="form-control input-sm select2">
+													<option value="">Select...</option>
+						                            <option value="In a Relationship" {{ ($profile['relationship']=="In a Relationship" ? "selected" : "") }}>In a Relationship</option>
+						                            <option value="Complicated" {{ ($profile['relationship']=="Complicated" ? "selected" : "") }}>Complicated</option>
+						                            <option value="Jomblo" {{ ($profile['relationship']=="Jomblo" ? "selected" : "") }}>Jomblo</option>
+												</select>
+											</div> -->
+											<div class="form-group">
+												<label class="control-label">Birthday</label>
+												<div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
+													<input type="text" class="form-control form-filter input-sm date-picker" readonly name="birthday" placeholder="From"  value="@if(!empty($profile['birthday'])){{date('d/m/Y', strtotime($profile['birthday']))}}@endif" data-date-format="dd/mm/yyyy">
+													<span class="input-group-btn">
+														<button class="btn btn-sm default" type="button">
+															<i class="fa fa-calendar"></i>
+														</button>
+													</span>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="control-label">Phone Verified</label>
+												<div class="mt-radio-inline">
+													<label class="mt-radio">
+														<input type="radio" name="phone_verified" id="optionsRadios1" value="1" @if($profile['phone_verified'] == '1') checked @endif > Verified
+														<span></span>
+													</label>
+													<label class="mt-radio">
+														<input type="radio" name="phone_verified" id="optionsRadios2" value="0" @if($profile['phone_verified'] == '0') checked @endif> Not Verified
+														<span></span>
+													</label>
+												</div>
+											</div>
+                                            <div class="form-group">
+                                                <label class="control-label">OTP Request Status</label>
+                                                <select name="otp_request_status" class="form-control input-sm select2" placeholder="Search Status">
+                                                    <option value="Can Request" @if($profile['otp_request_status'] == 'Can Request') selected @endif>Can Request</option>
+                                                    <option value="Can Not Request" @if($profile['otp_request_status'] == 'Can Not Request') selected @endif>Can Not Request</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label">Verify Email Request Status</label>
+                                                <select name="email_verify_request_status" class="form-control input-sm select2" placeholder="Search Status">
+                                                    <option value="Can Request" @if($profile['email_verify_request_status'] == 'Can Request') selected @endif>Can Request</option>
+                                                    <option value="Can Not Request" @if($profile['email_verify_request_status'] == 'Can Not Request') selected @endif>Can Not Request</option>
+                                                </select>
+                                            </div>
+											<!-- <div class="form-group">
+												<label class="control-label">Email Verified</label>
+												<div class="mt-radio-inline">
+													<label class="mt-radio">
+														<input type="radio" name="email_verified" id="optionsRadios3" value="1" @if($profile['email_verified'] == '1') checked @endif > Verified
+														<span></span>
+													</label>
+													<label class="mt-radio">
+														<input type="radio" name="email_verified" id="optionsRadios4" value="0" @if($profile['email_verified'] == '0') checked @endif> Not Verified
+														<span></span>
+													</label>
+												</div>
+											</div> -->
+                                            @if(MyHelper::hasAccess([5], $grantedFeature) || $profile['phone'] == session('phone'))
+											<div class="margiv-top-10">
+												<button class="btn green"> Save Changes </button>
+											</div>
+                                            @endif
+										</form>
+									</div>
+								</div>
+							</div>
+							<!--end col-md-9-->
 						</div>
 					</div>
 					<!--tab_1_2-->
