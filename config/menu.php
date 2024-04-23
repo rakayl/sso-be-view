@@ -169,6 +169,18 @@ return [
                     ]
                 ],
                 [
+                    'label' => 'Paket Pembangunan',
+                    'icon' => 'icon-wrench',
+                    'url' => 'paket',
+                    'active' => '\View::shared("menu_active") == "paket"'
+                ],
+                [
+                    'label' => 'Tarif Pengosongan',
+                    'icon' => 'fa fa-shopping-cart',
+                    'url' => 'tarif',
+                    'active' => '\View::shared("menu_active") == "tarif"'
+                ],
+                [
                     'label' => 'Global Pendapatan Vendor',
                     'icon' => 'fa fa-cog',
                     'type' => 'tree',

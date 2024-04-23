@@ -110,3 +110,21 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'non-iplt
     Route::get('delete/{id}', 'AccommodationController@delete');
     Route::post('update/{id}', 'AccommodationController@update');
 });
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'paket'], function () {
+    Route::any('/', 'PaketController@city');
+    Route::any('/{id}', 'PaketController@detailCity');
+    Route::post('/paket/create', 'PaketController@create');
+    Route::post('/paket/update', 'PaketController@update');
+    Route::get('/detail/{id}', 'PaketController@detail');
+    Route::post('/paket/detail/create', 'PaketController@detailCreate');
+    Route::get('/detail/delete/{id}', 'PaketController@detailDelete');
+});
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'tarif'], function () {
+    Route::any('/', 'TarifController@city');
+    Route::any('/{id}', 'TarifController@detailCity');
+    Route::post('/tarif/create', 'TarifController@create');
+    Route::post('/tarif/update', 'TarifController@update');
+    Route::get('/detail/{id}', 'TarifController@detail');
+    Route::post('/tarif/detail/create', 'TarifController@detailCreate');
+    Route::get('/detail/delete/{id}', 'TarifController@detailDelete');
+});
