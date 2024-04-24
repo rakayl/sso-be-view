@@ -1363,9 +1363,11 @@ class TransactionController extends Controller
             if($data['detail']['type'] == "renovasi"){
                 $city = $check['result']['transaction_renovasi']['id_city']??null;
                 $data['outlet'] = MyHelper::post('transaction/be/outlet/renov', ['id_city' => $city])['result']??array();
+                $data['paket'] = MyHelper::post('transaction/be/update/kontraktor/paket',['id_transaction' => $id])['result']??[];
               return view('transaction::transactionDetail4', $data);
             }
             $data['armada'] = MyHelper::get('transaction/be/armada/'.$id)['result']??[];
+            $data['tarif'] = MyHelper::post('transaction/be/tarif',['id_transaction' => $id])['result']??[];
             return view('transaction::transactionDetail3', $data);
         } else {
             return back()->withErrors(['Failed get detail transaction']);
