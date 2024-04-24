@@ -4,6 +4,20 @@
 		<div class="form-body">
 			<div style="text-align: center"><h3>Perhitungan Biaya</h3></div>
 			<div class="form-group">
+				<label class="col-md-4 control-label">Tarif<span class="required" aria-required="true"> * </span>
+				</label>
+				<div class="col-md-6">
+                                        <select name="id_tarif" class="form-control input-sm select2" placeholder="Search Tarif" data-placeholder="Choose Users City" required>
+                                                <option value="">Select...</option>
+                                                @if(isset($tarif))
+                                                        @foreach($tarif as $row)
+                                                                <option value="{{$row['id_tarif']}}" @if($detail['trasaction_sedot_wc']['id_tarif']??0 == $row['id_tarif']) selected @endif>{{$row['name_tarif']}}, Rp {{number_format($row['price_tarif'], 0, ",", ".")}}</option>
+                                                        @endforeach
+                                                @endif
+                                        </select>
+                                </div>
+			</div>
+			<div class="form-group">
 				<label class="col-md-4 control-label">Jumlah volume sedot wc <span class="required" aria-required="true"> * </span>
 				</label>
 				<div class="col-md-6">
