@@ -2003,6 +2003,26 @@ class SettingController extends Controller
             return view('setting::url_app_rating', $data);
         }
     }
+    public function whatsappSetting(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Whatsapp Setting',
+            'menu_active'    => 'setting-whatsapp',
+            'submenu_active'    => 'setting-whatsapp',
+        ];
+        if($post){
+            $query = MyHelper::post('setting/whatsapp-create', $post);
+            if(($query['status']??'')=='success'){
+                return redirect('setting/whatsapp')->with('success',['Success update data']);
+            }else{
+                return redirect('setting/whatsapp')->withErrors([$query['message']]);
+            }
+        }else{
+            $query = MyHelper::get('setting/whatsapp')['result']??null;
+            $data['result'] = $query;
+            return view('setting::whatsapp', $data);
+        }
+    }
     
     
     public function faqSedotList()
