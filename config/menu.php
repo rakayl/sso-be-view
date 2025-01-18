@@ -277,6 +277,39 @@ return [
         ],
         [
             'type' => 'group',
+            'label' => 'Dumping',
+            'children' => [
+                [
+                    'type' => 'tree',
+                    'label' => 'IPLT',
+                    'icon' => 'fa fa-recycle',
+                    'children' => [
+                        [
+                            'label' => 'Pending',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "iplt-pending"',
+                            'url' => 'iplt/pending',
+                            
+                        ],
+                        [
+                            'label' => 'Riwayat',
+                            'required_features' => [69],
+                            'active' => '\View::shared("submenu_active") == "iplt-riwayat"',
+                            'url' => 'iplt/riwayat'
+                        ],
+                       
+                    ]
+                ],
+                [
+                    'label' => 'Non IPLT',
+                    'icon' => 'icon-wrench',
+                    'url' => 'non-iplt',
+                    'active' => '\View::shared("menu_active") == "non-iplt"'
+                ],
+            ]
+        ],
+        [
+            'type' => 'group',
             'label' => 'Order',
             'children' => [
                 [
@@ -345,20 +378,20 @@ return [
                     ],
                     
                 ],
-                [
-                    'label' => 'Failed Void Payment',
-                    'required_features' => [299],
-                    'active' => '\View::shared("menu_active") == "failed-void-payment"',
-                    'url' => 'transaction/failed-void-payment',
-                    'icon' => 'fa fa-exclamation-triangle'
-                ],
-                [
-                        'label' => 'Points History',
-                        'required_features' => [93],
-                        'active' => '\View::shared("menu_active") == "balance"',
-                        'url' => 'transaction/balance',
-                        'icon' => 'fa fa-clock-o'
-                ],
+//                [
+//                    'label' => 'Failed Void Payment',
+//                    'required_features' => [299],
+//                    'active' => '\View::shared("menu_active") == "failed-void-payment"',
+//                    'url' => 'transaction/failed-void-payment',
+//                    'icon' => 'fa fa-exclamation-triangle'
+//                ],
+//                [
+//                        'label' => 'Points History',
+//                        'required_features' => [93],
+//                        'active' => '\View::shared("menu_active") == "balance"',
+//                        'url' => 'transaction/balance',
+//                        'icon' => 'fa fa-clock-o'
+//                ],
                 [
                     'type' => 'tree',
                     'label' => 'Order Settings',

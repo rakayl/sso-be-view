@@ -40,7 +40,7 @@ class IpltController extends Controller
             Session::forget('filter-iplt');
         }
 
-       $getList = MyHelper::post('dumping/be', $post);
+       $getList = MyHelper::post('dumping/be/riwayat', $post);
 
         if (isset($getList['status']) && $getList['status'] == "success") {
             $data['data']          = $getList['result']['data'];
@@ -63,29 +63,29 @@ class IpltController extends Controller
 
         $data = [
             'title'          => 'Iplt',
-            'sub_title'      => 'Riwayat Iplt List',
+            'sub_title'      => 'Iplt Pending List',
             'menu_active'    => 'iplt',
-            'submenu_active' => 'iplt-riwayat-list'
+            'submenu_active' => 'iplt-pending'
         ];
         
 
         if ($post) {
-            Session::put('filter-iplt', $post);
+            Session::put('filter-iplt-pending', $post);
         }
-        if (Session::has('filter-iplt') && $post && isset($post['filter'])) {
+        if (Session::has('filter-iplt-pending') && $post && isset($post['filter'])) {
             $page = 1;
             if (isset($post['page'])) {
                 $page = $post['page'];
             }
-            $post = Session::get('filter-iplt');
+            $post = Session::get('filter-iplt-pending');
             $post['page'] = $page;
             $data['conditions'] = $post['conditions'];
             $data['rule'] = $post['rule'];
         } else {
-            Session::forget('filter-iplt');
+            Session::forget('filter-iplt-pending');
         }
 
-       $getList = MyHelper::post('dumping/be/riwayat', $post);
+        $getList = MyHelper::post('dumping/be', $post);
 
         if (isset($getList['status']) && $getList['status'] == "success") {
             $data['data']          = $getList['result']['data'];
@@ -111,13 +111,13 @@ class IpltController extends Controller
             'menu_active'    => 'iplt',
             'submenu_active' => 'iplt-list',
         ];
-        $detail = MyHelper::post('iplt/be/detail', ['id_iplt' => $id]);
+        $detail = MyHelper::get('dumping/be/detail/'.$id);
         
         if (isset($detail['status']) && $detail['status'] == "success") {
-            $data['result'] = $detail['result'];
+            $data['detail'] = $detail['result'];
             return view('merchant::iplt.detail', $data);
         } else {
-            return redirect('iplt')->withErrors($save['messages'] ?? ['Failed get data']);
+            return redirect()->back()->withErrors($save['messages'] ?? ['Failed get data']);
         }
     }
     public function delete($id)

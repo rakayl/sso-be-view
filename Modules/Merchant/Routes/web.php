@@ -98,9 +98,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'accommod
     Route::post('update/{id}', 'AccommodationController@update');
 });
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'iplt'], function () {
-    Route::any('/', 'IpltController@list');
+    Route::any('/riwayat', 'IpltController@list');
     Route::any('/pending', 'IpltController@pending');
-    Route::get('detail/{id}', 'AccommodationController@detail');
+    Route::get('/detail/{id}', 'IpltController@detail');
 });
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'non-iplt'], function () {
     Route::any('/', 'AccommodationController@list');

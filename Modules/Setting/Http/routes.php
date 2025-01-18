@@ -56,6 +56,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::any('volume', 'SettingController@volume');
     
     Route::any('url-app-rating', 'SettingController@appRating');
+    Route::any('whatsapp', 'SettingController@whatsappSetting');
 
     /*Setting Expired time OTP and Email*/
     Route::any('time-expired', 'SettingController@timeExpired');
