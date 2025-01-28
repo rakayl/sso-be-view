@@ -103,4 +103,9 @@ class PaketController extends Controller
             return back()->withErrors($update['messages'] ?? ['Failed delete data']);
         }
     }
+    public function delete(Request $request){
+        $post = $request->except('_token');
+        $delete = MyHelper::post('paket/be/delete', $post);
+        return $delete; 
+    }
 }

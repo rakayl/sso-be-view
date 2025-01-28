@@ -68,6 +68,23 @@ return [
             'label' => 'Browse',
             'children' => [
                 [
+                    'label' => 'Data Bangunan',
+                    'type' => 'tree',
+                    'icon' => 'icon-home',
+                    'children' => [
+                        [
+                            'label' => 'Data Bangunan',
+                            'url' => 'bangunan',
+                            'active' => '\View::shared("submenu_active") == "bangunan-list"',
+                        ],
+                        [
+                            'label' => 'Tambah Bangunan',
+                            'url' => 'bangunan/create',
+                            'active' => '\View::shared("submenu_active") == "bangunan-new"',
+                        ],  
+                    ]
+                ],
+                [
                     'label' => 'Vendor Penyedotan',
                     'type' => 'tree',
                     'icon' => 'fa fa-university',
@@ -185,6 +202,11 @@ return [
                     'icon' => 'fa fa-cog',
                     'type' => 'tree',
                     'children' => [
+                        [
+                            'label' => 'Formula Pengosongan Tangki',
+                            'active' => '\View::shared("submenu_active") == "setting-global-formula"',
+                            'url' => 'setting/setting-global-formula',
+                        ],
                         [
                             'label' => 'Pengosongan Tangki',
                             'active' => '\View::shared("submenu_active") == "setting-global-commisission-sedot"',

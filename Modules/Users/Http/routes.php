@@ -14,6 +14,18 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'user', '
         Route::any('export', 'UsersFranchiseController@export');
         Route::post('import/save', 'UsersFranchiseController@importSave');
     });
+    Route::group(['prefix' => 'user-franchise'], function () {
+        Route::any('/', 'UsersFranchiseController@index');
+        Route::get('create', 'UsersFranchiseController@create');
+        Route::post('store', 'UsersFranchiseController@store');
+        Route::get('detail/{user_id}', 'UsersFranchiseController@detail');
+        Route::post('update/{user_id}', 'UsersFranchiseController@update');
+        Route::post('delete/{user_id}', 'UsersFranchiseController@destroy');
+
+        Route::get('import', 'UsersFranchiseController@import');
+        Route::any('export', 'UsersFranchiseController@export');
+        Route::post('import/save', 'UsersFranchiseController@importSave');
+    });
 
     Route::post('action/bulk', ['uses' => 'UsersController@bulkAction']);
     Route::post('activate', ['uses' => 'UsersController@activateUserDeleted']);
@@ -58,4 +70,9 @@ Route::group(['prefix' => 'webview/complete-profile', 'namespace' => 'Modules\Us
     Route::any('/', 'WebviewUserController@completeProfile');
     Route::post('/submit', 'WebviewUserController@completeProfileSubmit');
     Route::get('/success', 'WebviewUserController@completeProfileSuccess');
+});
+Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'bangunan', 'namespace' => 'Modules\Users\Http\Controllers'], function () {
+    
+    Route::any('/', ['middleware' => 'feature_control:2', 'uses' => 'BangunanController@index']);
+    Route::any('/create', ['middleware' => 'feature_control:2', 'uses' => 'BangunanController@create']);
 });

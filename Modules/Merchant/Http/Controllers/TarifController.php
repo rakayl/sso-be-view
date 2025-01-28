@@ -38,6 +38,38 @@ class TarifController extends Controller
         } else {
             return redirect('tarif')->withErrors($create['messages'] ?? ['Kota tidak ditemukan']);
         }
+         $textreplace = array(
+                            array(
+                                'keyword'=>'tarif',
+                                'message'=>'Tarif penyedotan'
+                            ), 
+                            array(
+                                'keyword'=>'volume',
+                                'message'=>'Volume yang disedot'
+                            ), 
+                           
+                            array(
+                                'keyword'=>'transaction_additional',
+                                'message'=>'Tambahan Biaya'
+                            ), 
+                            array(
+                                'keyword'=>'+',
+                                'message'=>'Added'
+                            ), 
+                            array(
+                                'keyword'=>'-',
+                                'message'=>'Subtraction'
+                            ), 
+                            array(
+                                'keyword'=>'*',
+                                'message'=>'Multiplication'
+                            ), 
+                            array(
+                                'keyword'=>'/',
+                                'message'=>'Distribution'
+                            ), 
+                        );
+               $data['textreplace'] = $textreplace;
         return view('merchant::tarif.paket', $data);
     }
 
@@ -92,6 +124,16 @@ class TarifController extends Controller
             return back()->withErrors($create['messages'] ?? ['Failed save data']);
         }
     }
+    public function formulaCreate(Request $request)
+    {
+       $post = $request->except('_token');
+       $create = MyHelper::post('tarif/be/formula', $post);
+        if (isset($create['status']) && $create['status'] == "success") {
+            return back()->withSuccess(['Success save data']);
+        } else {
+            return back()->withErrors($create['messages'] ?? ['Failed save data']);
+        }
+    }
     public function detailDelete($id)
     {
         $update = MyHelper::post('tarif/be/detail/delete', ['id_detail_tarif' => $id]);
@@ -100,5 +142,10 @@ class TarifController extends Controller
         } else {
             return back()->withErrors($update['messages'] ?? ['Failed delete data']);
         }
+    }
+    public function delete(Request $request){
+        $post = $request->except('_token');
+        $delete = MyHelper::post('tarif/be/delete', $post);
+        return $delete; 
     }
 }

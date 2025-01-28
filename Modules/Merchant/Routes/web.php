@@ -115,6 +115,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'paket'],
     Route::any('/{id}', 'PaketController@detailCity');
     Route::post('/paket/create', 'PaketController@create');
     Route::post('/paket/update', 'PaketController@update');
+    Route::post('/paket/delete', 'PaketController@delete');
     Route::get('/detail/{id}', 'PaketController@detail');
     Route::post('/paket/detail/create', 'PaketController@detailCreate');
     Route::get('/detail/delete/{id}', 'PaketController@detailDelete');
@@ -123,7 +124,9 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'tarif'],
     Route::any('/', 'TarifController@city');
     Route::any('/{id}', 'TarifController@detailCity');
     Route::post('/tarif/create', 'TarifController@create');
+    Route::post('/formula/create', 'TarifController@formulaCreate');
     Route::post('/tarif/update', 'TarifController@update');
+    Route::post('/tarif/delete', 'TarifController@delete');
     Route::get('/detail/{id}', 'TarifController@detail');
     Route::post('/tarif/detail/create', 'TarifController@detailCreate');
     Route::get('/detail/delete/{id}', 'TarifController@detailDelete');
