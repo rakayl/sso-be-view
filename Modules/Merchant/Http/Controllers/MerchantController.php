@@ -396,9 +396,9 @@ class MerchantController extends Controller
         $update = MyHelper::post('merchant/withdrawal/completed', $post);
 
         if (isset($update['status']) && $update['status'] == "success") {
-            return redirect('tukang-sedot/withdrawal')->withSuccess(['Success change status to completed']);
+            return redirect('merchant/withdrawal')->withSuccess(['Success change status to completed']);
         } else {
-            return redirect('tukang-sedot/withdrawal')->withErrors($update['messages'] ?? ['Failed change status']);
+            return redirect('merchant/withdrawal')->withErrors($update['messages'] ?? ['Failed change status']);
         }
     }
 

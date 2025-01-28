@@ -168,6 +168,63 @@
 		var textvaluebaru = textvalue+" "+param;
 		$('#formula').val(textvaluebaru);
         }
+    var SweetAlert = function() {
+            return {
+                init: function() {
+                    $(".delete").each(function() {
+                        var token  	= "{{ csrf_token() }}";
+                        let column 	= $(this).parents('tr');
+                        let id     	= $(this).data('id');
+                        var data = {
+                            '_token' : '{{csrf_token()}}',
+                            'id_paket':id
+                        };
+                        $(this).click(function() {
+                            swal({
+                                    title: "Apakah kamu yakin akan menghapus Paket Renovasi ini?",
+                                    text: "Anda tidak akan dapat memulihkan data ini!",
+                                    type: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonClass: "btn-danger",
+                                    confirmButtonText: "Ya, Hapus!",
+                                    closeOnConfirm: false
+                                },
+                                function(){
+                                    $.ajax({
+                                        type : "POST",
+                                        url : "{{url('paket/paket/delete')}}",
+                                        data : data,
+                                        success : function(response) {
+                                            if (response.status == 'success') {
+                                                swal({
+                                                    title: 'Success!',
+                                                    text: 'Paket Renovasi berhasil dihapus.',
+                                                    type: "success",
+                                                    timer: 2000,
+                                                    showCancelButton: false,
+                                                    showConfirmButton: false
+                                                });
+                                                SweetAlert.init()
+                                                window.location.reload();
+                                            }
+                                            else if(response.status == "fail"){
+                                                swal("Error!", response.messages[0], "error")
+                                            }
+                                            else {
+                                                swal("Error!", "Something went wrong. Failed to delete .", "error")
+                                            }
+                                        }
+                                    });
+                                });
+                        })
+                    })
+                }
+            }
+        }();
+        jQuery(document).ready(function() {
+            SweetAlert.init();
+
+        });
     </script>
     
 @endsection
@@ -204,7 +261,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject sbold uppercase font-blue">Paket Toilet</span>
+                <span class="caption-subject sbold uppercase font-blue">Paket Renovasi</span>
             </div>
         </div>
         <div class="tabbable-line tabbable-full-width">
@@ -235,7 +292,8 @@
                                             <tr>
                                                 <td style="text-align: center;">
                                                    <a href="{{ url('paket/detail/'.$dt['id_paket']) }}" class="btn btn-sm blue text-nowrap"><i class="fa fa-search"></i> Detail</a>
-                                                   </td>
+                                                   <a class="btn btn-sm delete btn-danger" data-id="{{$dt['id_paket']}}" type="button" data-toggle="tab"><i class="fa fa-trash"></i></a>
+                                                </td>
                                                 <td style="text-align: center;">{{$dt['name_paket']}}</td>
                                                 <td style="text-align: center;">{{"Rp " . number_format($dt['price_paket']??0,2,',','.')}}</td>
                                             </tr>

@@ -51,6 +51,7 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     /*global*/
     Route::any('setting-global-commission-sedot-wc', 'SettingController@settingGlobalCommissionSedotWc');
     Route::any('setting-global-commission-survey', 'SettingController@settingGlobalCommissionSurvey');
+    Route::any('setting-global-formula', 'SettingController@settingGlobalFormula');
     Route::any('sedot-rutin-jangka-waktu', 'SettingController@settingJangkaWaktu');
     
     Route::any('volume', 'SettingController@volume');

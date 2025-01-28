@@ -1943,6 +1943,58 @@ class SettingController extends Controller
             return view('setting::setting_global_commission_survey', $data);
         }
     }
+    public function settingGlobalFormula(Request $request){
+        $post = $request->except('_token');
+        $data = [
+            'title'          => 'Setting Global Formula Perhitungan Pengosongan Tangki',
+            'menu_active'    => 'setting-global-formula',
+            'submenu_active'    => 'setting-global-formula',
+        ];
+        if($post){
+            $query = MyHelper::post('setting/setting-global-formula-create', $post);
+            if(($query['status']??'')=='success'){
+                return redirect('setting/setting-global-formula')->with('success',['Success update data']);
+            }else{
+                return redirect('setting/setting-global-formula')->withErrors([$query['message']]);
+            }
+        }else{
+            $query = MyHelper::get('setting/setting-global-formula');
+            $data['result'] = $query;
+            $textreplace = array(
+                            array(
+                                'keyword'=>'tarif',
+                                'message'=>'Tarif penyedotan'
+                            ), 
+                            array(
+                                'keyword'=>'volume',
+                                'message'=>'Volume yang disedot'
+                            ), 
+                           
+                            array(
+                                'keyword'=>'transaction_additional',
+                                'message'=>'Tambahan Biaya'
+                            ), 
+                            array(
+                                'keyword'=>'+',
+                                'message'=>'Added'
+                            ), 
+                            array(
+                                'keyword'=>'-',
+                                'message'=>'Subtraction'
+                            ), 
+                            array(
+                                'keyword'=>'*',
+                                'message'=>'Multiplication'
+                            ), 
+                            array(
+                                'keyword'=>'/',
+                                'message'=>'Distribution'
+                            ), 
+                        );
+               $data['textreplace'] = $textreplace;
+            return view('setting::global-formula', $data);
+        }
+    }
     public function settingJangkaWaktu(Request $request){
         $post = $request->except('_token');
         $data = [

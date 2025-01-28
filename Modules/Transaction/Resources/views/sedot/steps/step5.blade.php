@@ -27,6 +27,16 @@
                                         </div>
                                 </div>
 			</div>
+			<div class="form-group">
+				<label class="col-md-4 control-label">Tambahan Biaya<span class="required" aria-required="true"> * </span>
+				</label>
+				<div class="col-md-6">
+                                        <div class="input-group">
+                                             <input class="form-control" type="number" name="transaction_additional" value="{{$detail['trasaction_sedot_wc']['transaction_additional']??0}}" required>
+                                             <span class="input-group-addon">Liter</span>
+                                        </div>
+                                </div>
+			</div>
                         @if(isset($detail['step']['step5']['procesed_by']))
 			<div class="form-group">
 				<label class="col-md-4 control-label" >Processed By  <span class="required" aria-required="true"> * </span>
