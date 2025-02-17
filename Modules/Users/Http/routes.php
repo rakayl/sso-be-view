@@ -74,5 +74,8 @@ Route::group(['prefix' => 'webview/complete-profile', 'namespace' => 'Modules\Us
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'bangunan', 'namespace' => 'Modules\Users\Http\Controllers'], function () {
     
     Route::any('/', ['middleware' => 'feature_control:2', 'uses' => 'BangunanController@index']);
+    Route::any('/detail/{id}', ['middleware' => 'feature_control:2', 'uses' => 'BangunanController@detail']);
     Route::any('/create', ['middleware' => 'feature_control:2', 'uses' => 'BangunanController@create']);
+    Route::post('/store', ['middleware' => 'feature_control:2', 'uses' => 'BangunanController@store']);
+    Route::post('/update', ['middleware' => 'feature_control:2', 'uses' => 'BangunanController@update']);
 });

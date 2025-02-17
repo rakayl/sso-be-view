@@ -26,98 +26,16 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-confirmation/bootstrap-confirmation.min.js') }}" type="text/javascript"></script>
 
-    <script>
-        $('.date-picker').datepicker({
-            format: 'dd M yyyy'
+    <script type="text/javascript">
+        $('.timepicker').timepicker({
+            autoclose: true,
+            minuteStep: 5,
+            showSeconds: false,
+
         });
-        $('.onlynumber').keypress(function(e) {
-            var regex = new RegExp("^[0-9]");
-            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-
-            var check_browser = navigator.userAgent.search("Firefox");
-
-            if (check_browser == -1) {
-                if (regex.test(str) || e.which == 8) {
-                    return true;
-                }
-            } else {
-                if (regex.test(str) || e.which == 8 || e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
-                    return true;
-                }
-            }
-
-            e.preventDefault();
-            return false;
-        });
-        $('#province').change(function() {
-            $('#city').empty();
-            $('#city').prop('disabled', true);
-            $('#district').empty();
-            $('#district').prop('disabled', true);
-            $('#subdistrict').empty();
-            $('#subdistrict').prop('disabled', true);
-            $('#merchant_postal_code').val('');
-
-            var isi   = $('#province').val();
-            let token = "{{ csrf_token() }}";
-
-            $.ajax({
-                type    : "POST",
-                url     : "<?php echo url('outlet/get/city')?>",
-                data    : "_token="+token+"&id_province="+isi,
-                success : function(result) {
-                    if (result['status'] == "success") {
-                        $('#city').prop('disabled', false);
-
-                        var city           = result['result'];
-                        var selectCity = '<option value=""></option>';
-
-                        for (var i = 0; i < city.length; i++) {
-                            selectCity += '<option value="'+city[i]['id_city']+'">'+city[i]['city_name']+'</option>';
-                        }
-
-                        $('#city').html(selectCity);
-                    }
-                    else {
-                        $('#city').prop('disabled', true);
-                    }
-                }
-            });
-        });
-
-        $('#city').change(function() {
-            $('#district').empty();
-            $('#district').prop('disabled', true);
-            $('#subdistrict').empty();
-            $('#subdistrict').prop('disabled', true);
-            $('#merchant_postal_code').val('');
-
-            var isi   = $('#city').val();
-            let token = "{{ csrf_token() }}";
-
-            $.ajax({
-                type    : "POST",
-                url     : "<?php echo url('outlet/get/district')?>",
-                data    : "_token="+token+"&id_city="+isi,
-                success : function(result) {
-                    if (result['status'] == "success") {
-                        $('#district').prop('disabled', false);
-
-                        var district           = result['result'];
-                        var selectDistrict = '<option value=""></option>';
-
-                        for (var i = 0; i < district.length; i++) {
-                            selectDistrict += '<option value="'+district[i]['id_district']+'">'+district[i]['district_name']+'</option>';
-                        }
-
-                        $('#district').html(selectDistrict);
-                    }
-                    else {
-                        $('#district').prop('disabled', true);
-                    }
-                }
-            });
-        });
+        // sortable
+        $( "#sortable" ).sortable();
+        $( "#sortable" ).disableSelection();
     </script>
     <script>
         var map;
@@ -241,181 +159,213 @@
 
         google.maps.event.addDomListener(window, 'load', initialize());
     </script>
+
     <script type="text/javascript">
-        
 
-        $(".file").change(function(e) {
-            var widthImg  = 300;
-            var heightImg = 300;
-
-            var _URL = window.URL || window.webkitURL;
-            var image, file;
-
-            if ((file = this.files[0])) {
-                image = new Image();
-
-                image.onload = function() {
-                    if (this.width == widthImg && this.height == heightImg) {
-                        // image.src = _URL.createObjectURL(file);
-                        //    $('#formimage').submit()
-                    }
-                    else {
-                        toastr.warning("Please check dimension of your photo.");
-                        $('#image').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
-                        $("#remove_fieldphoto").trigger( "click" );
-
-                    }
-                };
-
-                image.src = _URL.createObjectURL(file);
-            }
-
-        });
-        $(".filePhotoDetail").change(function(e) {
-            var _URL = window.URL || window.webkitURL;
-            var image, file;
-
-            if ((file = this.files[0])) {
-                image = new Image();
-
-                image.onload = function() {
-                    if (this.height != 375 && this.width != 720) {
-                        toastr.warning("Please check dimension of your photo. Maximum height is 375 px");
-                        $('#imageDetail').children('img').attr('src', 'https://www.placehold.it/720x375/EFEFEF/AAAAAA&amp;text=no+image');
-                        $("#remove_fieldphotodetail").trigger( "click" );
-                    }
-                };
-
-                image.src = _URL.createObjectURL(file);
-            }
-
-        });
-
-        $(".filePhotoCover").change(function(e) {
-            var widthImg  = 720;
-            var heightImg = 375;
-
-            var _URL = window.URL || window.webkitURL;
-            var image, file;
-
-            if ((file = this.files[0])) {
-                image = new Image();
-
-                image.onload = function() {
-                    if (this.width != widthImg && this.height != heightImg) {
-                        toastr.warning("Please check dimension of your photo.");
-                        $('#imageCover').children('img').attr('src', 'https://www.placehold.it/720x375/EFEFEF/AAAAAA&amp;text=no+image');
-                        $("#remove_fieldphotocover").trigger( "click" );
-
-                    }
-                };
-
-                image.src = _URL.createObjectURL(file);
-            }
-
-        });
-    </script>
-    <script>
         $(document).ready(function(){
-            initialize({{env('LONGITUDE')}}, {{env('LATITUDE')}});
-        });
-        $('.onlynumber').keypress(function (e) {
-            var regex = new RegExp("^[0-9]");
-            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
+            $('#table_product').DataTable( {
+                "pageLength": 15,
+                "lengthChange": false,
+                "ordering": false,
+                "info" : false
+            });
+            /* MAPS */
+            longNow = "{{ $bangunan['longitude'] }}";
+            latNow = "{{ $bangunan['latitude'] }}";
 
-            var check_browser = navigator.userAgent.search("Firefox");
-
-            if(check_browser == -1){
-                if (regex.test(str) || e.which == 8) {
-                    return true;
-                }
-            }else{
-                if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
-                    return true;
-                }
+            if (latNow == "" || longNow == "") {
+              navigator.geolocation.getCurrentPosition(function(position){
+                  initialize(position.coords.latitude, position.coords.longitude);
+              },
+              function (error) {
+                if (error.code == error.PERMISSION_DENIED)
+                initialize({{env('LONGITUDE')}}, {{env('LATITUDE')}});
+              });
+            }
+            else {
+              initialize(latNow, longNow);
             }
 
-            e.preventDefault();
-            return false;
-        });
-        $('#user').change(function() {
-            let name_province     	= $(this).find(':selected').data('province');
-            let id_province     	= $(this).find(':selected').data('id_province');
-            let city_name     	= $(this).find(':selected').data('city');
-            let id_city     	= $(this).find(':selected').data('id_city');
-            let email     	= $(this).find(':selected').data('email');
-            $('#name_province').val(name_province);
-            $('#id_province').val(id_province);
-            $('#city_name').val(city_name);
-            $('#id_city').val(id_city);
-            $('#email').val(email);
-            $('#emails').val(email);
+            /*=====================================*/
+
+            // untuk show atau hide informasi photo
+            if ($('.deteksi').data('dis') != 1) {
+                $('.deteksi-trigger').hide();
+            }
+            else {
+                $('.deteksi-trigger').show();
+            }
 
             let token = "{{ csrf_token() }}";
-            $.ajax({
-                type    : "POST",
-                url     : "<?php echo url('outlet/get/district')?>",
-                data    : "_token="+token+"&id_city="+id_city,
-                success : function(result) {
-                    if (result['status'] == "success") {
-                        $('#district').prop('disabled', false);
 
-                        var district           = result['result'];
-                        var selectDistrict = '<option value=""></option>';
+            // hapus gambar
+            $('.hapus-gambar').click(function() {
+                let id     = $(this).data('id');
+                let parent = $(this).parent().parent().parent().parent();
 
-                        for (var i = 0; i < district.length; i++) {
-                            selectDistrict += '<option value="'+district[i]['id_district']+'">'+district[i]['district_name']+'</option>';
+                $.ajax({
+                    type : "POST",
+                    url : "{{ url('outlet/photo/delete') }}",
+                    data : "_token="+token+"&id_outlet_photo="+id,
+                    success : function(result) {
+
+                        if (result == "success") {
+                            parent.remove();
+                            toastr.info("Photo has been deleted.");
                         }
-
-                        $('#district').html(selectDistrict);
-                    }
-                    else {
-                        $('#district').prop('disabled', true);
-                    }
-                }
-            });
-        });
-        
-
-        $('#district').change(function() {
-            $('#subdistrict').empty();
-            $('#subdistrict').prop('disabled', true);
-            $('#merchant_postal_code').val('');
-
-            var isi = $('#district').val();
-            let token = "{{ csrf_token() }}";
-
-            $.ajax({
-                type    : "POST",
-                url     : "<?php echo url('outlet/get/subdistrict')?>",
-                data    : "_token="+token+"&id_district="+isi,
-                success : function(result) {
-                    if (result['status'] == "success") {
-                        $('#subdistrict').prop('disabled', false);
-
-                        var subdistrict           = result['result'];
-                        var selectSubdistrict = '<option value=""></option>';
-
-                        for (var i = 0; i < subdistrict.length; i++) {
-                            selectSubdistrict += '<option value="'+subdistrict[i]['id_subdistrict']+'|'+subdistrict[i]['subdistrict_postal_code']+'">'+subdistrict[i]['subdistrict_name']+'</option>';
+                        else {
+                            toastr.warning("Something went wrong. Failed to delete photo.");
                         }
-
-                        $('#subdistrict').html(selectSubdistrict);
                     }
-                    else {
-                        $('#subdistrict').prop('disabled', true);
-                    }
-                }
+                });
             });
-        });
 
-        $('#subdistrict').change(function() {
-            var isi = $('#subdistrict').val();
-            var isi = isi.split('|');
+            // change info
+            $('#infoOutlet').click(function() {
+            //   initialize();
+            // console.log(latNow)
+            // console.log(latNow)
 
-            $('#merchant_postal_code').val(isi[1]);
+            // initialize(latNow, longNow);
+
+            });
+
+            $('#province').change(function() {
+                $('#city').empty();
+                $('#city').prop('disabled', true);
+                $('#district').empty();
+                $('#district').prop('disabled', true);
+                $('#subdistrict').empty();
+                $('#subdistrict').prop('disabled', true);
+                $('#outlet_postal_code').val('');
+
+                var isi         = $('#province').val();
+
+                $.ajax({
+                    type    : "POST",
+                    url     : "<?php echo url('outlet/get/city')?>",
+                    data    : "_token="+token+"&id_province="+isi,
+                    success : function(result) {
+                        if (result['status'] == "success") {
+                            $('#city').prop('disabled', false);
+
+                            var city           = result['result'];
+                            var selectCity = '<option value=""></option>';
+
+                            for (var i = 0; i < city.length; i++) {
+                                selectCity += '<option value="'+city[i]['id_city']+'" >'+city[i]['city_name']+'</option>';
+                            }
+
+                            $('#city').html(selectCity);
+                        }
+                        else {
+                            $('#city').prop('disabled', true);
+                        }
+                    }
+                });
+            });
+
+            $('#city').change(function() {
+                $('#district').empty();
+                $('#district').prop('disabled', true);
+                $('#subdistrict').empty();
+                $('#subdistrict').prop('disabled', true);
+                $('#outlet_postal_code').val('');
+
+                var isi   = $('#city').val();
+                let token = "{{ csrf_token() }}";
+
+                $.ajax({
+                    type    : "POST",
+                    url     : "<?php echo url('outlet/get/district')?>",
+                    data    : "_token="+token+"&id_city="+isi,
+                    success : function(result) {
+                        if (result['status'] == "success") {
+                            $('#district').prop('disabled', false);
+
+                            var district           = result['result'];
+                            var selectDistrict = '<option value=""></option>';
+
+                            for (var i = 0; i < district.length; i++) {
+                                selectDistrict += '<option value="'+district[i]['id_district']+'">'+district[i]['district_name']+'</option>';
+                            }
+
+                            $('#district').html(selectDistrict);
+                        }
+                        else {
+                            $('#district').prop('disabled', true);
+                        }
+                    }
+                });
+            });
+
+            $('#district').change(function() {
+                $('#subdistrict').empty();
+                $('#subdistrict').prop('disabled', true);
+                $('#outlet_postal_code').val('');
+
+                var isi = $('#district').val();
+                let token = "{{ csrf_token() }}";
+
+                $.ajax({
+                    type    : "POST",
+                    url     : "<?php echo url('outlet/get/subdistrict')?>",
+                    data    : "_token="+token+"&id_district="+isi,
+                    success : function(result) {
+                        if (result['status'] == "success") {
+                            $('#subdistrict').prop('disabled', false);
+
+                            var subdistrict           = result['result'];
+                            var selectSubdistrict = '<option value=""></option>';
+
+                            for (var i = 0; i < subdistrict.length; i++) {
+                                selectSubdistrict += '<option value="'+subdistrict[i]['id_subdistrict']+'|'+subdistrict[i]['subdistrict_postal_code']+'">'+subdistrict[i]['subdistrict_name']+'</option>';
+                            }
+
+                            $('#subdistrict').html(selectSubdistrict);
+                        }
+                        else {
+                            $('#subdistrict').prop('disabled', true);
+                        }
+                    }
+                });
+            });
+
+            $('#subdistrict').change(function() {
+                var isi = $('#subdistrict').val();
+                var isi = isi.split('|');
+                console.log(isi)
+                $('#postal_code').val(isi[1]);
+            });
+
+
+            
         });
     </script>
+
+    <script type="text/javascript">
+   
+
+    $('.latlong').change(function(){
+        var lat = $('#lat').val()
+        var long = $('#lng').val()
+        initialize(lat, long);
+    })
+    $('.is_closed').change(function(){
+        if($(this).is(':checked')){
+            $('#'+$(this).attr('data-id')).val('1')
+        }else{
+            $('#'+$(this).attr('data-id')).val('0')
+        }
+    })
+
+    function isNumberKey(evt){
+        var charCode = (evt.which) ? evt.which : event.keyCode
+        if (charCode > 31 && (charCode < 48 || charCode > 57))
+            return false;
+        return true;
+    }
+  </script>
 @endsection
 
 @section('content')
@@ -443,11 +393,11 @@
     <div class="portlet card_ light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">Tambah Bangunan</span>
+                <span class="caption-subject font-blue sbold uppercase">Update Bangunan</span>
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal" role="form" action="{{ url('bangunan/store') }}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" role="form" action="{{ url('bangunan/update') }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <br>
                     <h3 style="text-align: center">Data Bangunan</h3>
@@ -458,15 +408,15 @@
                                             <label class="col-md-3 control-label">
                                                     Customer
                                                     <span class="required" aria-required="true"> * </span>
-                                                   
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Pilih provinsi " data-container="body"></i>
                                             </label>
                                     </div>
                                     <div class="col-md-8">
-                                            <select id="user" name="id_user" class="form-control select2-multiple" data-placeholder="Select Customer" required>
+                                            <select disabled id="user" name="id_user" class="form-control select2-multiple" data-placeholder="Select Customer" required>
                                                     <option></option>
                                                     @if (!empty($user))
                                                             @foreach($user as $su)
-                                                                    <option value="{{ $su['id'] }}">{{ $su['name'] }} ({{ $su['phone'] }})</option>
+                                                                    <option value="{{ $su['id'] }}" @if($bangunan['id_user']==$su['id']) selected @endif>{{ $su['name'] }} ({{ $su['phone'] }})</option>
                                                             @endforeach
                                                     @endif
                                             </select>
@@ -478,10 +428,11 @@
                             <label class="col-md-3 control-label">
                                 Name Alamat 
                                 <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama alamat" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" required placeholder="Nama Alamat">
+                            <input type="text" class="form-control" name="name" value='{{$bangunan['name']}}' required placeholder="Nama Alamat">
                         </div>
                     </div>
                     <div class="form-group">
@@ -489,10 +440,11 @@
                             <label class="col-md-3 control-label">
                                 NIK 
                                 <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan NIK" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="nik" required placeholder="NIK">
+                            <input type="text" class="form-control" name="nik" value='{{$bangunan['nik']}}' required placeholder="NIK">
                         </div>
                     </div>
                     <div class="form-group">
@@ -500,10 +452,11 @@
                             <label class="col-md-3 control-label">
                                 Nomor Kartu Keluarga
                                 <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nomor kartu keluarga" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="no_kk" required placeholder="Nama Nomor Kartu Keluarga">
+                            <input type="text" class="form-control" name="no_kk" value='{{$bangunan['no_kk']}}' required placeholder="Nama Nomor Kartu Keluarga">
                         </div>
                     </div>
                     <div class="form-group">
@@ -511,10 +464,11 @@
                             <label class="col-md-3 control-label">
                                 Name Kartu Keluarga 
                                 <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama kartu keluarga" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" name="name_kk" required placeholder="Nama Kartu Keluarga">
+                            <input type="text" class="form-control" name="name_kk" value='{{$bangunan['name_kk']}}' required placeholder="Nama Kartu Keluarga">
                         </div>
                     </div>
                     <div class="form-group">
@@ -522,6 +476,7 @@
                                             <label class="col-md-3 control-label">
                                                     Province
                                                     <span class="required" aria-required="true"> * </span>
+                                                    <i class="fa fa-question-circle tooltips" data-original-title="Pilih provinsi " data-container="body"></i>
                                             </label>
                                     </div>
                                     <div class="col-md-8">
@@ -529,54 +484,65 @@
                                                     <option></option>
                                                     @if (!empty($province))
                                                             @foreach($province as $suw)
-                                                                    <option value="{{ $suw['id_province'] }}">{{ $suw['province_name'] }}</option>
+                                                                    <option @if ($suw['id_province'] == $bangunan['id_province']) selected @endif  value="{{ $suw['id_province'] }}">{{ $suw['province_name'] }}</option>
                                                             @endforeach
                                                     @endif
                                             </select>
                                     </div>
                             </div>
 
-                            <div class="form-group">
-                                    <div class="input-icon right">
-                                            <label class="col-md-3 control-label">
-                                                    City
-                                                    <span class="required" aria-required="true"> * </span>
-                                            </label>
-                                    </div>
-                                    <div class="col-md-8">
-                                            <select id="city" name="id_city" class="form-control select2-multiple" data-placeholder="Select City" disabled required>
-                                                    <option></option>
-                                            </select>
-                                    </div>
-                            </div>
+                           
 
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Disctrict
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
-                        <div class="col-md-8">
-                            <select id="district" name="id_district"  class="form-control select2-multiple" data-placeholder="Select Disctrict" disabled required>
-                                <option></option>
-                            </select>
-                        </div>
-                    </div>
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                City
+                <span class="required" aria-required="true"> * </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Pilih kota letak outlet" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-8">
+                <select id="city" name="id_city" class="form-control select2-multiple" data-placeholder="Select City" disabled required>
+                    <optgroup label="City List">
+                        <option value="{{ $bangunan['city']['id_city'] }}">{{ $bangunan['city']['city_name'] }}</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
 
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Subdisctrict
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
-                        <div class="col-md-8">
-                            <select id="subdistrict" name="id_subdistrict" class="form-control select2-multiple" data-placeholder="Select Subdisctrict" disabled required>
-                                <option></option>
-                            </select>
-                        </div>
-                    </div>
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                    Disctrict
+                    <span class="required" aria-required="true"> * </span>
+                    <i class="fa fa-question-circle tooltips" data-original-title="Pilih kecamatan outlet" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-8">
+                <select id="district" name="id_district" class="form-control select2-multiple" data-placeholder="Select Disctrict" disabled required>
+                    <optgroup label="Disctrict List">
+                        <option value="{{ $bangunan['district']['id_district'] }}">{{ $bangunan['district']['district_name'] }}</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                    Subdisctrict
+                    <span class="required" aria-required="true"> * </span>
+                    <i class="fa fa-question-circle tooltips" data-original-title="Pilih kelurahan outlet" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-8">
+                <select id="subdistrict" name="id_subdistrict" class="form-control select2-multiple" data-placeholder="Select Subdisctrict" disabled required>
+                    <optgroup label="Subdisctrict List">
+                        <option value="{{ $bangunan['subdistrict']['id_subdistrict'] }}">{{ $bangunan['subdistrict']['subdistrict_name'] }}</option>
+                    </optgroup>
+                </select>
+            </div>
+        </div>
 
                     <div class="form-group">
                         <div class="input-icon right">
@@ -586,7 +552,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="merchant_postal_code" name="postal_code" required placeholder="Postal Code" readonly>
+                            <input type="text" class="form-control" id="postal_code" value='{{$bangunan['postal_code']}}' name="postal_code" required placeholder="Postal Code" readonly>
                         </div>
                     </div>
 
@@ -595,24 +561,25 @@
                             <label class="col-md-3 control-label">
                                 Alamat
                                 <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Alamat lengkap " data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <textarea name="address" class="form-control" placeholder="Address" required></textarea>
+                            <textarea name="address" class="form-control" placeholder="Address" required>{{$bangunan['address']}}</textarea>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Latitude</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control latlong" name="latitude" value='' id="lat" required>
+                            <input type="text" class="form-control latlong" name="latitude" value='{{$bangunan['latitude']}}' id="lat" required>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-3 control-label">Longitude</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control latlong" name="longitude" value='' id="lng" required>
+                            <input type="text" class="form-control latlong" name="longitude" value='{{$bangunan['longitude']}}' id="lng" required>
                         </div>
                     </div>
 
@@ -632,7 +599,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="number" class="form-control" id="jml_keluarga" name="jml_keluarga" required placeholder="Jumlah Anggota Keluarga">
+                            <input type="number" class="form-control" value='{{$bangunan['jml_keluarga']}}' id="jml_keluarga" name="jml_keluarga" required placeholder="Jumlah Anggota Keluarga">
                         </div>
                     </div>
                     <div class="form-group">
@@ -643,7 +610,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="number" class="form-control" id="septic_tank_volume" name="septic_tank_volume" required placeholder="Volume Septic Tank">
+                            <input type="number" class="form-control" value='{{$bangunan['septic_tank_volume']}}' id="septic_tank_volume" name="septic_tank_volume" required placeholder="Volume Septic Tank">
                         </div>
                     </div>
                     <div class="form-group">
@@ -654,7 +621,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="posisi_septic_tank" name="posisi_septic_tank" required placeholder="Posisi Septic Tank">
+                            <input type="text" class="form-control" id="posisi_septic_tank" value='{{$bangunan['posisi_septic_tank']}}' name="posisi_septic_tank" required placeholder="Posisi Septic Tank">
                         </div>
                     </div>
                     <div class="form-group">
@@ -665,7 +632,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="jenis_bangunan" name="jenis_bangunan" required placeholder="Jenis Bangunan">
+                            <input type="text" class="form-control" id="jenis_bangunan" value='{{$bangunan['jenis_bangunan']}}' name="jenis_bangunan" required placeholder="Jenis Bangunan">
                         </div>
                     </div>
                     <div class="form-group">
@@ -676,7 +643,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="jenis_kepemilikan" name="jenis_kepemilikan" required placeholder="Jenis Kepemilikan">
+                            <input type="text" class="form-control" id="jenis_kepemilikan" value='{{$bangunan['jenis_kepemilikan']}}' name="jenis_kepemilikan" required placeholder="Jenis Kepemilikan">
                         </div>
                     </div>
                     <div class="form-group">
@@ -687,7 +654,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="sumber_air" name="sumber_air" required placeholder="Sumber Air">
+                            <input type="text" class="form-control" id="sumber_air" value='{{$bangunan['sumber_air']}}' name="sumber_air" required placeholder="Sumber Air">
                         </div>
                     </div>
                     <div class="form-group">
@@ -698,7 +665,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="jarak_sumber_air" name="jarak_sumber_air" required placeholder="Jarak Sumber Air Minum dan Penampungan">
+                            <input type="text" class="form-control" id="jarak_sumber_air" value='{{$bangunan['jarak_sumber_air']}}' name="jarak_sumber_air" required placeholder="Jarak Sumber Air Minum dan Penampungan">
                         </div>
                     </div>
                     <div class="form-group">
@@ -709,7 +676,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="jenis_sumber_air_minum" name="jenis_sumber_air_minum" required placeholder="Jenis Sumber Air Untuk Minum">
+                            <input type="text" class="form-control" id="jenis_sumber_air_minum" value='{{$bangunan['jenis_sumber_air_minum']}}' name="jenis_sumber_air_minum" required placeholder="Jenis Sumber Air Untuk Minum">
                         </div>
                     </div>
                     <div class="form-group">
@@ -720,7 +687,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="jenis_sumber_air_keluarga" name="jenis_sumber_air_keluarga" required placeholder="Jenis Sumber Air Untuk Kebutuhan Rumah Tangga">
+                            <input type="text" class="form-control" id="jenis_sumber_air_keluarga" value='{{$bangunan['jenis_sumber_air_keluarga']}}' name="jenis_sumber_air_keluarga" required placeholder="Jenis Sumber Air Untuk Kebutuhan Rumah Tangga">
                         </div>
                     </div>
                     <div class="form-group">
@@ -731,7 +698,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="akses_spald" name="akses_spald" required placeholder="Jenis Sumber Air Untuk Kebutuhan Rumah Tangga">
+                            <input type="text" class="form-control" id="akses_spald" value='{{$bangunan['akses_spald']}}' name="akses_spald" required placeholder="Jenis Sumber Air Untuk Kebutuhan Rumah Tangga">
                         </div>
                     </div>
                     <div class="form-group">
@@ -741,7 +708,7 @@
                             </label>
                         </div>
                         <div class="col-md-1">
-                            <input type="checkbox" class="form-control" id="babs" name="babs" >
+                            <input type="checkbox" class="form-control" @if($bangunan['babs']) checked @endif id="babs" name="babs" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -751,7 +718,7 @@
                             </label>
                         </div>
                         <div class="col-md-1">
-                            <input type="checkbox" class="form-control" id="lubang_tanah" name="lubang_tanah" >
+                            <input type="checkbox" class="form-control" @if($bangunan['lubang_tanah']) checked @endif id="lubang_tanah" name="lubang_tanah" >
                         </div>
                     </div>
                     <div class="form-group">
@@ -761,18 +728,20 @@
                             </label>
                         </div>
                         <div class="col-md-1">
-                            <input type="checkbox" class="form-control" id="fasilitas_umum" name="fasilitas_umum" >
+                            <input type="checkbox" @if($bangunan['fasilitas_umum']) checked @endif class="form-control" id="fasilitas_umum" name="fasilitas_umum" >
                         </div>
                     </div>
                 <div class="form-actions">
                     {{ csrf_field() }}
                     <div class="row">
                         <div class="col-md-offset-3 col-md-8">
+                            <input type="hidden" class="form-control" id="id_user_address" value="{{$bangunan['id_user_address']}}" name="id_user_address" >
                             <button type="submit" class="btn green">Submit</button>
                         </div>
                     </div>
                 </div>
-            </form>
-        </div>
+        </div>            </form>
+
+    </div>
     </div>
 @endsection

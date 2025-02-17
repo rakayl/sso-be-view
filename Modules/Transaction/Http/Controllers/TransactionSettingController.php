@@ -272,12 +272,11 @@ class TransactionSettingController extends Controller
             $data['service'] = $data['service'] * 100;
             $data['tax'] = MyHelper::post('setting', ['key' => 'tax'])['result']['value'] ?? 0;
             $data['tax'] = $data['tax'] * 100;
-            $data['mdr_charged'] = MyHelper::post('setting', ['key' => 'mdr_charged'])['result']['value'] ?? '';
-            $mdrFormula = MyHelper::post('setting', ['key' => 'mdr_formula'])['result']['value_text'] ?? '';
-            $data['mdr_formula'] = (array)json_decode($mdrFormula);
-            $data['withdrawal_fee_global'] = MyHelper::post('setting', ['key' => 'withdrawal_fee_global'])['result']['value'] ?? 0;
-            $data['banks'] = MyHelper::post('disburse/bank', $post)['result'] ?? [];
-
+//            $data['mdr_charged'] = MyHelper::post('setting', ['key' => 'mdr_charged'])['result']['value'] ?? '';
+//            $mdrFormula = MyHelper::post('setting', ['key' => 'mdr_formula'])['result']['value_text'] ?? '';
+//            $data['mdr_formula'] = (array)json_decode($mdrFormula);
+            $data['fee_payment'] = MyHelper::post('setting', ['key' => 'fee_payment'])['result']['value'] ?? 0;
+//            $data['banks'] = MyHelper::post('disburse/bank', $post)['result'] ?? [];
             return view('transaction::setting.all_fee', $data);
         } else {
             if ($type == 'service') {
@@ -291,11 +290,13 @@ class TransactionSettingController extends Controller
                     'tax' => ['value', $tax]
                 ];
                 $update = MyHelper::post('setting/update2', ['update' => $sendData]);
-            } elseif ($type == 'mdr') {
-                $update = MyHelper::post('transaction/setting/mdr', $post);
-            } elseif ($type == 'withdrawal') {
-                $update = MyHelper::post('transaction/setting/withdrawal', $post);
-            }
+//            } elseif ($type == 'mdr') {
+//                $update = MyHelper::post('transaction/setting/mdr', $post);
+//            } elseif ($type == 'withdrawal') {
+//                $update = MyHelper::post('transaction/setting/withdrawal', $post);
+            }elseif ($type == 'fee_payment') {
+                $update = MyHelper::post('transaction/setting/fee_payment', $post);
+            } 
 
             if (($update['status'] ?? false) == 'success') {
                 return redirect('transaction/setting/all-fee#' . $type . '_fee')->withSuccess(['Success update']);

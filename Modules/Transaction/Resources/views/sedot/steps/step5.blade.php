@@ -23,7 +23,7 @@
 				<div class="col-md-6">
                                         <div class="input-group">
                                              <input class="form-control" type="number" name="volume_sedot_wc" value="{{$detail['trasaction_sedot_wc']['volume_sedot_wc']??0}}" required>
-                                             <span class="input-group-addon">Liter</span>
+                                             <span class="input-group-addon">M<sup>3</sup></span>
                                         </div>
                                 </div>
 			</div>
@@ -32,8 +32,9 @@
 				</label>
 				<div class="col-md-6">
                                         <div class="input-group">
+                                            <span class="input-group-addon">Rp</span>
                                              <input class="form-control" type="number" name="transaction_additional" value="{{$detail['trasaction_sedot_wc']['transaction_additional']??0}}" required>
-                                             <span class="input-group-addon">Liter</span>
+                                             
                                         </div>
                                 </div>
 			</div>

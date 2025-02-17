@@ -1364,10 +1364,14 @@ class TransactionController extends Controller
                 $city = $check['result']['transaction_renovasi']['id_city']??null;
                 $data['outlet'] = MyHelper::post('transaction/be/outlet/renov', ['id_city' => $city])['result']??array();
                 $data['paket'] = MyHelper::post('transaction/be/update/kontraktor/paket',['id_transaction' => $id])['result']??[];
+                $data['province'] = MyHelper::get('province/list')['result'] ?? [];
+                $data['bangunan'] = MyHelper::get('users/bangunan/detail/'.$data['detail']['transaction_renovasi']['id_user_address'])['result'] ?? [];
               return view('transaction::transactionDetail4', $data);
             }
             $data['armada'] = MyHelper::get('transaction/be/armada/'.$id)['result']??[];
             $data['tarif'] = MyHelper::post('transaction/be/tarif',['id_transaction' => $id])['result']??[];
+            $data['province'] = MyHelper::get('province/list')['result'] ?? [];
+            $data['bangunan'] = MyHelper::get('users/bangunan/detail/'.$data['detail']['trasaction_sedot_wc']['id_user_address'])['result'] ?? [];
             return view('transaction::transactionDetail3', $data);
         } else {
             return back()->withErrors(['Failed get detail transaction']);

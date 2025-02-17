@@ -254,57 +254,7 @@
                 </div>
             </div>
         </div>
-        {{--
-        <div class="form-group">
-            <div class="input-icon right">
-                <label class="col-md-3 control-label">
-                Time Zone
-                <span class="required" aria-required="true"> * </span>
-                <i class="fa fa-question-circle tooltips" data-original-title="Zona waktu outlet" data-container="body"></i>
-                </label>
-            </div>
-            <div class="col-md-9">
-                <select class="form-control" name="time_zone_utc" required>
-                    <option value="" disabled @if ( old('time_zone_utc')== "" ) selected @endif>Select Time Zone</option>
-                    <option value="7" 
-                        @if ( $val['time_zone_utc'] == '7' ) 
-                            selected 
-                        @endif>WIB - Asia/Jakarta (UTC +07:00)</option>
-                    <option value="8" 
-                        @if ( $val['time_zone_utc'] == '8' ) 
-                            selected 
-                        @endif>WITA - Asia/Makassar (UTC +08:00)</option>
-                    <option value="9" 
-                        @if ( $val['time_zone_utc'] == '9' ) 
-                            selected 
-                        @endif>WIT - Asia/Jayapura (UTC +09:00)</option>
-                </select>
-            </div>
-        </div>
-        --}}
-        <!--<div class="form-group">
-            <div class="input-icon right">
-                <label class="col-md-3 control-label">
-                Deep Link Gojek
-                <i class="fa fa-question-circle tooltips" data-original-title="Deep link gojek" data-container="body"></i>
-                </label>
-            </div>
-            <div class="col-md-9">
-                <input type="text" class="form-control" name="deep_link_gojek" value="{{ $val['deep_link_gojek'] }}" placeholder="Deep link gojek">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="input-icon right">
-                <label class="col-md-3 control-label">
-                Deep Link Grab
-                <i class="fa fa-question-circle tooltips" data-original-title="Deep link grab" data-container="body"></i>
-                </label>
-            </div>
-            <div class="col-md-9">
-                <input type="text" class="form-control" name="deep_link_grab" value="{{ $val['deep_link_grab'] }}" placeholder="Deep link grab">
-            </div>
-        </div>-->
+      
 
         @if(MyHelper::hasAccess([96], $configs))
         <div class="form-group">

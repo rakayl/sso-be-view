@@ -82,13 +82,13 @@ $configs     = session('configs');
         <div class="portlet-title tabbable-line">
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#service_fee" data-toggle="tab" > Service Tax & Fee </a>
+                    <a href="#service_fee" data-toggle="tab" > Biaya Penanganan dan Pajak</a>
                 </li>
-                <li>
+<!--                <li>
                     <a href="#mdr_fee" data-toggle="tab"> MDR Fee</a>
-                </li>
+                </li>-->
                 <li>
-                    <a href="#withdrawal_fee" data-toggle="tab"> Withdrawal Fee</a>
+                    <a href="#withdrawal_fee" data-toggle="tab"> Biaya Pembayaran</a>
                 </li>
             </ul>
         </div>
@@ -139,94 +139,24 @@ $configs     = session('configs');
                         </div>
                     </form>
                 </div>
-                <div class="tab-pane" id="mdr_fee">
-                    <form class="form-horizontal" action="{{url('transaction/setting/fee/mdr')}}" method="post">
-                        {{ csrf_field() }}
-                        <div class="form-body">
-                            <div class="form-group">
-                                <div class="input-icon right">
-                                    <label class="col-md-3 control-label">
-                                        MDR Charged
-                                        <span class="required" aria-required="true"> * </span>
-                                    </label>
-                                </div>
-                                <div class="col-md-3">
-                                    <select class="select2 form-control" name="mdr_charged">
-                                        <option></option>
-                                        <option value="central" @if($mdr_charged == 'central') selected @endif>Central</option>
-                                        <option value="merchant" @if($mdr_charged == 'merchant') selected @endif>Merchant</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <br>
-                        <h3 style="text-align: center">MDR Fee</h3>
-                        <hr style="border-top: 2px dashed black;">
-                        <br>
-                        @foreach($mdr_formula as $key=>$mdr)
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <div class="input-icon right">
-                                        <label class="col-md-3 control-label">
-                                            {{ucfirst(str_replace('_', ' ', $key))}}
-                                            <span class="required" aria-required="true"> * </span>
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Example formula 0.01 * transaction_grandtotal or 1000" data-container="body"></i>
-                                        </label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" placeholder="Insert formula" class="form-control" name="mdr_formula[{{$key}}]" value="{{$mdr}}" required>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-
-                        <div class="form-actions">
-                            {{ csrf_field() }}
-                            <div class="row">
-                                <div class="col-md-offset-3 col-md-9">
-                                    <button type="submit" class="btn green">Submit</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
                 <div class="tab-pane" id="withdrawal_fee">
-                    <form class="form-horizontal" action="{{url('transaction/setting/fee/withdrawal')}}" method="post">
+                    <form class="form-horizontal" action="{{url('transaction/setting/fee/fee_payment')}}" method="post">
                         {{ csrf_field() }}
                         <div class="form-body">
                             <div class="form-group">
                                 <div class="input-icon right">
                                     <label class="col-md-5 control-label">
-                                        Withdrawal Global Fee
+                                        Biaya Pembayaran
                                         <span class="required" aria-required="true"> * </span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Example formula 0.01 * amount or 1000" data-container="body"></i>
                                     </label>
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="text" placeholder="Insert formula" class="form-control" name="withdrawal_fee_global" value="{{$withdrawal_fee_global}}" required>
+                                    <input type="text" placeholder="Insert formula" class="form-control" name="fee_payment" value="{{$fee_payment}}" required>
                                 </div>
                             </div>
                         </div>
-                        <br>
-                        <h3 style="text-align: center">Withdrawal Fee</h3>
-                        <hr style="border-top: 2px dashed black;">
-                        <br>
-                        @foreach($banks as $key=>$value)
-                            <div class="form-body">
-                                <div class="form-group">
-                                    <div class="input-icon right">
-                                        <label class="col-md-5 control-label">
-                                            {{$value['bank_name']}}
-                                            <i class="fa fa-question-circle tooltips" data-original-title="Example formula 0.01 * amount or 1000" data-container="body"></i>
-                                        </label>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input type="text" placeholder="Insert formula" class="form-control" name="data[{{$value['id_bank_name']}}][value]" value="{{$value['withdrawal_fee_formula']}}">
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-
+                        
                         <div class="form-actions">
                             {{ csrf_field() }}
                             <div class="row">

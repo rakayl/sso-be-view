@@ -218,7 +218,7 @@ class OutletController extends Controller
         if (empty($post['outlet_name'])) {
             
 
-            $outlet = MyHelper::post('outlet/be/list', ['outlet_code' => $code,'admin' => 1, 'qrcode' => 1]);
+            $outlet = MyHelper::post('outlet/be/list', ['outlet_code' => $code, 'qrcode' => 1]);
             
             if (isset($outlet['status']) && $outlet['status'] == "success") {
                 $data['outlet']    = $outlet['result'];
