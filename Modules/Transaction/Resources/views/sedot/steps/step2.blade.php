@@ -4,21 +4,6 @@
 		<div class="form-body">
 			<div style="text-align: center"><h3>Konfirmasi Vendor</h3></div>
                         <br>
-                        
-			<div class="form-group">
-				<label class="col-md-4 control-label">Vendor <span class="required" aria-required="true"> * </span>
-				</label>
-				<div class="col-md-6">
-                                    <select @if($detail['transaction_status_code']==4&&$detail['step_number']!=1) disabled @endif name="id_accommodation" class="form-control input-sm select2" placeholder="Search vendor" data-placeholder="Choose Armada" required>
-                                            <option value="">Select...</option>
-                                            @if(isset($armada))
-                                                    @foreach($armada as $row)
-                                                            <option value="{{$row['id_accommodation']}}" @if($detail['trasaction_sedot_wc']['id_accommodation']==$row['id_accommodation']) selected @endif >{{$row['name']}}-{{$row['number_accommodation']}}-{{$row['merk']}} {{$row['type']}}</option>
-                                                    @endforeach
-                                            @endif
-                                    </select>
-                                </div>
-			</div>
 			<div class="form-group">
 				<label class="col-md-2 control-label">
 				</label>

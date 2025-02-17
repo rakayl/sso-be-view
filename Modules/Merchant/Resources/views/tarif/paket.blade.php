@@ -300,7 +300,7 @@
                                     <i class="fa fa-question-circle tooltips" data-original-title="Rumus insentif yang digunakan dalam perhitungan pendapatan hairstylist (value * frekuensi)" data-container="body"></i>
                                 </label>
                                 <div class="col-md-8">
-                                    <textarea name="formula" id="formula" class="form-control" placeholder="Enter rumus perhitungan pengosongan tangki">{{$data['formula']??''}}</textarea>
+                                    <textarea name="formula" id="formula" class="form-control" placeholder="Enter rumus perhitungan pengosongan tangki">{{$formula['formula']??''}}</textarea>
                                     <br>
                                     <div class="row">
                                           @foreach($textreplace as $key=>$row)
@@ -312,6 +312,7 @@
                                 </div>
                             </div>
                             <div class="form-actions" style="text-align:center;">
+                                <input type="hidden" name="id_city" value="{{$id_city}}">
                                     {{ csrf_field() }}
                                     <button type="submit" class="btn blue" id="checkBtn">Update</button>
                             </div>

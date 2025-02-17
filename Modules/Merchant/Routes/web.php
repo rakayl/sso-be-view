@@ -103,12 +103,8 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'iplt'], 
     Route::get('/detail/{id}', 'IpltController@detail');
 });
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'non-iplt'], function () {
-    Route::any('/', 'AccommodationController@list');
-    Route::get('create', 'AccommodationController@create');
-    Route::post('store', 'AccommodationController@store');
-    Route::get('detail/{id}', 'AccommodationController@detail');
-    Route::get('delete/{id}', 'AccommodationController@delete');
-    Route::post('update/{id}', 'AccommodationController@update');
+    Route::any('/', 'NonIpltController@list');
+    Route::get('/detail/{id}', 'NonIpltController@detail');
 });
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'paket'], function () {
     Route::any('/', 'PaketController@city');

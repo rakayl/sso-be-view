@@ -32,6 +32,7 @@ class TarifController extends Controller
         $getList = MyHelper::post('tarif/be/list',$post);
          if (isset($getList['status']) && $getList['status'] == "success") {
             $data['data']          = $getList['result']['data'];
+            $data['formula']          = $getList['result']['formula'];
             $data['id_city']       = $id; 
             $data['city']          = $getList['result']['city']['city_type'].' '.$getList['result']['city']['city_name'].', '.$getList['result']['city']['province_name'];
             
