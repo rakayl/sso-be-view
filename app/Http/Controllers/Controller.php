@@ -26,10 +26,10 @@ class Controller extends BaseController
     public function login(LoginRequest $request)
     {
 
-        $captcha = GoogleReCaptchaV3::verifyResponse($request->input('g-recaptcha-response'))->isSuccess();
-        if (!$captcha) {
-            return redirect()->back()->withErrors(['Recaptcha failed']);
-        }
+//        $captcha = GoogleReCaptchaV3::verifyResponse($request->input('g-recaptcha-response'))->isSuccess();
+//        if (!$captcha) {
+//            return redirect()->back()->withErrors(['Recaptcha failed']);
+//        }
 
         $post = $request->all();
         $postLogin =  MyHelper::postLogin($request);

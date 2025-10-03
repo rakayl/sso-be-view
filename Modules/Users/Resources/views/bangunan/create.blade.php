@@ -11,9 +11,11 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 @endsection
 @section('page-script')
-    <script src="https://maps.googleapis.com/maps/api/js?key={{env('KEY_MAPS')}}&v=3.exp&signed_in=true&libraries=places"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
@@ -120,127 +122,52 @@
         });
     </script>
     <script>
-        var map;
+    // Default map position
+    var defaultLat = -8.1325;
+    var defaultLng = 113.2245;
 
-        var markers = [];
+    var map = L.map('map-canvas').setView([defaultLat, defaultLng], 13);
 
-        function initialize(latNow, longNow) {
-          var haightAshbury = new google.maps.LatLng(latNow,longNow);
-          var marker        = new google.maps.Marker({
-            position:new google.maps.LatLng(latNow,longNow),
-            map: map,
-            anchorPoint: new google.maps.Point(0, -29)
-          });
+    // Add tile layer
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
 
-          var mapOptions = {
-              zoom: 15,
-              center: haightAshbury,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
+    // Marker awal
+    var marker = L.marker([defaultLat, defaultLng], {draggable: true}).addTo(map);
 
-          var infowindow = new google.maps.InfoWindow({
-              content: '<p>Marker Location:</p>'
-          });
+    // Update input ketika marker digeser
+    marker.on('dragend', function () {
+        var latlng = marker.getLatLng();
+        $('#lat').val(latlng.lat);
+        $('#lng').val(latlng.lng);
+    });
 
-          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+    // Update marker ketika klik di map
+    map.on('click', function (e) {
+        marker.setLatLng(e.latlng);
+        $('#lat').val(e.latlng.lat);
+        $('#lng').val(e.latlng.lng);
+    });
 
-          var input = /** @type  {HTMLInputElement} */(
-              document.getElementById('pac-input'));
+    // Fungsi fallback pakai Nominatim jika API tidak punya lat/lng
+    function geocodeWithNominatim(name) {
+        $.get('https://nominatim.openstreetmap.org/search?format=json&q=' + name, function (data) {
+            if (data.length > 0) {
+                let lat = parseFloat(data[0].lat);
+                let lng = parseFloat(data[0].lon);
 
-              var types = document.getElementById('type-selector');
-              map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-              map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+                $('#lat').val(lat);
+                $('#lng').val(lng);
 
-              var autocomplete = new google.maps.places.Autocomplete(input);
-
-              autocomplete.bindTo('bounds', map);
-
-              var infowindow = new google.maps.InfoWindow();
-
-              google.maps.event.addListener(autocomplete, 'place_changed', function() {
-              deleteMarkers();
-              infowindow.close();
-              marker.setVisible(true);
-              var place = autocomplete.getPlace();
-              if (!place.geometry) {
-                  return;
-              }
-
-            // If the place has a geometry, then present it on a map.
-              if (place.geometry.viewport) {
-                  map.fitBounds(place.geometry.viewport);
-              } else {
-                  map.setCenter(place.geometry.location);
-                  map.setZoom(17);  // Why 17? Because it looks good.
-              }
-                  addMarker(place.geometry.location);
-              });
-
-              google.maps.event.addListener(map, 'click', function(event) {
-
-              deleteMarkers();
-              addMarker(event.latLng);
-              // marker.openInfoWindowHtml(latLng);
-              // infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-              infowindow.open(map, marker);
-          });
-          // Adds a marker at the center of the map.
-          addMarker(haightAshbury);
-        }
-
-        function placeMarker(location) {
-          marker = new google.maps.Marker({
-            position: location,
-            map: map,
-          });
-
-          markers.push(marker);
-
-          infowindow = new google.maps.InfoWindow({
-             content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
-          });
-          infowindow.open(map,marker);
-        }
-
-        // Add a marker to the map and push to the array.
-
-        function addMarker(location) {
-          var marker = new google.maps.Marker({
-            position: location,
-            map: map
-          });
-
-          $('#lat').val(location.lat());
-          $('#lng').val(location.lng());
-          markers.push(marker);
-        }
-
-        // Sets the map on all markers in the array.
-
-        function setAllMap(map) {
-          for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
-          }
-        }
-
-        // Removes the markers from the map, but keeps them in the array.
-        function clearMarkers() {
-          setAllMap(null);
-        }
-
-        // Shows any markers currently in the array.
-        function showMarkers() {
-          setAllMap(map);
-        }
-
-        // Deletes all markers in the array by removing references to them.
-        function deleteMarkers() {
-          clearMarkers();
-          markers = [];
-        }
-
-        google.maps.event.addDomListener(window, 'load', initialize());
-    </script>
+                map.setView([lat, lng], 15);
+                marker.setLatLng([lat, lng]);
+            } else {
+                alert("Lokasi tidak ditemukan di Nominatim!");
+            }
+        });
+    }
+</script>
     <script type="text/javascript">
         
 
@@ -316,9 +243,6 @@
         });
     </script>
     <script>
-        $(document).ready(function(){
-            initialize({{env('LONGITUDE')}}, {{env('LATITUDE')}});
-        });
         $('.onlynumber').keypress(function (e) {
             var regex = new RegExp("^[0-9]");
             var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
@@ -397,9 +321,9 @@
                         var selectSubdistrict = '<option value=""></option>';
 
                         for (var i = 0; i < subdistrict.length; i++) {
-                            selectSubdistrict += '<option value="'+subdistrict[i]['id_subdistrict']+'|'+subdistrict[i]['subdistrict_postal_code']+'">'+subdistrict[i]['subdistrict_name']+'</option>';
+                            selectSubdistrict += '<option value="'+subdistrict[i]['id_subdistrict']+'|'+subdistrict[i]['subdistrict_postal_code']+'|'+subdistrict[i]['subdistrict_latitude']+'|'+subdistrict[i]['subdistrict_longitude']+'">'+subdistrict[i]['subdistrict_name']+'</option>';
+                            
                         }
-
                         $('#subdistrict').html(selectSubdistrict);
                     }
                     else {
@@ -412,10 +336,21 @@
         $('#subdistrict').change(function() {
             var isi = $('#subdistrict').val();
             var isi = isi.split('|');
-
+             $('#lat').val(isi[2]);
+            $('#lng').val(isi[3]);
+            map.setView([isi[2], isi[3]], 15);
+            marker.setLatLng([isi[2], isi[3]]);
             $('#merchant_postal_code').val(isi[1]);
         });
+         $('#septic_tank_volume').on('change', function () {
+            if ($(this).val() === 'lainnya') {
+                $('#septic_tank_volume_lainnya').show().prop('required', true);
+            } else {
+                $('#septic_tank_volume_lainnya').hide().prop('required', false);
+            }
+        });
     </script>
+
 @endsection
 
 @section('content')
@@ -454,36 +389,24 @@
                     <hr style="border-top: 2px dashed black;">
                     <br>
                     <div class="form-group">
-                                    <div class="input-icon right">
-                                            <label class="col-md-3 control-label">
-                                                    Customer
-                                                    <span class="required" aria-required="true"> * </span>
-                                                   
-                                            </label>
-                                    </div>
-                                    <div class="col-md-8">
-                                            <select id="user" name="id_user" class="form-control select2-multiple" data-placeholder="Select Customer" required>
-                                                    <option></option>
-                                                    @if (!empty($user))
-                                                            @foreach($user as $su)
-                                                                    <option value="{{ $su['id'] }}">{{ $su['name'] }} ({{ $su['phone'] }})</option>
-                                                            @endforeach
-                                                    @endif
-                                            </select>
-                                    </div>
-                            </div>
+                            <div class="input-icon right">
+                                    <label class="col-md-3 control-label">
+                                            Customer
 
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Name Alamat 
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="name" required placeholder="Nama Alamat">
-                        </div>
+                                    </label>
+                            </div>
+                            <div class="col-md-8">
+                                    <select id="user" name="id_user" class="form-control select2-multiple" data-placeholder="Select Customer" required>
+                                            <option></option>
+                                            @if (!empty($user))
+                                                    @foreach($user as $su)
+                                                            <option value="{{ $su['id'] }}">{{ $su['name'] }} ({{ $su['phone'] }})</option>
+                                                    @endforeach
+                                            @endif
+                                    </select>
+                            </div>
                     </div>
+
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -498,18 +421,7 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                                Nomor Kartu Keluarga
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
-                        <div class="col-md-8">
-                            <input type="text" class="form-control" name="no_kk" required placeholder="Nama Nomor Kartu Keluarga">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Name Kartu Keluarga 
+                                Name Kepala Keluarga 
                                 <span class="required" aria-required="true"> * </span>
                             </label>
                         </div>
@@ -535,8 +447,7 @@
                                             </select>
                                     </div>
                             </div>
-
-                            <div class="form-group">
+                    <div class="form-group">
                                     <div class="input-icon right">
                                             <label class="col-md-3 control-label">
                                                     City
@@ -549,7 +460,6 @@
                                             </select>
                                     </div>
                             </div>
-
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -563,7 +473,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -577,7 +486,6 @@
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -589,7 +497,6 @@
                             <input type="text" class="form-control" id="merchant_postal_code" name="postal_code" required placeholder="Postal Code" readonly>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -624,144 +531,189 @@
                         </div>
                     </div>
                     
+                    {{-- Jenis Bangunan --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Jumlah Anggota Keluarga
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
+                        <label class="col-md-3 control-label">Jenis Bangunan <span class="required">*</span></label>
                         <div class="col-md-8">
-                            <input type="number" class="form-control" id="jml_keluarga" name="jml_keluarga" required placeholder="Jumlah Anggota Keluarga">
+                            <select class="form-control" name="jenis_bangunan" required>
+                                <option value="">Pilih Jenis Bangunan</option>
+                                <option value="Rumah">Rumah</option>
+                                <option value="Ruko / Rumah Kost">Ruko / Rumah Kost</option>
+                                <option value="Kantor Swasta / Pabrik / Niaga">Kantor Swasta / Pabrik / Niaga</option>
+                                <option value="Kantor Pemerintah">Kantor Pemerintah</option>
+                                <option value="Tempat Ibadah">Tempat Ibadah</option>
+                                <option value="Sekolah">Sekolah</option>
+                                <option value="Tempat Umum">Tempat Umum</option>
+                            </select>
                         </div>
                     </div>
+
+                    {{-- Jumlah Anggota Keluarga --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Volume Septic Tank
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
+                        <label class="col-md-3 control-label">Jumlah Anggota Keluarga <span class="required">*</span></label>
                         <div class="col-md-8">
-                            <input type="number" class="form-control" id="septic_tank_volume" name="septic_tank_volume" required placeholder="Volume Septic Tank">
+                            <input type="number" class="form-control" name="jml_keluarga" required placeholder="Jumlah Anggota Keluarga">
                         </div>
                     </div>
+
+                    {{-- Volume Septic Tank --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Posisi Septic Tank
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
+                        <label class="col-md-3 control-label">Volume Septic Tank <span class="required">*</span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="posisi_septic_tank" name="posisi_septic_tank" required placeholder="Posisi Septic Tank">
+                            <select class="form-control" name="septic_tank_volume" id="septic_tank_volume" required>
+                                <option value="">Pilih Volume</option>
+                                <option value="0.5">0.5 m³</option>
+                                <option value="1">1 m³</option>
+                                <option value="1.5">1.5 m³</option>
+                                <option value="2">2 m³</option>
+                                <option value="2.5">2.5 m³</option>
+                                <option value="3">3 m³</option>
+                                <option value="lainnya">Lainnya (Sebutkan)</option>
+                            </select>
+                             <input type="text" 
+                                    class="form-control mt-2" 
+                                    name="septic_tank_volume_lainnya" 
+                                    id="septic_tank_volume_lainnya" 
+                                    placeholder="Masukkan volume lainnya (contoh: 4.5 m³)" 
+                                    style="display:none;" />
                         </div>
+                       
                     </div>
+
+                    {{-- Posisi Septic Tank --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Jenis Bangunan
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
+                        <label class="col-md-3 control-label">Posisi Septic Tank <span class="required">*</span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="jenis_bangunan" name="jenis_bangunan" required placeholder="Jenis Bangunan">
+                            <select class="form-control" name="posisi_septic_tank" required>
+                                <option value="">Pilih Posisi</option>
+                                <option value="Di Luar Rumah">Di Luar Rumah</option>
+                                <option value="Di Dalam Rumah">Di Dalam Rumah</option>
+                            </select>
                         </div>
                     </div>
+
+                    {{-- Jenis Bangunan Septic Tank --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Jenis Kepemilikan
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
+                        <label class="col-md-3 control-label">Jenis Bangunan Septic Tank <span class="required">*</span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="jenis_kepemilikan" name="jenis_kepemilikan" required placeholder="Jenis Kepemilikan">
+                            <select class="form-control" name="jenis_bangunan_septic" required>
+                                <option value="">Pilih Jenis Bangunan Septic Tank</option>
+                                <option value="Cor Beton, Kedap">Cor Beton, Kedap</option>
+                                <option value="Pasangan Bata Plester, Kedap">Pasangan Bata Plester, Kedap</option>
+                                <option value="Plastik / PE">Plastik / PE</option>
+                                <option value="Fiberglass">Fiberglass</option>
+                                <option value="Buis Beton / Pasangan Bata, Tidak Kedap">Buis Beton / Pasangan Bata, Tidak Kedap</option>
+                            </select>
                         </div>
                     </div>
+
+                    {{-- Jenis Kepemilikan Septic Tank --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Sumber Air Utama
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
+                        <label class="col-md-3 control-label">Jenis Kepemilikan Septic Tank <span class="required">*</span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="sumber_air" name="sumber_air" required placeholder="Sumber Air">
+                            <select class="form-control" name="jenis_kepemilikan" required>
+                                <option value="">Pilih Kepemilikan</option>
+                                <option value="Pribadi">Pribadi</option>
+                                <option value="Bersama">Bersama</option>
+                            </select>
                         </div>
                     </div>
+
+                    {{-- Lubang Penyedotan --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Jarak Sumber Air Minum dan Penampungan
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
+                        <label class="col-md-3 control-label">Apakah Tersedia Lubang Penyedotan? <span class="required">*</span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="jarak_sumber_air" name="jarak_sumber_air" required placeholder="Jarak Sumber Air Minum dan Penampungan">
+                            <select class="form-control" name="lubang_penyedotan" required>
+                                <option value="">Pilih</option>
+                                <option value="Ya">Ya</option>
+                                <option value="Tidak, Perlu Dibongkar">Tidak, Perlu Dibongkar</option>
+                            </select>
                         </div>
                     </div>
+
+                    {{-- Jarak Septic Tank --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Jenis Sumber Air Untuk Minum
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
+                        <label class="col-md-3 control-label">Jarak Septic Tank dengan Jalan <span class="required">*</span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="jenis_sumber_air_minum" name="jenis_sumber_air_minum" required placeholder="Jenis Sumber Air Untuk Minum">
+                            <select class="form-control" name="jarak_septic_tank" required>
+                                <option value="">Pilih Jarak</option>
+                                <option value="< 10 Meter">< 10 Meter</option>
+                                <option value="10 - 50 Meter">10 - 50 Meter</option>
+                                <option value="> 50 Meter">> 50 Meter</option>
+                            </select>
                         </div>
                     </div>
+
+                    {{-- Lebar Jalan --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Jenis Sumber Air Untuk Kebutuhan Rumah Tangga
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
+                        <label class="col-md-3 control-label">Lebar Jalan Depan Rumah <span class="required">*</span></label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="jenis_sumber_air_keluarga" name="jenis_sumber_air_keluarga" required placeholder="Jenis Sumber Air Untuk Kebutuhan Rumah Tangga">
+                            <select class="form-control" name="lebar_jalan" required>
+                                <option value="">Pilih Lebar Jalan</option>
+                                <option value="< 3 Meter">< 3 Meter</option>
+                                <option value="3 - 5 Meter">3 - 5 Meter</option>
+                                <option value="> 5 Meter">> 5 Meter</option>
+                            </select>
                         </div>
                     </div>
+
+                    {{-- Tahun Pembangunan Tangki --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Akses Spald
-                                <span class="required" aria-required="true"> * </span>
-                            </label>
-                        </div>
+                        <label class="col-md-3 control-label">Tahun Pembangunan Tangki Septik</label>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="akses_spald" name="akses_spald" required placeholder="Jenis Sumber Air Untuk Kebutuhan Rumah Tangga">
+                            <input type="text" class="form-control" name="tahun_pembangunan" placeholder="Contoh: 2005 / Tidak tahu">
                         </div>
                     </div>
+
+                    {{-- Terakhir Disedot --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                BABS
-                            </label>
-                        </div>
-                        <div class="col-md-1">
-                            <input type="checkbox" class="form-control" id="babs" name="babs" >
+                        <label class="col-md-3 control-label">Kapan Tangki Septik Terakhir Disedot? <span class="required">*</span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="terakhir_disedot" required>
+                                <option value="">Pilih</option>
+                                <option value="3 Tahun Terakhir">3 Tahun Terakhir</option>
+                                <option value="Tidak Pernah Disedot">Tidak Pernah Disedot</option>
+                            </select>
                         </div>
                     </div>
+
+                    {{-- Jenis Sumber Air Minum (multiple select) --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Cubluk/Lubang Tanah
-                            </label>
-                        </div>
-                        <div class="col-md-1">
-                            <input type="checkbox" class="form-control" id="lubang_tanah" name="lubang_tanah" >
+                        <label class="col-md-3 control-label">Jenis Sumber Air Minum <span class="required">*</span></label>
+                        <div class="col-md-8">
+                            <select class="form-control select2" name="sumber_air_minum[]" multiple="multiple" required>
+                                <option value="PDAM">PDAM</option>
+                                <option value="PAMSIMAS">PAMSIMAS</option>
+                                <option value="Sumur">Sumur</option>
+                                <option value="Menampung Air Hujan">Menampung Air Hujan</option>
+                                <option value="Air Isi Ulang">Air Isi Ulang</option>
+                            </select>
                         </div>
                     </div>
+
+                    {{-- Jarak Sumber Air --}}
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Fasilitas Umum
-                            </label>
+                        <label class="col-md-3 control-label">Jarak Sumber Air Minum & Penampungan <span class="required">*</span></label>
+                        <div class="col-md-8">
+                            <select class="form-control" name="jarak_sumber_air" required>
+                                <option value="">Pilih</option>
+                                <option value="< 10 Meter">< 10 Meter</option>
+                                <option value="> 10 Meter">> 10 Meter</option>
+                            </select>
                         </div>
-                        <div class="col-md-1">
-                            <input type="checkbox" class="form-control" id="fasilitas_umum" name="fasilitas_umum" >
+                    </div>
+
+                    {{-- Sumber Air Rumah Tangga --}}
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Jenis Sumber Air Rumah Tangga <span class="required">*</span></label>
+                        <div class="col-md-8">
+                            <select class="form-control select2" name="sumber_air_keluarga[]" multiple="multiple" required>
+                                <option value="PDAM">PDAM</option>
+                                <option value="PAMSIMAS">PAMSIMAS</option>
+                                <option value="Sumur">Sumur</option>
+                                <option value="Menampung Air Hujan">Menampung Air Hujan</option>
+                                <option value="Air Isi Ulang">Air Isi Ulang</option>
+                            </select>
                         </div>
                     </div>
                 <div class="form-actions">
@@ -771,6 +723,7 @@
                             <button type="submit" class="btn green">Submit</button>
                         </div>
                     </div>
+                </div>
                 </div>
             </form>
         </div>

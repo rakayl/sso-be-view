@@ -11,17 +11,20 @@
         var temp1 = subject.replace("conditions[", "");
         var index = temp1.replace("][subject]", "");
         var subject_value = document.getElementsByName(val)[0].value;
-
-        if (subject_value == 'merchant_completed_step') {
+        console.log(subject_value)
+        if (subject_value == 'date'||subject_value == 'end_date') {
             var operator = "conditions[" + index + "][operator]";
             var operator_value = document.getElementsByName(operator)[0];
             for (i = operator_value.options.length - 1; i >= 0; i--)
                 operator_value.remove(i);
-            operator_value.options[operator_value.options.length] = new Option('Completed', '1');
-            operator_value.options[operator_value.options.length] = new Option('Not Complete', '0');
-
+            operator_value.options[operator_value.options.length] = new Option('=', '=');
+            operator_value.options[operator_value.options.length] = new Option('>=', '>=');
+            operator_value.options[operator_value.options.length] = new Option('>', '>');
+            operator_value.options[operator_value.options.length] = new Option('<=', '<=');
+            operator_value.options[operator_value.options.length] = new Option('<', '<');
+            
             var parameter = "conditions[" + index + "][parameter]";
-            document.getElementsByName(parameter)[0].type = 'hidden';
+            document.getElementsByName(parameter)[0].type = 'date';
         }else{
             var operator = "conditions[" + index + "][operator]";
             var operator_value = document.getElementsByName(operator)[0];
@@ -62,13 +65,19 @@
                                 <div class="col-md-4">
                                     <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                        <option value="title" @if ($con['subject'] == 'title') selected @endif>Title</option>
+                                       <option value="date" @if ($con['subject'] == 'date') selected @endif>Tanggal Mulai</option>
+                                       <option value="end_date" @if ($con['subject'] == 'end_date') selected @endif>Tanggal Selesai</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
-                                        @if($con['subject'] == 'merchant_completed_step')
-                                            <option value="1" @if ($con['operator'] == '1') selected @endif>Completed</option>
-                                            <option value="0" @if ($con['operator']  == '0') selected @endif>Not Complete</option>
+                                        @if($con['subject'] == 'date'||$con['subject'] == 'end_date')
+                                            <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
+                                            <option value=">=" @if ($con['operator'] == '>=') selected @endif>>=</option>
+                                            <option value=">" @if ($con['operator'] == '>') selected @endif>></option>
+                                            <option value="<=" @if ($con['operator'] == '<=') selected @endif><=</option>
+                                            <option value="<" @if ($con['operator'] == '<') selected @endif><</option>
+                                            
                                         @else
                                             <option value="=" @if ($con['operator'] == '=') selected @endif>=</option>
                                             <option value="like" @if ($con['operator']  == 'like') selected @endif>Like</option>
@@ -76,7 +85,11 @@
                                     </select>
                                 </div>
                                 <div class="col-md-3">
-                                    <input type="text" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
+                                     @if($con['subject'] == 'date'||$con['subject'] == 'end_date')
+                                        <input type="date" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
+                                      @else  
+                                        <input type="text" placeholder="Keyword" class="form-control" name="parameter" required @if (isset($con['parameter'])) value="{{ $con['parameter'] }}" @endif/>
+                                      @endif
                                 </div>
                             </div>
                         </div>
@@ -94,11 +107,18 @@
                                     <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                         <option value="" selected disabled>Search Subject</option>
                                        <option value="title">Title</option>
+                                       <option value="date">Tanggal Mulai</option>
+                                       <option value="end_date">Tanggal Selesai</option>
+                                    
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
                                         <option value="=" selected>=</option>
+                                        <option value=">=">>=</option>
+                                            <option value=">" ></option>
+                                            <option value="<=" ><=</option>
+                                            <option value="<" ><</option>
                                         <option value="like">Like</option>
                                     </select>
                                 </div>
@@ -123,11 +143,17 @@
                                     <select name="subject" class="form-control input-sm select2" placeholder="Search Subject" onChange="changeSubject(this.name)" style="width:100%">
                                         <option value="" selected disabled>Search Subject</option>
                                         <option value="title">Title</option>
+                                        <option value="date">Tanggal Mulai</option>
+                                        <option value="end_date">Tanggal Selesai</option>
                                     </select>
                                 </div>
                                 <div class="col-md-4">
                                     <select name="operator" class="form-control input-sm select2" placeholder="Search Operator" id="test" style="width:100%">
                                         <option value="=" selected>=</option>
+                                        <option value=">=">>=</option>
+                                            <option value=">" ></option>
+                                            <option value="<=" ><=</option>
+                                            <option value="<" ><</option>
                                         <option value="like">Like</option>
                                     </select>
                                 </div>

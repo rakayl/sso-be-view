@@ -93,7 +93,8 @@
             <tr>
                 <th scope="col" width="10%"> Action </th>
                 <th scope="col" width="10%"> Title </th>
-                <th scope="col" width="10%"> Date </th>
+                <th scope="col" width="10%"> Tanggal Mulai </th>
+                <th scope="col" width="10%"> Tanggal Selesai </th>
                 <th scope="col" width="10%"> Province </th>
                 <th scope="col" width="10%"> City </th>
                 <th scope="col" width="10%"> District </th>
@@ -110,7 +111,8 @@
                             <a class="btn btn-sm btn-danger" href="{{ url('event/delete',$val['id_event']) }}"><i class="fa fa-trash"></i></a>
                         </td>
                         <td>{{ $val['title'] }}</td>
-                        <td>{{ date('d M Y',strtotime($val['date'])) }}</td>
+                        <td>{{ date('d M Y H:i',strtotime($val['date'])) }}</td>
+                        <td>{{ date('d M Y H:i',strtotime($val['end_date'])) }}</td>
                         <td>{{ $val['province_name'] }}</td>
                         <td>{{ $val['city_name'] }}</td>
                         <td>{{ $val['district_name'] }}</td>

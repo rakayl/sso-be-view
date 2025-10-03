@@ -64,8 +64,16 @@
 		var image, file;
 
 		if ((file = this.files[0])) {
-			image = new Image();
+                    image = new Image();
+                    if (this.width == this.height) {
+                        
+                    }
+                    else {
+                        toastr.warning("Dimensi foto harus 1:1");
+                        $('#image').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        $("#removeSplash").trigger( "click" );
 
+                    }
 			image.src = _URL.createObjectURL(file);
 		}
 
@@ -240,7 +248,7 @@
                     <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
-                                Date Kegiatan
+                                Tanggal Mulai Kegiatan
                                 <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir dilaksanakan event" data-container="body"></i>
                                 </label>
@@ -248,6 +256,25 @@
                             <div class="col-md-8">
                                     <div class="input-group date margin-bottom-5">
                                             <input type="text" class="form-control datetimepicker" autocomplete="off" name="date" placeholder="Date Kegiatan" required>
+                                            <span class="input-group-btn">
+                                                    <button class="btn btn-sm default" type="button">
+                                                            <i class="fa fa-calendar"></i>
+                                                    </button>
+                                            </span>
+                                    </div>
+                            </div>
+                    </div>
+                    <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                Tanggal Selesai Kegiatan
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir dilaksanakan event" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-8">
+                                    <div class="input-group date margin-bottom-5">
+                                            <input type="text" class="form-control datetimepicker" autocomplete="off" name="end_date" placeholder="Date Kegiatan" required>
                                             <span class="input-group-btn">
                                                     <button class="btn btn-sm default" type="button">
                                                             <i class="fa fa-calendar"></i>
@@ -348,9 +375,10 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                                Image
-                                <span class="required" aria-required="true"> * </span>
-                                <i class="fa fa-question-circle tooltips" data-original-title="Foto event" data-container="body"></i>
+                                Image Event
+                                <span class="required" aria-require d="true"> * <br> 1:1 </span>
+                                <i class="fa fa-question-circle tooltips" 
+                                   data-original-title="Ukuran Image ukuran 1:1" data-container="body"></i>
                             </label>
                         </div>
                         <div class="fileinput fileinput-new col-md-8" data-provides="fileinput">

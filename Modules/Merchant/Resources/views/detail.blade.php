@@ -270,6 +270,14 @@
                                 </div>
                             </div>
                             <div class="form-group">
+                                <label for="multiple" class="control-label col-md-3">Kategory <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Kategory Vendor" data-container="body"></i>
+                                </label>
+                                <div class="col-md-8">
+                                    <input name="kategory_outlet" class="form-control" required placeholder="Name" value="{{$detail['kategory_outlet']}}" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="multiple" class="control-label col-md-3">License Number
                                     <i class="fa fa-question-circle tooltips" data-original-title="Nomor ijin usaha" data-container="body"></i>
                                 </label>

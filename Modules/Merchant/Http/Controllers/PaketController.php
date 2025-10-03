@@ -39,6 +39,7 @@ class PaketController extends Controller
         } else {
             return redirect('paket')->withErrors($create['messages'] ?? ['Kota tidak ditemukan']);
         }
+        $data['outlet'] = MyHelper::post('paket/be/outlet',$post)['result']??[];
         return view('merchant::province.paket', $data);
     }
 

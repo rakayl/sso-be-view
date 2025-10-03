@@ -136,6 +136,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'setting'
     Route::get('faq/kontraktor/sort', 'SettingController@faqKontraktorSort');
     Route::post('faq/kontraktor/sort/update', 'SettingController@faqKontraktorSortUpdate');
     
+    
+    
+    
+    
 });
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'namespace' => 'Modules\Setting\Http\Controllers'], function () {
@@ -144,6 +148,10 @@ Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'crm', 'n
 
 Route::group(['middleware' => ['web', 'validate_session'], 'prefix' => 'version', 'namespace' => 'Modules\Setting\Http\Controllers'], function () {
     Route::any('/', 'VersionController@index');
+});
+Route::group(['middleware' => ['web', 'validate_session'], 'namespace' => 'Modules\Setting\Http\Controllers'], function () {
+    Route::any('jenis-bangunan', 'SettingController@jenisBangunan');
+    Route::any('kepemilikan', 'SettingController@kepemilikan');
 });
 
 Route::group(['prefix' => 'setting', 'namespace' => 'Modules\Setting\Http\Controllers'], function () {

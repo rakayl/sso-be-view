@@ -400,7 +400,6 @@ class UsersController extends Controller
             $post['take'] = 10;
         }
         $post['page'] = $post['page'] ?? 1;
-
         $getUser = MyHelper::post('users/list', $post);
         if (isset($getUser['status']) && $getUser['status'] == "success") {
             $data['dataUser']          = $getUser['result']['data'];
@@ -415,7 +414,7 @@ class UsersController extends Controller
             $data['dataUserUpTo']      = 0;
             $data['dataUserPaginator'] = false;
         }
-
+        
         $getCity = MyHelper::get('city/list?log_save=0');
         if ($getCity['status'] == 'success') {
             $data['city'] = $getCity['result'];

@@ -19,7 +19,25 @@
                 <a target="_blank" href="{{url('merchant/detail', $val['merchant']['id_merchant'])}}">{{$val['merchant']['merchant_pic_name']}}</a>
             </div>
         </div>
-
+        <div class="form-group">
+            <div class="input-icon right">
+                <label class="col-md-3 control-label">
+                    Kategory 
+                    <span class="required" aria-required="true"> * </span>
+                    <i class="fa fa-question-circle tooltips" data-original-title="Masukkan Kategory" data-container="body"></i>
+                </label>
+            </div>
+            <div class="col-md-9">
+                <select name="kategory_outlet" class="form-control input-sm select2"
+                            data-placeholder="Swasta / Pemerintah" required>
+                            <option value="">Select...</option>
+                            <option value="pemerintah" @if ($val['kategory_outlet'] == 'pemerintah') selected @endif>Pemerintah
+                            </option>
+                            <option value="swasta" @if ($val['kategory_outlet'] == 'swasta') selected @endif>Swasta
+                            </option>
+                        </select>
+            </div>
+        </div>
         <div class="form-group">
             <div class="input-icon right">
                 <label class="col-md-3 control-label">
@@ -205,7 +223,29 @@
                 <input type="text" class="form-control" name="outlet_email" value="{{ $val['outlet_email'] }}" placeholder="Outlet Email" required>
             </div>
         </div>
+        <div class="form-group">
+            <label class="col-md-3 control-label">
+                Image Qris <span class="required" aria-required="true">* <br>(300*300) </span>
+                <i class="fa fa-question-circle tooltips" data-original-title="Image Qris ukuran 300 x 300" data-container="body"></i>
+            </label>
+            <div class="col-md-8">
+                <div class="fileinput fileinput-new" data-provides="fileinput">
+                    <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                        <img src="@if(!empty($val['outlet_image_qris'])){{$val['url_outlet_image_qris']}}@endif" alt="">
+                    </div>
+                    <div class="fileinput-preview fileinput-exists thumbnail" id="imageQris" style="max-width: 200px; max-height: 200px;"></div>
+                    <div>
+                        <span class="btn default btn-file">
+                        <span class="fileinput-new"> Select image </span>
+                        <span class="fileinput-exists"> Change </span>
+                        <input type="file" class="fileQris" id="fieldphoto" accept="image/*" name="outlet_image_qris" required @>
+                        </span>
 
+                        <a href="javascript:;" id="remove_fieldphotoQris" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="form-group">
             <label class="col-md-3 control-label">
@@ -308,5 +348,6 @@
             </div>
         </div>
     </div>
+    
     @endforeach
 </form>

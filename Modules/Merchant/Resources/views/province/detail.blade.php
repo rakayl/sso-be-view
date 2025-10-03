@@ -224,6 +224,14 @@
                 <form class="form-horizontal" role="form" action="{{url('paket/paket/update')}}" method="post" enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">Vendor<span class="required" aria-required="true">*</span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Vendor" data-container="body"></i>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="text" disabled value="{{$paket['outlet']['outlet_code'].' -- '.$paket['outlet']['outlet_name']}}" placeholder="Masukkan nama tarif" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-md-3 control-label">Nama Paket<span class="required" aria-required="true">*</span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama paket" data-container="body"></i>
                                     </label>

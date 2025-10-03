@@ -31,26 +31,12 @@
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-date-time-pickers.min.js') }}" type="text/javascript"></script>
     <script>
-        $('.onlynumber').keypress(function (e) {
-            var regex = new RegExp("^[0-9]");
-            var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
-
-            var check_browser = navigator.userAgent.search("Firefox");
-
-            if(check_browser == -1){
-                if (regex.test(str) || e.which == 8) {
-                    return true;
-                }
-            }else{
-                if (regex.test(str) || e.which == 8 ||  e.keyCode === 46 || (e.keyCode >= 37 && e.keyCode <= 40)) {
-                    return true;
-                }
-            }
-
-            e.preventDefault();
-            return false;
+      
+        var today = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate());
+        $('.datetimepicker').datetimepicker({ 
+            format: 'dd M yyyy H:i',
+            minDate: today
         });
-
         $('#province').change(function() {
             $('#city').empty();
             $('#city').prop('disabled', true);
@@ -69,6 +55,7 @@
                 data    : "_token="+token+"&id_province="+isi,
                 success : function(result) {
                     if (result['status'] == "success") {
+                        console.log(1)
                         $('#city').prop('disabled', false);
 
                         var city           = result['result'];
@@ -159,6 +146,42 @@
 
             $('#postal_code').val(isi[1]);
         });
+        $(".filePhotoCover").change(function(e) {
+            var widthImg  = 1080;
+            var heightImg = 1920;
+            var widthImg2  = 540;
+            var heightImg2 = 960;
+
+            var _URL = window.URL || window.webkitURL;
+            var image, file;
+
+            if ((file = this.files[0])) {
+                image = new Image();
+                image.onload = function() {
+                    if (this.width == this.height) {
+                        // image.src = _URL.createObjectURL(file);
+                        //    $('#formimage').submit()
+                    }
+                    else {
+                        toastr.warning("Dimensi Foto Harus 1:1");
+                        $('#image').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        $("#remove_fieldphotocover").trigger( "click" );
+
+                    }
+                };
+//                image.onload = function() {
+////                    if (this.width != widthImg && this.height != heightImg) {
+////                        toastr.warning("Please check dimension of your photo.");
+//                        $('#imageCover').children('img').attr('src', 'https://www.placehold.it/720x375/EFEFEF/AAAAAA&amp;text=no+image');
+//                        $("#remove_fieldphotocover").trigger( "click" );
+//
+////                    }
+//                };
+
+                image.src = _URL.createObjectURL(file);
+            }
+
+        });
     </script>
 @endsection
 
@@ -187,7 +210,7 @@
     <div class="portlet light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">New Kegiatan</span>
+                <span class="caption-subject font-blue sbold uppercase">Update Kegiatan</span>
             </div>
         </div>
         <div class="portlet-body form">
@@ -203,7 +226,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" disabled class="form-control" disabled name="title" value="{{$result['title']??null}}" required placeholder="Title">
+                            <input type="text"  class="form-control"  name="title" value="{{$result['title']??null}}" required placeholder="Title">
                         </div>
                     </div>
                     <div class="form-group">
@@ -215,20 +238,39 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <textarea name="deskripsi" disabled class="form-control" disabled placeholder="Deskripsi event" required>{{$result['deskripsi']??null}}</textarea>
+                            <textarea name="deskripsi"  class="form-control"  placeholder="Deskripsi event" required>{{$result['deskripsi']??null}}</textarea>
                         </div>
                     </div>
                     <div class="form-group">
                             <div class="input-icon right">
                                 <label class="col-md-3 control-label">
-                                Date Kegiatan
+                                Tanggal Mulai Kegiatan
                                 <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir dilaksanakan event" data-container="body"></i>
                                 </label>
                             </div>
                             <div class="col-md-8">
-                                    <div class="input-group date date-picker margin-bottom-5" data-date-format="yyyy-mm-dd">
-                                            <input type="text" disabled value="{{date('d/m/Y',strtotime($result['date']))}}" class="form-control date-picker" name="date" placeholder="Date Kegiatan" required>
+                                    <div class="input-group date margin-bottom-5">
+                                            <input type="text" value="{{date('d M Y H:i',strtotime($result['date']))}}" class="form-control datetimepicker" autocomplete="off" name="date" placeholder="Date Kegiatan" required>
+                                            <span class="input-group-btn">
+                                                    <button class="btn btn-sm default" type="button">
+                                                            <i class="fa fa-calendar"></i>
+                                                    </button>
+                                            </span>
+                                    </div>
+                            </div>
+                    </div>
+                    <div class="form-group">
+                            <div class="input-icon right">
+                                <label class="col-md-3 control-label">
+                                Tanggal Selesai Kegiatan
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Tanggal lahir dilaksanakan event" data-container="body"></i>
+                                </label>
+                            </div>
+                            <div class="col-md-8">
+                                    <div class="input-group date margin-bottom-5">
+                                            <input type="text" value="{{date('d M Y H:i',strtotime($result['end_date']))}}" class="form-control datetimepicker" autocomplete="off" name="end_date" placeholder="Date Kegiatan" required>
                                             <span class="input-group-btn">
                                                     <button class="btn btn-sm default" type="button">
                                                             <i class="fa fa-calendar"></i>
@@ -246,27 +288,30 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <select id="province" name="id_province" disabled class="form-control select2-multiple" data-placeholder="Select Province" required>
+                            <select id="province" name="id_province"  class="form-control select2-multiple" data-placeholder="Select Province" required>
                                 <option></option>
                                 @if (!empty($province))
                                     @foreach($province as $suw)
-                                        <option value="{{ $suw['id_province'] }}" disabled @if($result['id_province']==$suw['id_province']) selected @endif>{{ $suw['province_name'] }}</option>
+                                        <option value="{{ $suw['id_province'] }}"  @if($result['id_province']==$suw['id_province']) selected @endif>{{ $suw['province_name'] }}</option>
                                     @endforeach
                                 @endif
                             </select>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
-                                City
-                                <span class="required" aria-required="true"> * </span>
-                                <i class="fa fa-question-circle tooltips" data-original-title="Pilih kota letak outlet" data-container="body"></i>
+                            City
+                            <span class="required" aria-required="true"> * </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Pilih kota letak outlet" data-container="body"></i>
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" disabled class="form-control" disabled name="title" value="{{$result['city_name']??null}}" required placeholder="Title">
+                            <select id="city" name="id_city" class="form-control select2-multiple" data-placeholder="Select City" disabled required>
+                                <optgroup label="City List">
+                                    <option value="{{ $result['id_city'] }}">{{$result['city_name']??null}}</option>
+                                </optgroup>
+                            </select>
                         </div>
                     </div>
 
@@ -279,8 +324,11 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" disabled class="form-control" disabled name="title" value="{{$result['disctrict_name']??null}}" required placeholder="Title">
-                        
+                            <select id="district" class="form-control select2-multiple" data-placeholder="Select Disctrict" disabled required>
+                                <optgroup label="Disctrict List">
+                                    <option value="{{ $result['id_district'] }}">{{ $result['district_name'] }}</option>
+                                </optgroup>
+                            </select>
                         </div>
                     </div>
 
@@ -293,11 +341,13 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" disabled class="form-control" disabled name="title" value="{{$result['subdisctrict_name']??null}}" required placeholder="Title">
-                        
+                            <select id="subdistrict" name="id_subdistrict" class="form-control select2-multiple" data-placeholder="Select Subdisctrict" disabled required>
+                                <optgroup label="Subdisctrict List">
+                                    <option value="{{ $result['id_subdistrict'] }}">{{ $result['subdistrict_name'] }}</option>
+                                </optgroup>
+                            </select>
                         </div>
                     </div>
-
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
@@ -306,7 +356,7 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <input type="text" class="form-control" id="postal_code" name="postal_code" disabled value="{{$result['postal_code']??null}}" required placeholder="Postal Code" readonly>
+                            <input type="text" class="form-control" id="postal_code" name="postal_code"  value="{{$result['postal_code']??null}}" required placeholder="Postal Code" readonly>
                         </div>
                     </div>
 
@@ -319,35 +369,41 @@
                             </label>
                         </div>
                         <div class="col-md-8">
-                            <textarea name="address" disabled class="form-control" placeholder="Kegiatan Address" required>{{$result['address']??null}} </textarea>
+                            <textarea name="address"  class="form-control" placeholder="Kegiatan Address" required>{{$result['address']??null}} </textarea>
                         </div>
                     </div>
+                  
                     <div class="form-group">
-                        <div class="input-icon right">
-                            <label class="col-md-3 control-label">
-                                Image
-                                <span class="required" aria-required="true"> * </span>
-                                <i class="fa fa-question-circle tooltips" data-original-title="Foto event" data-container="body"></i>
-                            </label>
-                        </div>
-                        <div class="fileinput fileinput-new col-md-8" data-provides="fileinput">
-                                <div class="fileinput-preview fileinput-new thumbnail">
-                                        @if(isset($result['image_event']))
-                                                <img src="{{$result['image_event']}}" style="max-width: 250px; max-height: 250px;" alt="">
-                                        @else
-                                                No Pictures
-                                        @endif
+                        <label class="col-md-3 control-label">
+                            Image Event<span class="required" aria-required="true">* <br> 1080 * 1920 / 540 * 960 </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Ukuran Image ukuran 1080 * 1920 / 540 * 960" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 300px; height: 300px;">
+                                    <img src="@if(!empty($result['image_event'])){{$result['image_event']}}@endif" alt="">
                                 </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" id="imageCover" style="max-width: 300px; max-height: 300px;"></div>
+                                <div>
+                                    <span class="btn default btn-file">
+                                    <span class="fileinput-new"> Select image </span>
+                                    <span class="fileinput-exists"> Change </span>
+                                    <input type="file" class="filePhotoCover" id="fieldphotocover" accept="image/*" name="image_event" @if(empty($result['image_event'])) required @endif>
+                                    </span>
+
+                                    <a href="javascript:;" id="remove_fieldphotocover" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-actions">
                     {{ csrf_field() }}
-<!--                    <div class="row">
+                    <div class="row">
                         <div class="col-md-offset-3 col-md-9">
                             <button type="submit" class="btn green">Submit</button>
                         </div>
-                    </div>-->
+                    </div>
                 </div>
             </form>
         </div>

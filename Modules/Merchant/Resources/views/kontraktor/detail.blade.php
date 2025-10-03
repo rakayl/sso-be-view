@@ -265,13 +265,21 @@
                             </div>
                             <div class="form-group">
                                 <label for="multiple" class="control-label col-md-3">Name <span class="required" aria-required="true"> * </span>
-                                    <i class="fa fa-question-circle tooltips" data-original-title="Nama jam kerja" data-container="body"></i>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Nama" data-container="body"></i>
                                 </label>
                                 <div class="col-md-4">
                                     <input name="merchant_name" class="form-control" required placeholder="Name" value="{{$detail['outlet_name']}}" disabled>
                                 </div>
                                 <div class="col-md-4" style="margin-left: -2%">
                                     <a class="btn btn-primary" href="{{url('outlet/detail', $detail['outlet_code'])}}">Detail Outlet</a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="multiple" class="control-label col-md-3">Kategory <span class="required" aria-required="true"> * </span>
+                                    <i class="fa fa-question-circle tooltips" data-original-title="Kategory Vendor" data-container="body"></i>
+                                </label>
+                                <div class="col-md-8">
+                                    <input name="kategory_outlet" class="form-control" required placeholder="Name" value="{{$detail['kategory_outlet']}}" disabled>
                                 </div>
                             </div>
                             <div class="form-group">

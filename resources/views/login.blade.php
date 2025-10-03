@@ -72,7 +72,7 @@
                     <input class="form-control form-control-solid placeholder-no-fix" type="password" autocomplete="off" placeholder="Password" name="password" required/>
 				</div>
 				<div class="form-group" style="margin-bottom: 0">
-                    {!!  GoogleReCaptchaV3::renderField('captcha_div','login', 'captcha_div') !!}
+                    <!--{!!  GoogleReCaptchaV3::renderField('captcha_div','login', 'captcha_div') !!}-->
                 </div>
                 <div class="form-actions">
                     <button type="submit" class="btn uppercase btn-block" style="background: {{env('BUTTON_LOGIN')}}; color: #fff">Login</button>
