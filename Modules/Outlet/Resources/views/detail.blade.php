@@ -6,6 +6,7 @@
 @extends('layouts.main')
 
 @section('page-style')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -16,10 +17,19 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/datatables/datatables.min.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
-@endsection
+
+ @endsection
 
 @section('page-script')
-    <script src="https://maps.googleapis.com/maps/api/js?key={{env('KEY_MAPS')}}&v=3.exp&signed_in=true&libraries=places"></script>
+    <!-- Leaflet CSS & JS -->
+    
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Leaflet Geocoder (search box) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
@@ -44,127 +54,62 @@
         $( "#sortable" ).disableSelection();
     </script>
     <script>
-        var map;
+        var map, marker;
 
-        var markers = [];
+        function initMap(latNow, lngNow) {
+            // Default fallback (Jakarta)
+            var startLat = latNow || -6.200000;
+            var startLng = lngNow || 106.816666;
 
-        function initialize(latNow, longNow) {
-          var haightAshbury = new google.maps.LatLng(latNow,longNow);
-          var marker        = new google.maps.Marker({
-            position:new google.maps.LatLng(latNow,longNow),
-            map: map,
-            anchorPoint: new google.maps.Point(0, -29)
-          });
+            // Init map
+            map = L.map('map-canvas').setView([startLat, startLng], 13);
 
-          var mapOptions = {
-              zoom: 15,
-              center: haightAshbury,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
+            // Tambahkan tile layer dari OSM
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors'
+            }).addTo(map);
 
-          var infowindow = new google.maps.InfoWindow({
-              content: '<p>Marker Location:</p>'
-          });
+            // Tambahkan marker draggable
+            marker = L.marker([startLat, startLng], {draggable:true}).addTo(map);
 
-          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            // Event drag marker -> update input
+            marker.on('dragend', function(e) {
+                var latlng = marker.getLatLng();
+                document.getElementById('lat').value = latlng.lat;
+                document.getElementById('lng').value = latlng.lng;
+            });
 
-          var input = /** @type  {HTMLInputElement} */(
-              document.getElementById('pac-input'));
+            // Klik peta -> pindah marker
+            map.on('click', function(e) {
+                marker.setLatLng(e.latlng);
+                document.getElementById('lat').value = e.latlng.lat;
+                document.getElementById('lng').value = e.latlng.lng;
+            });
 
-              var types = document.getElementById('type-selector');
-              map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-              map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+            // Tambahkan search box pakai Leaflet Control Geocoder
+            var geocoder = L.Control.geocoder({
+                defaultMarkGeocode: false
+            })
+            .on('markgeocode', function(e) {
+                var center = e.geocode.center;
+                map.setView(center, 15);
+                marker.setLatLng(center);
+                document.getElementById('lat').value = center.lat;
+                document.getElementById('lng').value = center.lng;
+            })
+            .addTo(map);
 
-              var autocomplete = new google.maps.places.Autocomplete(input);
-
-              autocomplete.bindTo('bounds', map);
-
-              var infowindow = new google.maps.InfoWindow();
-
-              google.maps.event.addListener(autocomplete, 'place_changed', function() {
-              deleteMarkers();
-              infowindow.close();
-              marker.setVisible(true);
-              var place = autocomplete.getPlace();
-              if (!place.geometry) {
-                  return;
-              }
-
-            // If the place has a geometry, then present it on a map.
-              if (place.geometry.viewport) {
-                  map.fitBounds(place.geometry.viewport);
-              } else {
-                  map.setCenter(place.geometry.location);
-                  map.setZoom(17);  // Why 17? Because it looks good.
-              }
-                  addMarker(place.geometry.location);
-              });
-
-              google.maps.event.addListener(map, 'click', function(event) {
-
-              deleteMarkers();
-              addMarker(event.latLng);
-              // marker.openInfoWindowHtml(latLng);
-              // infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-              infowindow.open(map, marker);
-          });
-          // Adds a marker at the center of the map.
-          addMarker(haightAshbury);
+            // Isi awal input
+            document.getElementById('lat').value = startLat;
+            document.getElementById('lng').value = startLng;
         }
 
-        function placeMarker(location) {
-          marker = new google.maps.Marker({
-            position: location,
-            map: map,
-          });
-
-          markers.push(marker);
-
-          infowindow = new google.maps.InfoWindow({
-             content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
-          });
-          infowindow.open(map,marker);
-        }
-
-        // Add a marker to the map and push to the array.
-
-        function addMarker(location) {
-          var marker = new google.maps.Marker({
-            position: location,
-            map: map
-          });
-
-          $('#lat').val(location.lat());
-          $('#lng').val(location.lng());
-          markers.push(marker);
-        }
-
-        // Sets the map on all markers in the array.
-
-        function setAllMap(map) {
-          for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
-          }
-        }
-
-        // Removes the markers from the map, but keeps them in the array.
-        function clearMarkers() {
-          setAllMap(null);
-        }
-
-        // Shows any markers currently in the array.
-        function showMarkers() {
-          setAllMap(map);
-        }
-
-        // Deletes all markers in the array by removing references to them.
-        function deleteMarkers() {
-          clearMarkers();
-          markers = [];
-        }
-
-        google.maps.event.addDomListener(window, 'load', initialize());
+        // Init map setelah page load
+        $(document).ready(function() {
+            initMap({{ $outlet[0]['outlet_latitude'] ?? 'null' }}, {{ $outlet[0]['outlet_longitude'] ?? 'null' }});
+        });
     </script>
+
 
     <script type="text/javascript">
 
@@ -179,18 +124,7 @@
             longNow = "{{ $outlet[0]['outlet_longitude'] }}";
             latNow = "{{ $outlet[0]['outlet_latitude'] }}";
 
-            if (latNow == "" || longNow == "") {
-              navigator.geolocation.getCurrentPosition(function(position){
-                  initialize(position.coords.latitude, position.coords.longitude);
-              },
-              function (error) {
-                if (error.code == error.PERMISSION_DENIED)
-                  initialize(-7.7972, 110.3688);
-              });
-            }
-            else {
-              initialize(latNow, longNow);
-            }
+           
 
             /*=====================================*/
 
@@ -500,6 +434,33 @@
                         toastr.warning("Please check dimension of your photo.");
                         $('#image').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
                         $("#remove_fieldphoto").trigger( "click" );
+
+                    }
+                };
+
+                image.src = _URL.createObjectURL(file);
+            }
+
+        });
+        $(".fileQris").change(function(e) {
+            var widthImg  = 300;
+            var heightImg = 300;
+
+            var _URL = window.URL || window.webkitURL;
+            var image, file;
+
+            if ((file = this.files[0])) {
+                image = new Image();
+
+                image.onload = function() {
+                    if (this.width == widthImg && this.height == heightImg) {
+                        // image.src = _URL.createObjectURL(file);
+                        //    $('#formimage').submit()
+                    }
+                    else {
+                        toastr.warning("Please check dimension of your photo.");
+                        $('#imageQris').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        $("#remove_fieldphotoQris").trigger( "click" );
 
                     }
                 };

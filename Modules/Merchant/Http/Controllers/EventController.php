@@ -29,6 +29,7 @@ class EventController extends Controller
         $idSubdis = explode("|", $post['id_subdistrict']);
         $post['id_subdistrict'] = $idSubdis[0] ?? null;
         $post['date'] = date('Y-m-d H:i:s', strtotime($post['date']));
+        $post['end_date'] = date('Y-m-d H:i:s', strtotime($post['end_date']));
         $post['created_by'] = Session::get('id_user');
          if (isset($post['image_event'])) {
             $post['image_event'] = MyHelper::encodeImage($post['image_event']);
@@ -57,7 +58,7 @@ class EventController extends Controller
         
 
         if ($post) {
-            Session::put('filter-event', $post);
+             Session::put('filter-event', $post);
         }
         if (Session::has('filter-event') && $post && isset($post['filter'])) {
             $page = 1;
@@ -71,7 +72,6 @@ class EventController extends Controller
         } else {
             Session::forget('filter-event');
         }
-
         $getList = MyHelper::post('event/list', $post);
 
         if (isset($getList['status']) && $getList['status'] == "success") {
@@ -121,11 +121,19 @@ class EventController extends Controller
     public function update(Request $request, $id)
     {
         $post = $request->except('_token');
-        
-        $post['id_event_sedot_wc'] = $id;
-        $post['event_price'] = (int)str_replace(".","",$post['event_price']);
+        if(isset($post['id_subdistrict'])){
+            $idSubdis = explode("|", $post['id_subdistrict']);
+            $post['id_subdistrict'] = $idSubdis[0] ?? null;
+        }
+        $post['date'] = date('Y-m-d H:i:s', strtotime($post['date']));
+        $post['end_date'] = date('Y-m-d H:i:s', strtotime($post['end_date']));
+        $post['created_by'] = Session::get('id_user');
+        $post['id_event'] = $id;
+         if (isset($post['image_event'])) {
+            $post['image_event'] = MyHelper::encodeImage($post['image_event']);
+        }
         $update = MyHelper::post('event/update', $post);
-
+        
         if (isset($update['status']) && $update['status'] == "success") {
             return redirect('event/detail/' . $id)->withSuccess(['Success save data']);
         } else {

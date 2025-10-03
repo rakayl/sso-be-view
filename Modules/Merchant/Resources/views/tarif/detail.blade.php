@@ -219,6 +219,14 @@
                 <form class="form-horizontal" role="form" action="{{url('tarif/tarif/update')}}" method="post" enctype="multipart/form-data">
                             <div class="form-body">
                                 <div class="form-group">
+                                    <label class="col-md-3 control-label">Vendor<span class="required" aria-required="true">*</span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Vendor" data-container="body"></i>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <input type="text" disabled value="{{$tarif['outlet']['outlet_code'].' -- '.$tarif['outlet']['outlet_name']}}" placeholder="Masukkan nama tarif" class="form-control" required />
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label class="col-md-3 control-label">Nama Tarif<span class="required" aria-required="true">*</span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama tarif" data-container="body"></i>
                                     </label>

@@ -2356,4 +2356,65 @@ class SettingController extends Controller
 
         return parent::redirect($delete, 'FAQ has been deleted.');
     }
+    
+    public function jenisBangunan(Request $request)
+    {
+        $post = $request->except('_token');
+        $data = [
+            'title'             => 'Setting Jenis Bangunan',
+            'menu_active'       => 'setting-jenis-bangunan',
+            'submenu_active'    => 'setting-jenis-bangunan'
+        ];
+        if (!empty($post)) {
+            $save = MyHelper::post('jenis-bangunan/update', $post);
+            if (isset($save['status']) && $save['status'] == "success") {
+                return redirect('jenis-bangunan')->withSuccess(['Setting has been updated.']);
+            } else {
+                if (isset($save['errors'])) {
+                    return back()->withErrors($save['errors'])->withInput();
+                }
+                if (isset($save['status']) && $save['status'] == "fail") {
+                    return back()->withErrors($save['messages'])->withInput();
+                }
+                return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+            }
+        }
+        $version = MyHelper::get('jenis-bangunan/list');
+        if (isset($version['status']) && $version['status'] == "success") {
+            $data['version'] = $version['result'];
+        } else {
+            $data['version'] = [];
+        }
+        return view('setting::jenis_bangunan', $data);
+    }
+    public function kepemilikan(Request $request)
+    {
+        $post = $request->except('_token');
+        $data = [
+            'title'             => 'Setting Jenis Bangunan',
+            'menu_active'       => 'setting-jenis-kepemilikan',
+            'submenu_active'    => 'setting-jenis-kepemilikan'
+        ];
+        if (!empty($post)) {
+            $save = MyHelper::post('jenis-kepemilikan/update', $post);
+            if (isset($save['status']) && $save['status'] == "success") {
+                return redirect('kepemilikan')->withSuccess(['Setting has been updated.']);
+            } else {
+                if (isset($save['errors'])) {
+                    return back()->withErrors($save['errors'])->withInput();
+                }
+                if (isset($save['status']) && $save['status'] == "fail") {
+                    return back()->withErrors($save['messages'])->withInput();
+                }
+                return back()->withErrors(['Something when wrong. Please try again.'])->withInput();
+            }
+        }
+        $version = MyHelper::get('jenis-kepemilikan/list');
+        if (isset($version['status']) && $version['status'] == "success") {
+            $data['version'] = $version['result'];
+        } else {
+            $data['version'] = [];
+        }
+        return view('setting::jenis_kepemilikan', $data);
+    }
 }

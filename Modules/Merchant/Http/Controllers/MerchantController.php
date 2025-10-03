@@ -152,6 +152,9 @@ class MerchantController extends Controller
         if (!empty($post['outlet_longitude']) && (strpos($post['outlet_longitude'], ',') !== false || $post['outlet_longitude'] == 'NaN')) {
             return back()->withErrors(['Please input invalid longitude'])->withInput();
         }
+         if (!empty($post['outlet_image_qris'])) {
+            $post['outlet_image_qris'] = MyHelper::encodeImage($post['outlet_image_qris']);
+        }
         if (!empty($post['outlet_image_logo_portrait'])) {
             $post['outlet_image_logo_portrait'] = MyHelper::encodeImage($post['outlet_image_logo_portrait']);
         }
@@ -240,7 +243,7 @@ class MerchantController extends Controller
             'submenu_active' => 'tukang-sedot-list',
         ];
 
-        $data['outlets'] = MyHelper::get('outlet/be/list/simple')['result'] ?? [];
+//        $data['outlets'] = MyHelper::get('outlet/be/list/simple')['result'] ?? [];
         $data['provinces'] = MyHelper::get('province/list')['result'] ?? [];
         $data['cities'] = MyHelper::get('city/list')['result'] ?? [];
         $detail = MyHelper::post('merchant/detail', ['id_merchant' => $id]);

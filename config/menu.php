@@ -240,6 +240,16 @@ return [
                             'active' => '\View::shared("submenu_active") == "setting-volume"',
                             'url' => 'setting/volume',
                         ],
+                        [
+                            'label' => 'Jenis Bangunan',
+                            'active' => '\View::shared("submenu_active") == "setting-jenis-bangunan"',
+                            'url' => 'jenis-bangunan',
+                        ],
+                        [
+                            'label' => 'Jenis Kepemilikan',
+                            'active' => '\View::shared("submenu_active") == "setting-jenis-kepemilikan"',
+                            'url' => 'kepemilikan',
+                        ],
                     ]
                 ],
                 [

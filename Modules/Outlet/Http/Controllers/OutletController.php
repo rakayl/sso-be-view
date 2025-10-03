@@ -380,14 +380,16 @@ class OutletController extends Controller
                     $post['outlet_close_hours'] = date('H:i:s', strtotime($post['outlet_close_hours']));
                 }
 
-                $status_franchise = 0;
-
-                if (isset($post['status_franchise'])) {
-                    $status_franchise = $post['status_franchise'];
-                }
+//                $status_franchise = 0;
+//
+//                if (isset($post['status_franchise'])) {
+//                    $status_franchise = $post['status_franchise'];
+//                }
                 $post = array_filter($post);
-                $post['status_franchise'] = $status_franchise;
-
+//                $post['status_franchise'] = $status_franchise;
+                if (!empty($post['outlet_image_qris'])) {
+                    $post['outlet_image_qris'] = MyHelper::encodeImage($post['outlet_image_qris']);
+                }
                 if (!empty($post['outlet_image_logo_portrait'])) {
                     $post['outlet_image_logo_portrait'] = MyHelper::encodeImage($post['outlet_image_logo_portrait']);
                 }

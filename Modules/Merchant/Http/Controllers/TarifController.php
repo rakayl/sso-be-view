@@ -71,6 +71,8 @@ class TarifController extends Controller
                             ), 
                         );
                $data['textreplace'] = $textreplace;
+        
+        $data['outlet'] = MyHelper::post('tarif/be/outlet',$post)['result']??[];
         return view('merchant::tarif.paket', $data);
     }
 

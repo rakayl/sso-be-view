@@ -282,6 +282,8 @@
                                     <thead>
                                     <tr>
                                         <th class="text-nowrap text-center">Action</th>
+                                        <th class="text-nowrap text-center">Vendor Code</th>
+                                        <th class="text-nowrap text-center">Vendor Name</th>
                                         <th class="text-nowrap text-center">Name Paket</th>
                                         <th class="text-nowrap text-center">Price</th>
                                     </tr>
@@ -294,6 +296,8 @@
                                                    <a href="{{ url('paket/detail/'.$dt['id_paket']) }}" class="btn btn-sm blue text-nowrap"><i class="fa fa-search"></i> Detail</a>
                                                    <a class="btn btn-sm delete btn-danger" data-id="{{$dt['id_paket']}}" type="button" data-toggle="tab"><i class="fa fa-trash"></i></a>
                                                 </td>
+                                                <td style="text-align: center;">{{$dt['outlet']['outlet_code']??'--'}}</td>
+                                                <td style="text-align: center;">{{$dt['outlet']['outlet_name']??'--'}}</td>
                                                 <td style="text-align: center;">{{$dt['name_paket']}}</td>
                                                 <td style="text-align: center;">{{"Rp " . number_format($dt['price_paket']??0,2,',','.')}}</td>
                                             </tr>
@@ -312,6 +316,21 @@
             <div class="tab-pane" id="create">
                 <form class="form-horizontal" role="form" action="{{url('paket/paket/create')}}" method="post" enctype="multipart/form-data">
                             <div class="form-body">
+                                <div class="form-group">
+                                    <label class="col-md-3 control-label">Vendor Penyedotan<span class="required" aria-required="true">*</span>
+                                        <i class="fa fa-question-circle tooltips" data-original-title="Pilih Vendor" data-container="body"></i>
+                                    </label>
+                                    <div class="col-md-6">
+                                        <select id="outlet" name="id_outlet" class="form-control select2-multiple" data-placeholder="Select Vendor"  required>
+                                            <option></option>
+                                            @if (!empty($outlet))
+                                                    @foreach($outlet as $suw)
+                                                            <option value="{{ $suw['id_outlet'] }}">{{ $suw['outlet_code'] }} -- {{ $suw['outlet_name'] }}</option>
+                                                    @endforeach
+                                            @endif
+                                    </select>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-md-3 control-label">Nama Paket<span class="required" aria-required="true">*</span>
                                         <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nama paket" data-container="body"></i>

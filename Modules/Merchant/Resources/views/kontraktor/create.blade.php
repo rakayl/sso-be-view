@@ -1,6 +1,7 @@
 @extends('layouts.main')
 
 @section('page-style')
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/datemultiselect/jquery-ui.multidatespicker.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css" />
@@ -13,9 +14,14 @@
     <link href="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-toastr/toastr.min.css')}}" rel="stylesheet" type="text/css" />
 @endsection
 @section('page-script')
-    <script src="https://maps.googleapis.com/maps/api/js?key={{env('KEY_MAPS')}}&v=3.exp&signed_in=true&libraries=places"></script>
+        <!-- Leaflet CSS & JS -->
+     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <!-- Leaflet Geocoder untuk search lokasi -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"/>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-fileinput/bootstrap-fileinput.js')}}" type="text/javascript"></script>
-    <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
+        <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/select2/js/select2.full.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-summernote/summernote.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/pages/scripts/components-select2.min.js') }}" type="text/javascript"></script>
     <script src="{{ env('STORAGE_URL_VIEW') }}{{('assets/global/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js')}}"></script>
@@ -120,127 +126,60 @@
         });
     </script>
     <script>
-        var map;
+    var map, marker;
 
-        var markers = [];
+    // Default posisi awal dari .env
+    var latNow = {{ env('LATITUDE') }};
+    var longNow = {{ env('LONGITUDE') }};
 
-        function initialize(latNow, longNow) {
-          var haightAshbury = new google.maps.LatLng(latNow,longNow);
-          var marker        = new google.maps.Marker({
-            position:new google.maps.LatLng(latNow,longNow),
-            map: map,
-            anchorPoint: new google.maps.Point(0, -29)
-          });
+    function initialize(lat = latNow, lng = longNow) {
+        // Inisialisasi map
+        map = L.map('map-canvas').setView([lat, lng], 20);
 
-          var mapOptions = {
-              zoom: 15,
-              center: haightAshbury,
-              mapTypeId: google.maps.MapTypeId.ROADMAP
-          };
+        // Tambahkan tile OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
 
-          var infowindow = new google.maps.InfoWindow({
-              content: '<p>Marker Location:</p>'
-          });
+        // Tambahkan marker
+        marker = L.marker([lat, lng], { draggable: true }).addTo(map);
 
-          map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+        // Set input awal
+        document.getElementById('lat').value = lat;
+        document.getElementById('lng').value = lng;
 
-          var input = /** @type  {HTMLInputElement} */(
-              document.getElementById('pac-input'));
+        // Event drag marker
+        marker.on('dragend', function(e) {
+            var latlng = marker.getLatLng();
+            $('#lat').val(latlng.lat);
+            $('#lng').val(latlng.lng);
+        });
 
-              var types = document.getElementById('type-selector');
-              map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-              map.controls[google.maps.ControlPosition.TOP_LEFT].push(types);
+        // Event klik peta
+        map.on('click', function(e) {
+            marker.setLatLng(e.latlng);
+            $('#lat').val(e.latlng.lat);
+            $('#lng').val(e.latlng.lng);
+        });
 
-              var autocomplete = new google.maps.places.Autocomplete(input);
+        // Geocoder (pencarian alamat)
+        L.Control.geocoder({
+            defaultMarkGeocode: false
+        }).on('markgeocode', function(e) {
+            var center = e.geocode.center;
+            map.fitBounds(e.geocode.bbox);
+            marker.setLatLng(center);
+            $('#lat').val(center.lat);
+            $('#lng').val(center.lng);
+        }).addTo(map);
+    }
 
-              autocomplete.bindTo('bounds', map);
+    // Jalankan saat halaman siap
+    $(document).ready(function(){
+        initialize(); // otomatis ambil dari latNow & longNow
+    });
+</script>
 
-              var infowindow = new google.maps.InfoWindow();
-
-              google.maps.event.addListener(autocomplete, 'place_changed', function() {
-              deleteMarkers();
-              infowindow.close();
-              marker.setVisible(true);
-              var place = autocomplete.getPlace();
-              if (!place.geometry) {
-                  return;
-              }
-
-            // If the place has a geometry, then present it on a map.
-              if (place.geometry.viewport) {
-                  map.fitBounds(place.geometry.viewport);
-              } else {
-                  map.setCenter(place.geometry.location);
-                  map.setZoom(17);  // Why 17? Because it looks good.
-              }
-                  addMarker(place.geometry.location);
-              });
-
-              google.maps.event.addListener(map, 'click', function(event) {
-
-              deleteMarkers();
-              addMarker(event.latLng);
-              // marker.openInfoWindowHtml(latLng);
-              // infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
-              infowindow.open(map, marker);
-          });
-          // Adds a marker at the center of the map.
-          addMarker(haightAshbury);
-        }
-
-        function placeMarker(location) {
-          marker = new google.maps.Marker({
-            position: location,
-            map: map,
-          });
-
-          markers.push(marker);
-
-          infowindow = new google.maps.InfoWindow({
-             content: 'Latitude: ' + location.lat() + '<br>Longitude: ' + location.lng()
-          });
-          infowindow.open(map,marker);
-        }
-
-        // Add a marker to the map and push to the array.
-
-        function addMarker(location) {
-          var marker = new google.maps.Marker({
-            position: location,
-            map: map
-          });
-
-          $('#lat').val(location.lat());
-          $('#lng').val(location.lng());
-          markers.push(marker);
-        }
-
-        // Sets the map on all markers in the array.
-
-        function setAllMap(map) {
-          for (var i = 0; i < markers.length; i++) {
-            markers[i].setMap(map);
-          }
-        }
-
-        // Removes the markers from the map, but keeps them in the array.
-        function clearMarkers() {
-          setAllMap(null);
-        }
-
-        // Shows any markers currently in the array.
-        function showMarkers() {
-          setAllMap(map);
-        }
-
-        // Deletes all markers in the array by removing references to them.
-        function deleteMarkers() {
-          clearMarkers();
-          markers = [];
-        }
-
-        google.maps.event.addDomListener(window, 'load', initialize());
-    </script>
     <script type="text/javascript">
         
 
@@ -263,6 +202,33 @@
                         toastr.warning("Please check dimension of your photo.");
                         $('#image').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
                         $("#remove_fieldphoto").trigger( "click" );
+
+                    }
+                };
+
+                image.src = _URL.createObjectURL(file);
+            }
+
+        });
+        $(".fileQris").change(function(e) {
+            var widthImg  = 300;
+            var heightImg = 300;
+
+            var _URL = window.URL || window.webkitURL;
+            var image, file;
+
+            if ((file = this.files[0])) {
+                image = new Image();
+
+                image.onload = function() {
+                    if (this.width == widthImg && this.height == heightImg) {
+                        // image.src = _URL.createObjectURL(file);
+                        //    $('#formimage').submit()
+                    }
+                    else {
+                        toastr.warning("Please check dimension of your photo.");
+                        $('#imageQris').children('img').attr('src', 'https://www.placehold.it/300x300/EFEFEF/AAAAAA&amp;text=no+image');
+                        $("#remove_fieldphotoQris").trigger( "click" );
 
                     }
                 };
@@ -316,9 +282,7 @@
         });
     </script>
     <script>
-        $(document).ready(function(){
-            initialize({{env('LONGITUDE')}}, {{env('LATITUDE')}});
-        });
+  
         $('.onlynumber').keypress(function (e) {
             var regex = new RegExp("^[0-9]");
             var str = String.fromCharCode(!e.charCode ? e.which : e.charCode);
@@ -443,11 +407,11 @@
     <div class="portlet card_ light bordered">
         <div class="portlet-title">
             <div class="caption">
-                <span class="caption-subject font-blue sbold uppercase">New Vendor Pembangunan</span>
+                <span class="caption-subject font-blue sbold uppercase">New Vendor Penyedotan</span>
             </div>
         </div>
         <div class="portlet-body form">
-            <form class="form-horizontal" role="form" action="{{ url('tukang-sedot/store') }}" method="post" enctype="multipart/form-data">
+            <form class="form-horizontal" role="form" action="{{ url('kontraktor/store') }}" method="post" enctype="multipart/form-data">
                 <div class="form-body">
                     <div class="form-body">
                             <div class="form-group">
@@ -476,7 +440,7 @@
                                     </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" onkeyup="" name="email" placeholder="Email (Required & Unique)"
+                                    <input type="email" onkeyup="" name="email" placeholder="Email (Required & Unique)"
                                         class="form-control" required autocomplete="new-password"
                                         value="{{ old('email') }}" />
                                 </div>
@@ -596,6 +560,25 @@
                     <div class="form-group">
                         <div class="input-icon right">
                             <label class="col-md-3 control-label">
+                                Kategory 
+                                <span class="required" aria-required="true"> * </span>
+                                <i class="fa fa-question-circle tooltips" data-original-title="Masukkan Kategory" data-container="body"></i>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <select name="kategory_outlet" class="form-control input-sm select2"
+                                        data-placeholder="Swasta / Pemerintah" required>
+                                        <option value="">Select...</option>
+                                        <option value="pemerintah" @if (old('kategory_outlet') == 'pemerintah') selected @endif>Pemerintah
+                                        </option>
+                                        <option value="swasta" @if (old('kategory_outlet') == 'swasta') selected @endif>Swasta
+                                        </option>
+                                    </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-icon right">
+                            <label class="col-md-3 control-label">
                                 License Number
                                 <span class="required" aria-required="true"> * </span>
                                 <i class="fa fa-question-circle tooltips" data-original-title="Masukkan nomor ijin usaha" data-container="body"></i>
@@ -680,7 +663,29 @@
                             <textarea name="merchant_address" class="form-control" placeholder="Outlet Address" required></textarea>
                         </div>
                     </div>
-
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">
+                            Image Qris <span class="required" aria-required="true">* <br>(300*300) </span>
+                            <i class="fa fa-question-circle tooltips" data-original-title="Image Qris ukuran 300 x 300" data-container="body"></i>
+                        </label>
+                        <div class="col-md-8">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                                    <img src="" alt="">
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail" id="imageQris" style="max-width: 200px; max-height: 200px;"></div>
+                                <div>
+                                    <span class="btn default btn-file">
+                                    <span class="fileinput-new"> Select image </span>
+                                    <span class="fileinput-exists"> Change </span>
+                                    <input type="file" class="fileQris" id="fieldphoto" accept="image/*" name="outlet_image_qris" required @>
+                                    </span>
+            
+                                    <a href="javascript:;" id="remove_fieldphotoQris" class="btn red fileinput-exists" data-dismiss="fileinput"> Remove </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label">
                             Image Logo Portrait <span class="required" aria-required="true">* <br>(300*300) </span>
@@ -736,14 +741,14 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label">Latitude</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control latlong" name="outlet_latitude" value='' id="lat" required>
+                                <input type="text" class="form-control latlong" name="outlet_latitude"  id="lat" required>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label class="col-md-3 control-label">Longitude</label>
                             <div class="col-md-8">
-                                <input type="text" class="form-control latlong" name="outlet_longitude" value='' id="lng" required>
+                                <input type="text" class="form-control latlong" name="outlet_longitude" id="lng" required>
                             </div>
                         </div>
 
